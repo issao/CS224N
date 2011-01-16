@@ -28,7 +28,7 @@ public class SmoothedTrigramLanguageModel implements LanguageModel {
   private Map<List<String>, Counter<String>> biGram;
   private Map<List<String>, Counter<String>> triGram;
   private Map<List<String>, Counter<String>> smoothedTriGram;
-  
+
   // -----------------------------------------------------------------------
 
   /**
@@ -110,11 +110,14 @@ public class SmoothedTrigramLanguageModel implements LanguageModel {
         break;
       }
     }
+    System.out.println("maxFrequenceForGT: " + maxFrequencyForGT);
+    System.out.println("freqCount" + frequencyCount);
+//    System.out.println("lexicon: " + lexicon.size() + " " + lexicon);
 
     Map<List<String>, Counter<String>> smoothedNgram = new HashMap<List<String>, Counter<String>>();
 
     double normalizingFactor = 0.0;
-    
+
     // Handle the case of missing nGrams
     double totalMissingNgramsGTCount = frequencyCount.getCount(1);
     normalizingFactor += totalMissingNgramsGTCount;
@@ -147,7 +150,14 @@ public class SmoothedTrigramLanguageModel implements LanguageModel {
       int prefixMissingNgrams = lexicon.size() - prefixCounter.size();
       smoothedPrefixCounter.setCount(UNKNOWN, totalMissingNgramsGTCount
           * prefixMissingNgrams / totalMissingNgrams);
+//      System.out.println("prefixMissingNgrams[" + prefix + "] "
+//          + prefixMissingNgrams);
     }
+    System.out.println("totalMissingNgrams: " + totalMissingNgrams);
+    System.out.println("totalMissingNgramsGTCount: "
+        + totalMissingNgramsGTCount);
+    System.out.println("normalizingfactor: " + normalizingFactor);
+//    System.out.println(smoothedNgram);
 
     return smoothedNgram;
   }
@@ -172,13 +182,14 @@ public class SmoothedTrigramLanguageModel implements LanguageModel {
       // For the unigram case, remember that when we smooth it and
       // have to allow for the possibility of UNKNOWN.
     }
-    Counter<String> smothedPrefixCounter = smoothedTriGram.get(prefix);
-    if (!smothedPrefixCounter.keySet().contains(word)) {
-      int prefixMissingNgrams = lexicon.size() - smothedPrefixCounter.size() + 1; // + 1 for UNKNOWN.
-      return smothedPrefixCounter.getCount(UNKNOWN) / prefixMissingNgrams / smothedPrefixCounter.totalCount();
-    }
-    return smothedPrefixCounter.getCount(word)
-        / smothedPrefixCounter.totalCount();
+    Counter<String> smoothedPrefixCounter = smoothedTriGram.get(prefix);
+    if (!smoothedPrefixCounter.keySet().contains(word)) {
+      int prefixMissingNgrams = lexicon.size() - smoothedPrefixCounter.size() + 1;  // +1 for unknown
+      return smoothedPrefixCounter.getCount(UNKNOWN) / prefixMissingNgrams
+          / smoothedPrefixCounter.totalCount();
+   }
+    return smoothedPrefixCounter.getCount(word)
+        / smoothedPrefixCounter.totalCount();
   }
 
   /**
@@ -238,8 +249,6 @@ public class SmoothedTrigramLanguageModel implements LanguageModel {
   public String generateWord(List<String> prefix) {
     double sample = Math.random();
     double sum = 0.0;
-    // This might be simpler if instead of startWordCounter, we had a list
-    // of all words. This leaves no room for unknown.
     for (String word : lexicon) {
       sum += getWordProbability(prefix, word);
       if (sum > sample) {

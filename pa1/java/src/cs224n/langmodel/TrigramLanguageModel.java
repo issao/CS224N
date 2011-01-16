@@ -73,6 +73,10 @@ public class TrigramLanguageModel implements LanguageModel {
 		}
 	}
 
+	private void smooth() {
+    	
+	}
+	
 	private void addNgramCount(List<String> sentence, int index, int n,
 			Map<List<String>, Counter<String>> ngram) {
 		assert index + 1 >= n;
