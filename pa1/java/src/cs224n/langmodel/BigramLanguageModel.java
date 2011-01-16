@@ -124,7 +124,7 @@ public class BigramLanguageModel implements LanguageModel {
 	     for (String secondWord : startWordCounter.keySet()) {
          sum += getWordProbability(word, secondWord);
        }
-       sum += getWordProbablity(word, STOP);
+       sum += getWordProbability(word, STOP);
 	  }
 	}
   return sum / checked;
