@@ -111,19 +111,20 @@ public class BigramLanguageModel implements LanguageModel {
     // since this is a unigram model, 
     // the event space is everything in the vocabulary (including STOP)
     // and a UNK token
+   int checked = 0;
+   double sum = 0.0;
    for (String word : startWordCounter.keySet()) {
-      double sample = Math.random();
-     if (sample < 5.0 / startWordCounter.size()) {
-      double sum = 0.0;
-	    for (String secondWord : startWordCounter.keySet()) {
-	      sum += pairCounter.getCount(new Pair(word, secondWord)) / (startWordCounter.getCount(word));
-            }
-      sum += pairCounter.getCount(new Pair(word, STOP)) / startWordCounter.getCount(word);
-      return sum;
-	    }
+     double sample = Math.random();
+     // We expect to check ~20 distributions
+     if (sample < 20.0 / startWordCounter.size()) {
+       checked++;
+	     for (String secondWord : startWordCounter.keySet()) {
+	       sum += pairCounter.getCount(new Pair(word, secondWord)) / (startWordCounter.getCount(word));
+       }
+       sum += pairCounter.getCount(new Pair(word, STOP)) / startWordCounter.getCount(word);
+	  }
 	}
-return 2.0;
-    
+  return sum / checked;
   }
   
   /**
