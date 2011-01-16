@@ -11,14 +11,18 @@ import java.util.List;
  * ficticious count for unknown words.  (That is, we pretend that there is
  * a single unknown word, and that we saw it just once during training.)
  *
- * @author Dan Klein
+ * @author Yaron and Issao
  */
-public class EmpiricalUnigramLanguageModel implements LanguageModel {
+public class SmoothedUnigramLanguageModel implements LanguageModel {
 
   private static final String STOP = "</S>";
+  private static final String UNKNOWN = "<UNK/>";
   
   private Counter<String> wordCounter;
   private double total;
+    private ArrayList<Integer> frequencyCount;
+    private int maxFrequencyForGT;
+    private double normalizingFactor;
 
 
   // -----------------------------------------------------------------------
@@ -26,8 +30,9 @@ public class EmpiricalUnigramLanguageModel implements LanguageModel {
   /**
    * Constructs a new, empty unigram language model.
    */
-  public EmpiricalUnigramLanguageModel() {
+  public SmoothedUnigramLanguageModel() {
     wordCounter = new Counter<String>();
+    frequencyCount = new ArrayList<Integer>();
     total = Double.NaN;
   }
 
@@ -37,7 +42,7 @@ public class EmpiricalUnigramLanguageModel implements LanguageModel {
    * frequencies of all words (including the stop token) over the whole
    * collection of sentences are compiled.
    */
-  public EmpiricalUnigramLanguageModel(Collection<List<String>> sentences) {
+  public SmoothedUnigramLanguageModel(Collection<List<String>> sentences) {
     this();
     train(sentences);
   }
@@ -54,13 +59,66 @@ public class EmpiricalUnigramLanguageModel implements LanguageModel {
   public void train(Collection<List<String>> sentences) {
     wordCounter = new Counter<String>();
     for (List<String> sentence : sentences) {
-      List<String> stoppedSentence = new ArrayList<String>(sentence);
-      stoppedSentence.add(STOP);
-      for (String word : stoppedSentence) {
+      for (String word : sentence) {
         wordCounter.incrementCount(word, 1.0);
       }
+      wordCounter.incrementCount(STOP, 1.0);
     }
     total = wordCounter.totalCount();
+
+    smooth();
+  }
+
+  private void smooth() {
+      // Initialize frequencyCount
+      int maxCount = (int) wordCounter.getCount(wordCounter.argMax());
+      for (int i = 0; i <= maxCount; i++) {
+	  frequencyCount.add(0);
+      }
+      
+      // Count the number of words that occur k times.
+      for (String word : wordCounter.keySet()) {
+	  frequencyCount.set((int) wordCounter.getCount(word),
+			     frequencyCount.get((int) wordCounter.getCount(word))
+			     + 1);
+      }
+
+      // Find the first index that is 0.
+      for (int i = 1; i <= maxCount; i++) {
+	  if (frequencyCount.get(i) == 0) {
+	      maxFrequencyForGT = i - 2;
+	      break;
+	  }
+      }
+
+      // Compute normalizingFactor
+      // Initialize it to the weight of the unknown word.
+      normalizingFactor = 1;
+      double sum = 0;
+      for (String word : wordCounter.keySet()) {
+	  sum += getWordProbability(word);
+	  System.out.println(word + " " + getWordProbability(word));
+      }
+    
+      // remember to add the UNK. In this SmoothedUnigramLanguageModel
+      // we assume there is only one UNK, so we add...
+      sum += getWordProbability(UNKNOWN);
+
+      normalizingFactor = sum;
+
+      /*      System.out.println(wordCounter);
+      System.out.println(frequencyCount);
+      System.out.println(normalizingFactor);
+      System.out.println(maxFrequencyForGT);
+
+      System.out.println(frequencyCount.get(1) / normalizingFactor);
+      for (int i = 1; i <= maxFrequencyForGT; i++) {
+	  System.out.println((i + 1.0) * frequencyCount.get(i + 1) /
+			     frequencyCount.get(i) / normalizingFactor);
+      }
+      for (int i = maxFrequencyForGT + 1; i <= maxCount; i++) {
+	  System.out.println(frequencyCount.get(i) / normalizingFactor);
+	  }*/
   }
 
 
@@ -69,10 +127,13 @@ public class EmpiricalUnigramLanguageModel implements LanguageModel {
   private double getWordProbability(String word) {
     double count = wordCounter.getCount(word);
     if (count == 0) {                   // unknown word
-      // System.out.println("UNKNOWN WORD: " + sentence.get(index));
-      return 1.0 / (total + 1.0);
+	return frequencyCount.get(1) / normalizingFactor;
+    } else if (count <= maxFrequencyForGT) {
+	return (count + 1) * frequencyCount.get((int) count + 1) /
+	    frequencyCount.get((int) count) / normalizingFactor;
+    } else {
+	return count / normalizingFactor;
     }
-    return count / (total + 1.0);
   }
 
   /**
@@ -113,11 +174,13 @@ public class EmpiricalUnigramLanguageModel implements LanguageModel {
     // this loop goes through the vocabulary (which includes STOP)
     for (String word : wordCounter.keySet()) {
       sum += getWordProbability(word);
+      System.out.println(word + " " + getWordProbability(word));
     }
     
-    // remember to add the UNK. In this EmpiricalUnigramLanguageModel
+    // remember to add the UNK. In this SmoothedUnigramLanguageModel
     // we assume there is only one UNK, so we add...
-    sum += 1.0 / (total + 1.0);
+    sum += getWordProbability(UNKNOWN);
+    System.out.println("UNK " + getWordProbability(UNKNOWN));
     
     return sum;
   }
