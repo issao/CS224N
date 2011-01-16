@@ -71,6 +71,10 @@ public class BigramLanguageModel implements LanguageModel {
 
   // -----------------------------------------------------------------------
 
+  private double getWordProbability(String previousWord, String word) {
+    return pairCounter.getCount(new Pair(previousWord, word)) / startWordCounter.getCount(previousWord);
+  }
+
   /**
    * Returns the probability, according to the model, of the word specified
    * by the argument sentence and index.  Smoothing is used, so that all
@@ -85,8 +89,7 @@ public class BigramLanguageModel implements LanguageModel {
       firstWord = sentence.get(index - 1);
     }
     String secondWord = sentence.get(index);
-   
-    return pairCounter.getCount(new Pair(firstWord, secondWord)) / startWordCounter.getCount(firstWord);
+    return getWordProbability(firstWord, secondWord); 
   }
 
   /**
@@ -119,9 +122,9 @@ public class BigramLanguageModel implements LanguageModel {
      if (sample < 20.0 / startWordCounter.size()) {
        checked++;
 	     for (String secondWord : startWordCounter.keySet()) {
-	       sum += pairCounter.getCount(new Pair(word, secondWord)) / (startWordCounter.getCount(word));
+         sum += getWordProbability(word, secondWord);
        }
-       sum += pairCounter.getCount(new Pair(word, STOP)) / startWordCounter.getCount(word);
+       sum += getWordProbablity(word, STOP);
 	  }
 	}
   return sum / checked;
@@ -138,7 +141,7 @@ public class BigramLanguageModel implements LanguageModel {
     double sum = 0.0;
     // This might be simpler if instead of startWordCounter, we had a list of all words. This leaves no room for unknown.
     for (String word : startWordCounter.keySet()) {
-      sum += pairCounter.getCount(new Pair(previousWord, word)) / (startWordCounter.getCount(previousWord));
+      sum += getWordProbability(previousWord, word);
       if (sum > sample) {
         return word;
       }
