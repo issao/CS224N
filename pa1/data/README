@@ -1,0 +1,41 @@
+Europarl data for PA1.
+
+Each data file consists of a collection of sentences, one per line.
+
+The file "europarl.lowercased" is obtained from the instruction on the
+shared task webpage of the Statistical Machine Translation Workshop:
+
+  http://www.statmt.org/wmt08/baseline.html
+
+Starting from "europarl.lowercased", we removed sentences with 
+non-ascii characters and deleted some common punctuations. 
+The resulting file is "europarl.lowercased.ascii". Then we 
+filtered out sentences with 39 or more tokens. There are
+1,140,475 sentences after processing.
+
+We randomly selected the train/validate/test data sets:
+
+     80%    train            40,000 sentences
+     10%    validate          5,000 sentences
+     10%    test              5,000 sentences
+    ----    --------        -----------------
+    100%    TOTAL            50,000 sentences
+
+There is also a file "europarl.lowercased.ascii.short.notused" which
+contains the remaining 1,090,475 sentences. You can use that to increase
+the amount of training data.
+
+
+---
+Enron data for PA1.
+
+Downloaded subset of Enron corpus, cleaned version from:
+http://www.verbs.colorado.edu/enronsent
+
+Created enron-test.sent.txt per Europarl cleaning scripts per instructions
+above as run on the enronsent20 file in the downloaded corpus.  Saved
+only the first 5000 lines.
+
+Created enron.sent.notused by concatenating all of the other enronsent*
+files together, not including enronsent20.  Cleaned them per the Europarl
+scripts.

@@ -1,0 +1,18 @@
+germany: maildir/germany-c/discussion_threads/1870.
+delainey: maildir/delainey-d/discussion_threads/98.
+ward: maildir/ward-k/discussion_threads/95.
+motley: maildir/motley-m/inbox/65.
+arora: maildir/arora-h/discussion_threads/27.
+mcconnell: maildir/mcconnell-m/discussion_threads/355.
+
+
+Text Normalization
+----
+
+1. Manually split sentences into lines, one per line
+2. Ran tokenizer.perl to split tokens and punctuation
+3. Ran lowercase.perl to lowercase all words
+4. Ran strip-punctuation.perl to remove some punctuation
+
+(2) and (3) were obtained from http://www.statmt.org/wmt08/baseline.html
+(4) was created by Nate Chambers
