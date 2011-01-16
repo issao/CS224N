@@ -166,7 +166,7 @@ public class SmoothedTrigramLanguageModel implements LanguageModel {
     }
     Counter<String> smothedPrefixCounter = smoothedTriGram.get(prefix);
     if (!smothedPrefixCounter.keySet().contains(word)) {
-      int prefixMissingNgrams = lexicon.size() - smothedPrefixCounter.size();
+      int prefixMissingNgrams = lexicon.size() - smothedPrefixCounter.size() + 1; // + 1 for UNKNOWN.
       return smothedPrefixCounter.getCount(UNKNOWN) / prefixMissingNgrams / smothedPrefixCounter.totalCount();
     }
     return smothedPrefixCounter.getCount(word)
