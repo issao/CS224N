@@ -39,7 +39,9 @@ import java.util.*;
           List<String> sentence = new ArrayList<String>();
           for (int i = 0; i < words.length; i++) {
             String word = words[i];
-            sentence.add(word.toLowerCase());
+            if (!word.equals("")) {
+              sentence.add(word.toLowerCase());
+            }
           }
           return sentence;
         } catch (IOException e) {

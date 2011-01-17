@@ -83,13 +83,17 @@ public class SmoothedBackOffNGramLanguageModel implements LanguageModel {
     alphaBiGram = computeAlpha(smoothedBiGram, 2);
     alphaTriGram = computeAlpha(smoothedTriGram, 3);
     for (List<String> prefix : smoothedBiGram.keySet()) {
-      System.out.println("BIGRAMS [" + prefix + "]:" + smoothedBiGram.get(prefix));
-      System.out.println("alpha: " + alphaBiGram.get(prefix));
-      for (String word : smoothedBiGram.get(prefix).keySet()) {
-        System.out.println(word + ": " + smoothedUniGram.get(new ArrayList<String>()).getCount(word) + " " + getWordProbability(new ArrayList<String>(), word, 1));
-      }
-      System.out.println("---------");
+//      System.out.println("BIGRAMS [" + prefix + "]:" + smoothedBiGram.get(prefix));
+//      System.out.println("alpha: " + alphaBiGram.get(prefix));
+//      for (String word : smoothedBiGram.get(prefix).keySet()) {
+//        System.out.println(word + ": " + smoothedUniGram.get(new ArrayList<String>()).getCount(word) + " " + getWordProbability(new ArrayList<String>(), word, 1));
+//      }
+//      System.out.println("---------");
     }
+    System.out.println("raw bi:" +biGram);
+    System.out.println("smooth bi:" + smoothedBiGram);
+    System.out.println(smoothedUniGram);
+    System.out.println(alphaBiGram);
   }
   
   private double getAlpha(List<String> prefix, int n) {
@@ -106,6 +110,7 @@ public class SmoothedBackOffNGramLanguageModel implements LanguageModel {
       Map<List<String>, Counter<String>> ngram) {
     assert index + 1 >= n;
     List<String> prefix = getPrefix(sentence, index, n);
+    assert prefix.size() == n- 1;
     if (!ngram.containsKey(prefix)) {
       ngram.put(prefix, new Counter<String>());
     }
@@ -115,7 +120,12 @@ public class SmoothedBackOffNGramLanguageModel implements LanguageModel {
   private Map<List<String>, Double> computeAlpha(Map<List<String>, Counter<String>> ngram, int n) {
     Map<List<String>, Double> alpha = new HashMap<List<String>, Double>();
     for (List<String> prefix : ngram.keySet()) {
-      alpha.put(prefix, computeSingleAlpha(prefix, ngram, n));
+      
+      double calcedAlpha = computeSingleAlpha(prefix, ngram, n);
+      if (n==2) {
+        System.out.println("computing alpha for " + prefix + " got " + calcedAlpha);
+      }
+      alpha.put(prefix, calcedAlpha);
     }
     return alpha;
   }
@@ -123,23 +133,27 @@ public class SmoothedBackOffNGramLanguageModel implements LanguageModel {
   private double computeSingleAlpha(List<String> prefix,
       Map<List<String>, Counter<String>> ngram, int n) {
     double sumProbabilityLowOrder = 0.0;
-    System.out.println("prefix: "+ prefix);
+//    System.out.println("prefix: "+ prefix);
     
     for (String word : ngram.get(prefix).keySet()) {
       if (!word.equals(UNKNOWN)) {
-        System.out.println("word [" + word + "]: " + getWordProbability(
-            prefix.subList(1, n - 1), word, n - 1));
-        System.out.println("higher ngram: " + getWordProbability(prefix, word, n));
+//        System.out.println("word [" + word + "]: " + getWordProbability(
+//            prefix.subList(1, n - 1), word, n - 1));
+//        System.out.println("higher ngram: " + getWordProbability(prefix, word, n));
         sumProbabilityLowOrder += getWordProbability(
             prefix.subList(1, n - 1), word, n - 1);
       }
     }
     sumProbabilityLowOrder = 1.0 - sumProbabilityLowOrder;
-    System.out.println("I got alpha:" + ngram.get(prefix).getCount(UNKNOWN) / ngram.get(prefix).totalCount()
-        / sumProbabilityLowOrder);
-    System.out.println("unknown: " + ngram.get(prefix).getCount(UNKNOWN) / ngram.get(prefix).totalCount());
-    System.out.println("-----");
-    
+//    System.out.println("I got alpha:" + ngram.get(prefix).getCount(UNKNOWN) / ngram.get(prefix).totalCount()
+//        / sumProbabilityLowOrder);
+//    System.out.println("unknown: " + ngram.get(prefix).getCount(UNKNOWN) / ngram.get(prefix).totalCount());
+//    System.out.println("-----");
+    if (n == 2) {
+      System.out.println(prefix);
+    System.out.println("Num: " + ngram.get(prefix).getCount(UNKNOWN) / ngram.get(prefix).totalCount());
+    System.out.println("dem: " + sumProbabilityLowOrder);
+    }
     return ngram.get(prefix).getCount(UNKNOWN) / ngram.get(prefix).totalCount()
         / sumProbabilityLowOrder;
   }
@@ -168,7 +182,9 @@ public class SmoothedBackOffNGramLanguageModel implements LanguageModel {
         break;
       }
     }
-
+    if (n == 2) {
+    System.out.println("frequency count: " + frequencyCount);
+    }
     Map<List<String>, Counter<String>> smoothedNgram = new HashMap<List<String>, Counter<String>>();
 
     double normalizingFactor = 0.0;
@@ -185,6 +201,8 @@ public class SmoothedBackOffNGramLanguageModel implements LanguageModel {
 
     for (List<String> prefix : ngram.keySet()) {
       if (!smoothedNgram.containsKey(prefix)) {
+        assert prefix.size() == n -1;
+
         smoothedNgram.put(prefix, new Counter<String>());
       }
       Counter<String> prefixCounter = ngram.get(prefix);
@@ -302,14 +320,35 @@ public class SmoothedBackOffNGramLanguageModel implements LanguageModel {
   public double checkModel() {
     int checked = 0;
     double sum = 0.0;
+//    for (List<String> prefix : smoothedBiGram.keySet()) {
+//      double sample = Math.random();
+//      // We expect to check ~20 distributions
+//      if (sample < 20.0 / smoothedBiGram.size()) {
+//        checked++;
+//        for (String word : lexicon) {
+//          sum += getWordProbability(prefix, word, 2);
+//        }
+//      }
+//    }
+//    System.out.println("checked " + checked + " conditional probabilities");
+    
+//    int checked = 0;
+//    double sum = 0.0;
+//    
     for (List<String> prefix : smoothedTriGram.keySet()) {
       double sample = Math.random();
       // We expect to check ~20 distributions
       if (sample < 20.0 / smoothedTriGram.size()) {
+        prefix = new ArrayList<String>();
+        prefix.add("public");
+        prefix.add("finance");
+        
         checked++;
         for (String word : lexicon) {
           sum += getWordProbability(prefix, word);
         }
+        System.out.println();
+//        sum += getWordProbability(prefix, "DFGSDFDN");
       }
     }
     System.out.println("checked " + checked + " conditional probabilities");

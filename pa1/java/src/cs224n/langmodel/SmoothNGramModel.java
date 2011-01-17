@@ -62,7 +62,9 @@ public class SmoothNGramModel extends NGram {
       totalNgrams += knownWords(prefix).size();
     }
     // Compute missingNGrams
-    int totalMissingNgrams = (int) Math.pow(lexicon().size(), n) - totalNgrams;
+    // Each word can be any in the lexicon, and we allow the last word to be UNKNOWN
+    int totalMissingNgrams = (int) Math.pow(lexicon().size(), n - 1) * (lexicon().size() + 1) - totalNgrams;
+    assert totalMissingNgrams > 0;
     // Compute total count to be distributed to missingNGrams
     double totalMissingNgramsGTCount = frequencyCount.getCount(1);
 
@@ -83,7 +85,7 @@ public class SmoothNGramModel extends NGram {
           smoothedPrefixCounter.setCount(word, wordFrequency);
         }
       }
-      int prefixMissingNgrams = lexicon().size() - knownWords(prefix).size();
+      int prefixMissingNgrams = lexicon().size() - knownWords(prefix).size() + 1;  // +1 for UNKNOWN
       // TODO: Experiment with different normalizing factor.
       smoothedPrefixCounter.setCount(MISSING, totalMissingNgramsGTCount
           * prefixMissingNgrams / totalMissingNgrams);
