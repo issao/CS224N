@@ -8,14 +8,16 @@ import java.util.Set;
 
 import cs224n.util.Counter;
 
-public class SmoothNGramModel extends NGram {
+public class ZipfSmoothNGramModel extends NGram {
 
   private static final int MIN_FREQUENCY_FOR_GT = 20;
   private static final String MISSING = "<MISSING/>";
   private EmpiricalNGramModel empiricalNGram;
   private Map<List<String>, Counter<String>> smoothCount;
+  private double zipfA;
+  private double zipfB;
 
-  public SmoothNGramModel(int n) {
+  public ZipfSmoothNGramModel(int n) {
     super(n);
     empiricalNGram = new EmpiricalNGramModel(n);
     smoothCount = new HashMap<List<String>, Counter<String>>();
@@ -48,7 +50,7 @@ public class SmoothNGramModel extends NGram {
     }
 
     // Compute the maxFrequencyForGT
-    // TODO: Zipff fitting
+    fitZipfCurve(frequencyCount, maxCount);
     int maxFrequencyForGT = 0;
     for (int i = 1; i <= maxCount; i++) {
       if (frequencyCount.getCount(i) <= MIN_FREQUENCY_FOR_GT) {
@@ -63,9 +65,11 @@ public class SmoothNGramModel extends NGram {
       totalNgrams += knownWords(prefix).size();
     }
     // Compute missingNGrams
-    // Each word can be any in the lexicon, and we allow the last word to be UNKNOWN
-    double totalMissingNgrams = Math.pow(lexicon().size(), n - 1) * (lexicon().size() + 1) - totalNgrams;
-    assert totalMissingNgrams > 0;
+    // Each word can be any in the lexicon, and we allow the last word to be
+    // UNKNOWN
+    double totalMissingNgrams = Math.pow(lexicon().size(), n - 1)
+        * (lexicon().size() + 1) - totalNgrams;
+    assert totalMissingNgrams > 0.0;
     // Compute total count to be distributed to missingNGrams
     double totalMissingNgramsGTCount = frequencyCount.getCount(1);
 
@@ -83,21 +87,52 @@ public class SmoothNGramModel extends NGram {
               / frequencyCount.getCount(wordFrequency);
           smoothedPrefixCounter.setCount(word, wordGTCount);
         } else {
-          smoothedPrefixCounter.setCount(word, wordFrequency);
+          // Use Zipf curve.
+          double wordGTCount = (wordFrequency + 1) * zipf(wordFrequency + 1)
+              / zipf(wordFrequency);
+          smoothedPrefixCounter.setCount(word, wordGTCount);
         }
       }
-      int prefixMissingNgrams = lexicon().size() - knownWords(prefix).size() + 1;  // +1 for UNKNOWN
+      int prefixMissingNgrams = lexicon().size() - knownWords(prefix).size()
+          + 1; // +1 for UNKNOWN
       // TODO: Experiment with different normalizing factor.
       smoothedPrefixCounter.setCount(MISSING, totalMissingNgramsGTCount
           * prefixMissingNgrams / totalMissingNgrams);
-      
+
       // Now change smoothed counts to conditional probabilities
       double totalCount = smoothedPrefixCounter.totalCount();
       for (String word : smoothedPrefixCounter.keySet()) {
-        smoothedPrefixCounter.setCount(word, smoothedPrefixCounter.getCount(word) / totalCount);
+        smoothedPrefixCounter.setCount(word,
+            smoothedPrefixCounter.getCount(word) / totalCount);
       }
-      assert Math.abs(1.0-smoothedPrefixCounter.totalCount() ) < 1e-6;
+      assert Math.abs(1.0 - smoothedPrefixCounter.totalCount()) < 1e-6;
     }
+  }
+
+  private void fitZipfCurve(Counter<Integer> frequencyCount, int maxCount) {
+    int count = 0;
+    double sumX = 0.0, sumY = 0.0, sumXY = 0.0, sumXX = 0.0;
+    for (int i = 1; i <= maxCount; i++) {
+      // We ignore zeroes so that they don't pull down the fit, specially around
+      // the tail which is full of large gaps.
+      if (frequencyCount.getCount(i) == 0.0) {
+        continue;
+      }
+      double y = Math.log(frequencyCount.getCount(i));
+      double x = Math.log(i);
+      sumX += x;
+      sumY += y;
+      sumXY += x * y;
+      sumXX += x * x;
+      count++;
+    }
+
+    zipfB = (sumXY - sumX * sumY / count) / (sumXX - sumX * sumX / count);
+    zipfA = sumY / count - zipfB * sumX / count;
+  }
+
+  private double zipf(int i) {
+    return Math.exp(zipfA) * Math.pow(i, zipfB);
   }
 
   @Override
@@ -105,7 +140,7 @@ public class SmoothNGramModel extends NGram {
     assert prefix.size() == n - 1;
     if (!knownPrefixes().contains(prefix)) {
       // Missing prefix, give uniform probability.
-      return 1.0 / (lexicon().size() + 1); 
+      return 1.0 / (lexicon().size() + 1);
     }
     Counter<String> smoothedPrefixCounter = smoothCount.get(prefix);
     if (!knownWords(prefix).contains(word)) {
