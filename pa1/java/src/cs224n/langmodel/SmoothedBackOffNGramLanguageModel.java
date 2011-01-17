@@ -82,6 +82,14 @@ public class SmoothedBackOffNGramLanguageModel implements LanguageModel {
     smoothedTriGram = smooth(triGram, 3);
     alphaBiGram = computeAlpha(smoothedBiGram, 2);
     alphaTriGram = computeAlpha(smoothedTriGram, 3);
+    for (List<String> prefix : smoothedBiGram.keySet()) {
+      System.out.println("BIGRAMS [" + prefix + "]:" + smoothedBiGram.get(prefix));
+      System.out.println("alpha: " + alphaBiGram.get(prefix));
+      for (String word : smoothedBiGram.get(prefix).keySet()) {
+        System.out.println(word + ": " + smoothedUniGram.get(new ArrayList<String>()).getCount(word) + " " + getWordProbability(new ArrayList<String>(), word, 1));
+      }
+      System.out.println("---------");
+    }
   }
   
   private double getAlpha(List<String> prefix, int n) {
@@ -115,14 +123,24 @@ public class SmoothedBackOffNGramLanguageModel implements LanguageModel {
   private double computeSingleAlpha(List<String> prefix,
       Map<List<String>, Counter<String>> ngram, int n) {
     double sumProbabilityLowOrder = 0.0;
+    System.out.println("prefix: "+ prefix);
+    
     for (String word : ngram.get(prefix).keySet()) {
       if (!word.equals(UNKNOWN)) {
+        System.out.println("word [" + word + "]: " + getWordProbability(
+            prefix.subList(1, n - 1), word, n - 1));
+        System.out.println("higher ngram: " + getWordProbability(prefix, word, n));
         sumProbabilityLowOrder += getWordProbability(
             prefix.subList(1, n - 1), word, n - 1);
       }
     }
     sumProbabilityLowOrder = 1.0 - sumProbabilityLowOrder;
-    return ngram.get(prefix).getCount(UNKNOWN)
+    System.out.println("I got alpha:" + ngram.get(prefix).getCount(UNKNOWN) / ngram.get(prefix).totalCount()
+        / sumProbabilityLowOrder);
+    System.out.println("unknown: " + ngram.get(prefix).getCount(UNKNOWN) / ngram.get(prefix).totalCount());
+    System.out.println("-----");
+    
+    return ngram.get(prefix).getCount(UNKNOWN) / ngram.get(prefix).totalCount()
         / sumProbabilityLowOrder;
   }
 

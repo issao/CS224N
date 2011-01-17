@@ -112,7 +112,7 @@ public class SmoothedTrigramLanguageModel implements LanguageModel {
     }
     System.out.println("maxFrequenceForGT: " + maxFrequencyForGT);
     System.out.println("freqCount" + frequencyCount);
-//    System.out.println("lexicon: " + lexicon.size() + " " + lexicon);
+    // System.out.println("lexicon: " + lexicon.size() + " " + lexicon);
 
     Map<List<String>, Counter<String>> smoothedNgram = new HashMap<List<String>, Counter<String>>();
 
@@ -150,14 +150,14 @@ public class SmoothedTrigramLanguageModel implements LanguageModel {
       int prefixMissingNgrams = lexicon.size() - prefixCounter.size();
       smoothedPrefixCounter.setCount(UNKNOWN, totalMissingNgramsGTCount
           * prefixMissingNgrams / totalMissingNgrams);
-//      System.out.println("prefixMissingNgrams[" + prefix + "] "
-//          + prefixMissingNgrams);
+      // System.out.println("prefixMissingNgrams[" + prefix + "] "
+      // + prefixMissingNgrams);
     }
     System.out.println("totalMissingNgrams: " + totalMissingNgrams);
     System.out.println("totalMissingNgramsGTCount: "
         + totalMissingNgramsGTCount);
     System.out.println("normalizingfactor: " + normalizingFactor);
-//    System.out.println(smoothedNgram);
+    // System.out.println(smoothedNgram);
 
     return smoothedNgram;
   }
@@ -173,7 +173,7 @@ public class SmoothedTrigramLanguageModel implements LanguageModel {
     if (!smoothedTriGram.containsKey(prefix)) {
       // Missing prefix, back off.
       return 1.0 / lexicon.size();
-      
+
       // backoff TODO
       // Smooth all three of them.
       // Whenever outputing this uniform crap, back off instead.
@@ -184,10 +184,11 @@ public class SmoothedTrigramLanguageModel implements LanguageModel {
     }
     Counter<String> smoothedPrefixCounter = smoothedTriGram.get(prefix);
     if (!smoothedPrefixCounter.keySet().contains(word)) {
-      int prefixMissingNgrams = lexicon.size() - smoothedPrefixCounter.size() + 1;  // +1 for unknown
+      int prefixMissingNgrams = lexicon.size() - smoothedPrefixCounter.size()
+          + 1; // +1 for unknown
       return smoothedPrefixCounter.getCount(UNKNOWN) / prefixMissingNgrams
           / smoothedPrefixCounter.totalCount();
-   }
+    }
     return smoothedPrefixCounter.getCount(word)
         / smoothedPrefixCounter.totalCount();
   }
