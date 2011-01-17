@@ -44,7 +44,7 @@ public abstract class NGram implements LanguageModel {
   protected abstract double getWordProbability(List<String> prefix, String word);
 
   protected List<String> getPrefix(List<String> sentence, int index) {
-    List<String> prefix = sentence.subList(index - n + 1, index);
+    List<String> prefix = new ArrayList<String>(sentence.subList(index - n + 1, index));
     assert prefix.size() == n - 1;
     return prefix;
   }

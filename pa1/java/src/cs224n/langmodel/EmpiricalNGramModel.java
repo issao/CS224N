@@ -47,6 +47,7 @@ public class EmpiricalNGramModel extends NGram {
 
   @Override
   protected double getWordProbability(List<String> prefix, String word) {
+    assert prefix.size() == n - 1;
     if (!rawCount.containsKey(prefix)) {
       return 0.0;  // No smoothing here.
     }
@@ -60,6 +61,7 @@ public class EmpiricalNGramModel extends NGram {
 
   @Override
   protected Set<String> knownWords(List<String> prefix) {
+    assert prefix.size() == n - 1;
     return rawCount.get(prefix).keySet();
   }
 
@@ -69,6 +71,7 @@ public class EmpiricalNGramModel extends NGram {
   }
   
   public int getCount(List<String> prefix, String word) {
+    assert prefix.size() == n - 1;
     if (!rawCount.containsKey(prefix)) {
       return 0;
     }
@@ -76,6 +79,7 @@ public class EmpiricalNGramModel extends NGram {
   }
 
   public Counter<String> getPrefixCounter(List<String> prefix) {
+    assert prefix.size() == n - 1;
     if (!rawCount.containsKey(prefix)) {
       return null;
     }

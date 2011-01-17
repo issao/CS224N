@@ -94,6 +94,7 @@ public class SmoothNGramModel extends NGram {
 
   @Override
   protected double getWordProbability(List<String> prefix, String word) {
+    assert prefix.size() == n - 1;
     if (!knownPrefixes().contains(prefix)) {
       // Missing prefix, give uniform probability.
       return 1.0 / (lexicon().size() + 1); 
@@ -121,6 +122,7 @@ public class SmoothNGramModel extends NGram {
 
   @Override
   protected Set<String> knownWords(List<String> prefix) {
+    assert prefix.size() == n - 1;
     return empiricalNGram.knownWords(prefix);
   }
 
