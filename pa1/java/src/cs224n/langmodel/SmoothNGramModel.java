@@ -89,6 +89,13 @@ public class SmoothNGramModel extends NGram {
       // TODO: Experiment with different normalizing factor.
       smoothedPrefixCounter.setCount(MISSING, totalMissingNgramsGTCount
           * prefixMissingNgrams / totalMissingNgrams);
+      
+      // Now change smoothed counts to conditional probabilities
+      double totalCount = smoothedPrefixCounter.totalCount();
+      for (String word : smoothedPrefixCounter.keySet()) {
+        smoothedPrefixCounter.setCount(word, smoothedPrefixCounter.getCount(word) / totalCount);
+      }
+      assert Math.abs(1.0-smoothedPrefixCounter.totalCount() ) < 1e-6;
     }
   }
 
@@ -107,11 +114,9 @@ public class SmoothNGramModel extends NGram {
       // Once we add backoff, this does not matter except for the unigram case.
       int prefixMissingNgrams = lexicon().size() - knownWords(prefix).size()
           + 1; // +1 for UKNOWN
-      return smoothedPrefixCounter.getCount(MISSING) / prefixMissingNgrams
-          / smoothedPrefixCounter.totalCount();
+      return smoothedPrefixCounter.getCount(MISSING) / prefixMissingNgrams;
     }
-    return smoothedPrefixCounter.getCount(word)
-        / smoothedPrefixCounter.totalCount();
+    return smoothedPrefixCounter.getCount(word);
   }
 
   @Override
