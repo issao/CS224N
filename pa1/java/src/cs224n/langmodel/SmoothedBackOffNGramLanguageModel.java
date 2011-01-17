@@ -108,17 +108,18 @@ public class SmoothedBackOffNGramLanguageModel implements LanguageModel {
     }
     if (!alpha.keySet().contains(prefix)) {
       double sumProbabilityLowOrder = 0.0;
-      // NOTE: Doing it this way is really slow. We need to as much of possible iterate over existing n-grams.
-//      for (String word : lexicon) {
-//        if (!highNGram.get(prefix).containsKey(word)) {
-//          sumProbabilityLowOrder += getWordProbability(
-//              prefix.subList(1, n - 1), word, n - 1);
-//        }
-//      }
+      // NOTE: Doing it this way is really slow. We need to as much of possible
+      // iterate over existing n-grams.
+      // for (String word : lexicon) {
+      // if (!highNGram.get(prefix).containsKey(word)) {
+      // sumProbabilityLowOrder += getWordProbability(
+      // prefix.subList(1, n - 1), word, n - 1);
+      // }
+      // }
       for (String word : highNGram.get(prefix).keySet()) {
         if (!word.equals(UNKNOWN)) {
           sumProbabilityLowOrder += getWordProbability(
-            prefix.subList(1, n - 1), word, n - 1);
+              prefix.subList(1, n - 1), word, n - 1);
         }
       }
       sumProbabilityLowOrder = 1.0 - sumProbabilityLowOrder;
@@ -187,8 +188,12 @@ public class SmoothedBackOffNGramLanguageModel implements LanguageModel {
         normalizingFactor += smoothedPrefixCounter.getCount(word);
       }
       int prefixMissingNgrams = lexicon.size() - prefixCounter.size();
-      smoothedPrefixCounter.setCount(UNKNOWN, totalMissingNgramsGTCount
-          * prefixMissingNgrams / totalMissingNgrams);  // FIXME this gives nan for the unigram
+      if (n != 1) {
+        smoothedPrefixCounter.setCount(UNKNOWN, totalMissingNgramsGTCount
+            * prefixMissingNgrams / totalMissingNgrams);
+      } else {
+        smoothedPrefixCounter.setCount(UNKNOWN, totalMissingNgramsGTCount);
+      }
     }
 
     return smoothedNgram;
