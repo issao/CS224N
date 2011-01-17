@@ -14,11 +14,13 @@ public class EmpiricalNGramModel extends NGram {
 
   private Set<String> lexicon;
   private Map<List<String>, Counter<String>> rawCount;
+  private Map<List<String>, Double> totalCount;
 
   public EmpiricalNGramModel(int n) {
     super(n);
     lexicon = new HashSet<String>();
     rawCount = new HashMap<List<String>, Counter<String>>();
+    totalCount = new HashMap<List<String>, Double>();
   }
 
   @Override
@@ -33,6 +35,9 @@ public class EmpiricalNGramModel extends NGram {
         lexicon.add(stoppedSentence.get(i));
         addNgramCount(stoppedSentence, i);
       }
+    }
+    for (List<String> prefix : rawCount.keySet()) {
+      totalCount.put(prefix, rawCount.get(prefix).totalCount());
     }
   }
 
@@ -50,7 +55,7 @@ public class EmpiricalNGramModel extends NGram {
     if (!rawCount.containsKey(prefix)) {
       return 0.0;  // No smoothing here.
     }
-    return rawCount.get(prefix).getCount(word) / rawCount.get(prefix).totalCount();
+    return rawCount.get(prefix).getCount(word) / totalCount.get(prefix);
   }
 
   @Override
