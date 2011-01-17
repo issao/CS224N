@@ -23,7 +23,7 @@ public class LanguageModelTester {
    * (base 2) of the probability, according to the model, of each datum.
    * Lower perplexity indicates a better fit.
    */
-  static double computePerplexity(LanguageModel languageModel, 
+  public static double computePerplexity(LanguageModel languageModel, 
                                   Collection<List<String>> sentences) {
     double logProbability = 0.0;
     double numSymbols = 0.0;
@@ -187,7 +187,7 @@ public class LanguageModelTester {
     Map<String, String> options = new HashMap<String, String>();
     options.put("-data",      "/afs/ir/class/cs224n/pa1/data");
     options.put("-train",     "europarl-train.sent.txt");
-    options.put("-valid",     "europarl-valid.sent.txt");
+    options.put("-valid",     "europarl-validate.sent.txt");
     options.put("-test",      "europarl-test.sent.txt");
     options.put("-model",     "cs224n.langmodel.EmpiricalUnigramLanguageModel");
     options.put("-showguesses",       "false");  // show rebuilt Enron emails?
@@ -207,15 +207,15 @@ public class LanguageModelTester {
     // set up file locations ...............................................
     String dataPath  = options.get("-data");
     String trainFile = dataPath + "/" + options.get("-train");
-    //String validFile = dataPath + "/" + options.get("-valid");
+    String validFile = dataPath + "/" + options.get("-valid");
     String testFile  = dataPath + "/" + options.get("-test");
     String jumblePath   = dataPath + "/jumble";
 
     // load sentence data ..................................................
     System.out.println("Training data will be read from " + trainFile);
     Collection<List<String>> trainSentences = Sentences.Reader.readSentences(trainFile);
-    // System.out.println("Validation data will be read from " + validFile);
-    // Collection<List<String>> validSentences = Sentences.Reader.readSentences(validFile);
+    System.out.println("Validation data will be read from " + validFile);
+    Collection<List<String>> validSentences = Sentences.Reader.readSentences(validFile);
     System.out.println("Testing data will be read from  " + testFile + "\n");
     Collection<List<String>> testSentences = Sentences.Reader.readSentences(testFile);
 
@@ -252,6 +252,13 @@ public class LanguageModelTester {
                      " from " + trainFile + " ... ");
     model.train(trainSentences);
     System.out.println("done\n");
+    
+    // tune model....
+    if (model instanceof TunableModel) {
+      System.out.println("Tuning model...");
+      ((TunableModel)model).tune(validSentences);      
+      System.out.println("done\n");
+    }
 
     // check if the probability distribution of the model sums up properly
     if ("true".equals(options.get("-check"))) {
@@ -271,6 +278,10 @@ public class LanguageModelTester {
     NumberFormat nf = new DecimalFormat("0.0000");
     System.out.printf("%-30s","Training set perplexity: ");
     System.out.println(nf.format(computePerplexity(model, trainSentences)));
+          
+    System.out.printf("%-30s","Validation set perplexity: ");
+    System.out.println(nf.format(computePerplexity(model, validSentences)));
+    
     System.out.printf("%-30s","Test set perplexity: ");
     System.out.println(nf.format(computePerplexity(model, testSentences)));
 

@@ -27,12 +27,16 @@ public abstract class NGram implements LanguageModel {
     for (int i = 0; i < n - 1; i++) {
       stoppedSentence.add(0, START);
     }
-    double probability = 1.0;
+    double probability = 0.0;
     for (int index = n - 1; index < stoppedSentence.size(); index++) {
       // TODO: Use log likelihood?
-      probability *= getWordProbability(stoppedSentence, index);
+      probability += Math.log(getWordProbability(stoppedSentence, index)) / Math.log(2.0);
     }
-    return probability;
+    return Math.pow(2, probability);
+  }
+
+  public int getN() {
+    return n;
   }
 
   @Override
