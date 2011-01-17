@@ -80,8 +80,18 @@ public class SmoothedBackOffNGramLanguageModel implements LanguageModel {
     smoothedUniGram = smooth(uniGram, 1);
     smoothedBiGram = smooth(biGram, 2);
     smoothedTriGram = smooth(triGram, 3);
-    alphaBiGram = new HashMap<List<String>, Double>();
-    alphaTriGram = new HashMap<List<String>, Double>();
+    alphaBiGram = computeAlpha(smoothedBiGram, 2);
+    alphaTriGram = computeAlpha(smoothedTriGram, 3);
+  }
+  
+  private double getAlpha(List<String> prefix, int n) {
+    if (n == 2) {
+      return alphaBiGram.get(prefix);
+    } else if (n == 3) {
+      return alphaTriGram.get(prefix);
+    }
+    assert false;
+    return -1;
   }
 
   private void addNgramCount(List<String> sentence, int index, int n,
@@ -93,40 +103,27 @@ public class SmoothedBackOffNGramLanguageModel implements LanguageModel {
     }
     ngram.get(prefix).incrementCount(sentence.get(index), 1.0);
   }
-
-  private double getAlpha(List<String> prefix,
-      Map<List<String>, Counter<String>> highNGram, int n) {
-    // Computes alpha with memoization.
-    Map<List<String>, Double> alpha;
-    if (n == 2) {
-      alpha = alphaBiGram;
-    } else if (n == 3) {
-      alpha = alphaTriGram;
-    } else {
-      assert false;
-      alpha = null;
+  
+  private Map<List<String>, Double> computeAlpha(Map<List<String>, Counter<String>> ngram, int n) {
+    Map<List<String>, Double> alpha = new HashMap<List<String>, Double>();
+    for (List<String> prefix : ngram.keySet()) {
+      alpha.put(prefix, computeSingleAlpha(prefix, ngram, n));
     }
-    if (!alpha.keySet().contains(prefix)) {
-      double sumProbabilityLowOrder = 0.0;
-      // NOTE: Doing it this way is really slow. We need to as much of possible
-      // iterate over existing n-grams.
-      // for (String word : lexicon) {
-      // if (!highNGram.get(prefix).containsKey(word)) {
-      // sumProbabilityLowOrder += getWordProbability(
-      // prefix.subList(1, n - 1), word, n - 1);
-      // }
-      // }
-      for (String word : highNGram.get(prefix).keySet()) {
-        if (!word.equals(UNKNOWN)) {
-          sumProbabilityLowOrder += getWordProbability(
-              prefix.subList(1, n - 1), word, n - 1);
-        }
+    return alpha;
+  }
+  
+  private double computeSingleAlpha(List<String> prefix,
+      Map<List<String>, Counter<String>> ngram, int n) {
+    double sumProbabilityLowOrder = 0.0;
+    for (String word : ngram.get(prefix).keySet()) {
+      if (!word.equals(UNKNOWN)) {
+        sumProbabilityLowOrder += getWordProbability(
+            prefix.subList(1, n - 1), word, n - 1);
       }
-      sumProbabilityLowOrder = 1.0 - sumProbabilityLowOrder;
-      alpha.put(prefix, highNGram.get(prefix).getCount(UNKNOWN)
-          / sumProbabilityLowOrder);
     }
-    return alpha.get(prefix);
+    sumProbabilityLowOrder = 1.0 - sumProbabilityLowOrder;
+    return ngram.get(prefix).getCount(UNKNOWN)
+        / sumProbabilityLowOrder;
   }
 
   private Map<List<String>, Counter<String>> smooth(
@@ -244,7 +241,7 @@ public class SmoothedBackOffNGramLanguageModel implements LanguageModel {
         return ngram.get(prefix).getCount(UNKNOWN); // Deal with OOV word in a
                                                     // better way?
       }
-      return getAlpha(prefix, ngram, n)
+      return getAlpha(prefix, n)
           * getWordProbability(prefix.subList(1, n - 1), word, n - 1);
     }
     double a = smoothedPrefixCounter.getCount(word);
