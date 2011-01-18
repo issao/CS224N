@@ -191,6 +191,11 @@ public class EMInterpolatedNGramModel extends NGram implements TunableModel {
   }
 
   @Override
+  public List<Double> modelWeigths() {
+    return new ArrayList<Double>();
+  }
+
+  @Override
   protected Set<List<String>> knownPrefixes() {
     return lastModel.knownPrefixes();
   }
