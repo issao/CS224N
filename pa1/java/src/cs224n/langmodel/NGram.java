@@ -69,13 +69,13 @@ public abstract class NGram implements LanguageModel {
       }
     }
     // Check random prefixes;
-    String[] lexiconArray = (String[]) lexicon().toArray();
+    Object[] lexiconArray = lexicon().toArray();
     for (int iteration = 0; iteration < 10; iteration++) {
       List<String> prefix = new ArrayList<String>();
       for (int i = 0; i < n - 1; i++) {
         int wordIndex = (int) Math.random() * lexicon().size();
         assert 0 <= wordIndex && wordIndex < lexicon().size();
-        prefix.add(lexiconArray[wordIndex]);
+        prefix.add((String)lexiconArray[wordIndex]);
       }
       checked++;
       sum += checkModelForPrefix(prefix);
