@@ -1,5 +1,6 @@
 package cs224n.langmodel;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -39,6 +40,7 @@ public class InterpolatedTriGramModel extends NGram implements TunableModel {
         assert -1E-6 <= beta && beta <= 1 + 1E-6;
         assert -1E-6 <= gamma && gamma <= 1 + 1E-6;
         double perplexity = LanguageModelTester.computePerplexity(this, trainingSentences);
+//        assert !Double.isInfinite(perplexity); 
         System.out.println(alpha + ", " + beta + ", "+ gamma +":" + perplexity);
         if (perplexity < bestPerplexity) {
            bestPerplexity = perplexity;
@@ -52,7 +54,7 @@ public class InterpolatedTriGramModel extends NGram implements TunableModel {
     alpha = bestAlpha;
     beta = bestBeta;
     gamma = bestGamma;
-    System.out.println("Tuned alpha, betta, gamma: " + alpha + ", " + beta + ", " + gamma);
+    System.out.println("Tuned alpha, betta, gamma: " + alpha + ", " + beta + ", " + gamma + ": " + bestPerplexity);
   }
   
   @Override
@@ -94,6 +96,15 @@ public class InterpolatedTriGramModel extends NGram implements TunableModel {
   @Override
   protected Set<String> lexicon() {
     return modelThree.lexicon();
+  }
+
+  @Override
+  public List<Double> modelWeigths() {
+    List<Double> weights = new ArrayList<Double>();
+    weights.add(alpha);
+    weights.add(beta);
+    weights.add(gamma);
+    return weights;
   }
 
 }
