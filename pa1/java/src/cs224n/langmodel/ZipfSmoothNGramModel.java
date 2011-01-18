@@ -101,6 +101,7 @@ public class ZipfSmoothNGramModel extends NGram {
 
       // Now change smoothed counts to conditional probabilities
       double totalCount = smoothedPrefixCounter.totalCount();
+      assert totalCount != 0;
       for (String word : smoothedPrefixCounter.keySet()) {
         smoothedPrefixCounter.setCount(word,
             smoothedPrefixCounter.getCount(word) / totalCount);
