@@ -331,7 +331,7 @@ public class LanguageModelTester {
         List<String> sentence = model.generateSentence();
         System.out.println("  " + sentence);
         if (model instanceof NGram) {
-          SentencePrinter.print(sentence, (NGram) model);
+          //SentencePrinter.print(sentence, (NGram) model);
         }
       }
     }

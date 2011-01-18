@@ -12,6 +12,7 @@ import cs224n.util.Counter;
 
 public class EMInterpolatedNGramModel extends NGram implements TunableModel {
 
+  private static final double MINIMUM_ENTROPY_STEP = 0.01;
   private static final int NUMBER_ITERATIONS = 10;
   private List<NGram> models;
   private NGram lastModel;
@@ -72,6 +73,7 @@ public class EMInterpolatedNGramModel extends NGram implements TunableModel {
         fractionalCount.add(new Counter<String>());
       }
       
+      double previousEntropy = Double.NEGATIVE_INFINITY;
       for (int iteration = 0; iteration < NUMBER_ITERATIONS; iteration++) {
         // E-Step 1- Compute P(word, Y) = P(word|Y) * P(Y)
         for (String word : wordSet) {
@@ -117,6 +119,11 @@ public class EMInterpolatedNGramModel extends NGram implements TunableModel {
         }
 
         checkWeights(weight);
+        
+        if (entropy - previousEntropy < MINIMUM_ENTROPY_STEP) {
+          break;
+        }
+        previousEntropy = entropy;
       }
     }
   }
