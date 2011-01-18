@@ -67,12 +67,12 @@ public class BackoffModel extends NGram {
   }
 
   @Override
-  protected Set<List<String>> knownPrefixes() {
+  public Set<List<String>> knownPrefixes() {
     return primaryModel.knownPrefixes();
   }
 
   @Override
-  protected Set<String> knownWords(List<String> prefix) {
+  public Set<String> knownWords(List<String> prefix) {
     return primaryModel.knownWords(prefix);
   }
 

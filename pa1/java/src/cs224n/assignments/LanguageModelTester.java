@@ -66,7 +66,7 @@ public class LanguageModelTester {
     EditDistance editDistance = new EditDistance();
 
     if( showGuesses ) System.out.println("***Rebuilt Enron Emails***");
-    // Loop over each jumbled sentence.
+    // Loop over each jumbled sentence.d
     for (JumbleProblem jProblem : jumbleProblems) {
       List<String> correctSentence = jProblem.getCorrectSentence();
       List<String> bestGuess = null;
@@ -88,9 +88,11 @@ public class LanguageModelTester {
         }
       }
       // Debugging, showing the best guess sentences
-      if( showGuesses ) {
-	for( String token : bestGuess ) System.out.print(token + " ");
-	System.out.println();
+      if( showGuesses && languageModel instanceof NGram) {
+        System.out.println("Guess:");
+        SentencePrinter.print(bestGuess, (NGram) languageModel);
+        System.out.println("Correct:");
+        SentencePrinter.print(correctSentence, (NGram) languageModel);
       }
       // If exactly correct
       if( distanceForBestScores == 0 ) {
@@ -102,7 +104,8 @@ public class LanguageModelTester {
     } // end jumbleproblem loop
 
     if( showGuesses ) System.out.println("******");
-
+    
+    
     //    return totalDistance / totalWords;
     return new Pair<Double,Double>(totalWER / (double)jumbleProblems.size(), 
 				   (double)absoluteCorrect / (double)jumbleProblems.size());

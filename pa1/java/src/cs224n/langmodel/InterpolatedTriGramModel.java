@@ -84,12 +84,12 @@ public class InterpolatedTriGramModel extends NGram implements TunableModel {
   }
 
   @Override
-  protected Set<List<String>> knownPrefixes() {
+  public Set<List<String>> knownPrefixes() {
     return modelThree.knownPrefixes();
   }
 
   @Override
-  protected Set<String> knownWords(List<String> prefix) {
+  public Set<String> knownWords(List<String> prefix) {
     return modelThree.knownWords(prefix);
   }
 

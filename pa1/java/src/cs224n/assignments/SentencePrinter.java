@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import cs224n.langmodel.EmpiricalNGramModel;
 import cs224n.langmodel.NGram;
 
 public class SentencePrinter {
-  private static final double logPperSpace = 4.0;
+  private static final double logPperSpace = 2.0;
+
   public static void print(List<String> sentence, NGram model) {
     int n = model.getN();
     List<String> prefix = new ArrayList<String>();
@@ -21,12 +23,19 @@ public class SentencePrinter {
       for (int i = 0; i < nSpaces; i++) {
         spaces += " ";
       }
-      System.out.println(spaces + flatten(prefix) + " " + word);
+      System.out.print(spaces + flatten(prefix) + " " + word + " ["
+          + Math.exp(-1 * logP) + "]");
+      if (!model.knownPrefixes().contains(prefix)) {
+        System.out.print("[*]");
+      } else if (!model.knownWords(prefix).contains(word)) {
+        System.out.print("[**]");
+      }
+      System.out.println();
       prefix.remove(0);
       prefix.add(word);
     }
   }
-  
+
   private static String flatten(List<String> sentence) {
     String s = "";
     for (int i = 0; i < sentence.size(); i++) {

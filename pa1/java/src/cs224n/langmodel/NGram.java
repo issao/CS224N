@@ -52,9 +52,9 @@ public abstract class NGram implements LanguageModel {
     return prefix;
   }
   
-  protected abstract Set<List<String>> knownPrefixes();
+  public abstract Set<List<String>> knownPrefixes();
   
-  protected abstract Set<String> knownWords(List<String> prefix);
+  public abstract Set<String> knownWords(List<String> prefix);
   
   @Override
   public double checkModel() {
