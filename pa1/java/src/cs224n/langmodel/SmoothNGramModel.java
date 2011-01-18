@@ -116,6 +116,7 @@ public class SmoothNGramModel extends NGram {
       // Once we add backoff, this does not matter except for the unigram case.
       int prefixMissingNgrams = lexicon().size() - knownWords(prefix).size()
           + 1; // +1 for UKNOWN
+      assert prefixMissingNgrams > 0;
       return smoothedPrefixCounter.getCount(MISSING) / prefixMissingNgrams;
     }
     return smoothedPrefixCounter.getCount(word);
