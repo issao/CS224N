@@ -42,8 +42,7 @@ public class AnarchyLanguageModelTester {
     double logProbability = 0.0;
     double numSymbols = 0.0;
     for (List<String> sentence : sentences) {
-      logProbability += Math
-          .log(languageModel.getSentenceProbability(sentence)) / Math.log(2.0);
+      logProbability += languageModel.getSentenceProbability(sentence);
       numSymbols += sentence.size();
       // output.println("logp=" + logProbability + " size=" + numSymbols);
     }

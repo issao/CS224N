@@ -31,7 +31,7 @@ public abstract class NGram implements LanguageModel {
     for (int index = n - 1; index < stoppedSentence.size(); index++) {
       probability += Math.log(getWordProbability(stoppedSentence, index)) / Math.log(2.0);
     }
-    return Math.pow(2, probability);
+    return probability;
   }
 
   public int getN() {

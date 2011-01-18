@@ -29,7 +29,7 @@ public class InterpolatedTriGramModel extends NGram implements TunableModel {
   @Override
   public void tune(Collection<List<String>> trainingSentences) {
     modelTuned = true;
-    double bestAlpha = -1, bestBeta = -1, bestGamma = -1, bestPerplexity = Double.POSITIVE_INFINITY;
+    double bestAlpha = 0, bestBeta = 0, bestGamma = 1, bestPerplexity = Double.POSITIVE_INFINITY;
     for (int i = 0; i <= kGridPoints; i++) {
       for (int j = 0; j <= kGridPoints - i; j++) {
         alpha = ((double)i)/kGridPoints;
@@ -40,7 +40,6 @@ public class InterpolatedTriGramModel extends NGram implements TunableModel {
         assert -1E-6 <= beta && beta <= 1 + 1E-6;
         assert -1E-6 <= gamma && gamma <= 1 + 1E-6;
         double perplexity = LanguageModelTester.computePerplexity(this, trainingSentences);
-//        assert !Double.isInfinite(perplexity); 
         System.out.println(alpha + ", " + beta + ", "+ gamma +":" + perplexity);
         if (perplexity < bestPerplexity) {
            bestPerplexity = perplexity;
@@ -72,9 +71,9 @@ public class InterpolatedTriGramModel extends NGram implements TunableModel {
 
   @Override
   protected double getWordProbability(List<String> prefix, String word) {
-    return alpha * modelOne.getWordProbability(modelOne.chopPrefix(prefix), word) +
-           beta * modelTwo.getWordProbability(modelTwo.chopPrefix(prefix), word) +     
-           gamma * modelThree.getWordProbability(modelThree.chopPrefix(prefix), word);
+    return alpha * modelOne.getWordProbability(prefix.subList(n - modelOne.getN(), 2), word) +
+           beta * modelTwo.getWordProbability(prefix.subList(n - modelTwo.getN(), 2), word) +     
+           gamma * modelThree.getWordProbability(prefix.subList(n - modelThree.getN(), 2), word);
   }
 
   @Override
