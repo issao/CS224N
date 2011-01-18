@@ -32,7 +32,7 @@ public class LanguageModelTester {
         Math.log(languageModel.getSentenceProbability(sentence)) / 
         Math.log(2.0);
       numSymbols += sentence.size();
-      //      System.out.println("logp=" + logProbability + " size=" + numSymbols);
+            //System.out.println("logp=" + logProbability + " size=" + numSymbols);
     }
     double avgLogProbability = logProbability / numSymbols;
     //    System.out.println("avglogp=" + avgLogProbability);
@@ -317,7 +317,11 @@ public class LanguageModelTester {
       System.out.println();
       System.out.println("Generated sentences:");
       for (int i = 0; i < 10; i++) {
-        System.out.println("  " + model.generateSentence());
+        List<String> sentence = model.generateSentence();
+        System.out.println("  " + sentence);
+        if (model instanceof NGram) {
+          SentencePrinter.print(sentence, (NGram) model);
+        }
       }
     }
 

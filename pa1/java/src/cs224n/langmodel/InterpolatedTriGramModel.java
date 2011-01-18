@@ -71,7 +71,7 @@ public class InterpolatedTriGramModel extends NGram implements TunableModel {
   
 
   @Override
-  protected double getWordProbability(List<String> prefix, String word) {
+  public double getWordProbability(List<String> prefix, String word) {
     return alpha * modelOne.getWordProbability(modelOne.chopPrefix(prefix), word) +
            beta * modelTwo.getWordProbability(modelTwo.chopPrefix(prefix), word) +     
            gamma * modelThree.getWordProbability(modelThree.chopPrefix(prefix), word);
