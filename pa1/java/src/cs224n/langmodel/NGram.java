@@ -121,4 +121,11 @@ public abstract class NGram implements LanguageModel {
     return UNKNOWN;
   }
   
+  public List<String> chopPrefix(List<String> largePrefix) {
+    assert largePrefix.size() >= n - 1;
+    List<String> prefix = largePrefix.subList(largePrefix.size() + 1 - n, largePrefix.size());
+    assert prefix.size() == n - 1;
+    return prefix;
+  }
+  
 }
