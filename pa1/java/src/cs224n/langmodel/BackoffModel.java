@@ -45,6 +45,7 @@ public class BackoffModel extends NGram {
       sumProbabilitySecondary += backoffModel.getWordProbability(
           getBackoffModelPrefix(prefix), word);
     }
+    assert sumProbabilitySecondary != 1;
     return (1 - sumProbabilityPrimary) / (1 - sumProbabilitySecondary);
   }
 
