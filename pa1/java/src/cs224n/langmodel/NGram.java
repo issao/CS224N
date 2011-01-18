@@ -62,13 +62,24 @@ public abstract class NGram implements LanguageModel {
     double sum = 0.0;
     for (List<String> prefix : knownPrefixes()) {
       double sample = Math.random();
-      // We expect to check ~20 distributions
-      if (sample < 20.0 / knownPrefixes().size()) {
+      // We expect to check ~10 distributions
+      if (sample < 10.0 / knownPrefixes().size()) {
         checked++;
         sum += checkModelForPrefix(prefix);  
       }
     }
-    // TODO: Check unknown prefixes.
+    // Check random prefixes;
+    String[] lexiconArray = (String[]) lexicon().toArray();
+    for (int iteration = 0; iteration < 10; iteration++) {
+      List<String> prefix = new ArrayList<String>();
+      for (int i = 0; i < n - 1; i++) {
+        int wordIndex = (int) Math.random() * lexicon().size();
+        assert 0 <= wordIndex && wordIndex < lexicon().size();
+        prefix.add(lexiconArray[wordIndex]);
+      }
+      checked++;
+      sum += checkModelForPrefix(prefix);
+    }
     System.out.println("checked " + checked + " conditional probabilities");
     return sum / checked;
   }
