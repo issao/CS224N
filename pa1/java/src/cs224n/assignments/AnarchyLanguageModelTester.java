@@ -269,7 +269,7 @@ public class AnarchyLanguageModelTester {
     options.put("-showguesses", "false"); // show rebuilt Enron emails?
     options.put("-jumble", "false"); // run Jumble (Enron) evaluation?
     options.put("-baselines", "true"); // compute WER baselines?
-    options.put("-generate", "true"); // generate some sentences?
+    options.put("-generate", "false"); // generate some sentences?
     options.put("-check", "true"); // check probabilities sum to 1
 
     // let command-line options supersede defaults .........................
@@ -333,6 +333,7 @@ public class AnarchyLanguageModelTester {
             pw.println(result);
             pw.flush();
           } catch (Exception e) {
+            e.printStackTrace();
             System.err.println(model.getName() + " FAILED!!!");
           }
         }

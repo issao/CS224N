@@ -34,6 +34,7 @@ public class LanguageModelTester {
       numSymbols += sentence.size();
       //      System.out.println("logp=" + logProbability + " size=" + numSymbols);
     }
+    assert numSymbols > 0;
     double avgLogProbability = logProbability / numSymbols;
     //    System.out.println("avglogp=" + avgLogProbability);
     double perplexity = Math.pow(0.5, avgLogProbability);
