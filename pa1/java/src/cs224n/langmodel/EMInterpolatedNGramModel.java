@@ -173,12 +173,12 @@ public class EMInterpolatedNGramModel extends NGram implements TunableModel {
   }
 
   @Override
-  protected Set<List<String>> knownPrefixes() {
+  public Set<List<String>> knownPrefixes() {
     return lastModel.knownPrefixes();
   }
 
   @Override
-  protected Set<String> knownWords(List<String> prefix) {
+  public Set<String> knownWords(List<String> prefix) {
     return lastModel.knownWords(prefix);
   }
 

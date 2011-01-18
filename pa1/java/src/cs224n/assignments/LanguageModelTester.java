@@ -87,10 +87,11 @@ public class LanguageModelTester {
         }
       }
       // Debugging, showing the best guess sentences
-      if (showGuesses) {
-        for (String token : bestGuess)
-          System.out.print(token + " ");
-        System.out.println();
+      if( showGuesses && languageModel instanceof NGram) {
+        System.out.println("Guess:");
+        SentencePrinter.print(bestGuess, (NGram) languageModel);
+        System.out.println("Correct:");
+        SentencePrinter.print(correctSentence, (NGram) languageModel);
       }
       // If exactly correct
       if (distanceForBestScores == 0) {
@@ -102,12 +103,12 @@ public class LanguageModelTester {
           / (numWithBestScores * correctSentence.size());
     } // end jumbleproblem loop
 
-    if (showGuesses)
-      System.out.println("******");
-
-    // return totalDistance / totalWords;
-    return new Pair<Double, Double>(totalWER / (double) jumbleProblems.size(),
-        (double) absoluteCorrect / (double) jumbleProblems.size());
+    if( showGuesses ) System.out.println("******");
+    
+    
+    //    return totalDistance / totalWords;
+    return new Pair<Double,Double>(totalWER / (double)jumbleProblems.size(), 
+				   (double)absoluteCorrect / (double)jumbleProblems.size());
   }
 
   /**

@@ -61,12 +61,12 @@ public class EmpiricalNGramModel extends NGram {
   }
 
   @Override
-  protected Set<List<String>> knownPrefixes() {
+  public Set<List<String>> knownPrefixes() {
     return rawCount.keySet();
   }
 
   @Override
-  protected Set<String> knownWords(List<String> prefix) {
+  public Set<String> knownWords(List<String> prefix) {
     assert prefix.size() == n - 1;
     return rawCount.get(prefix).keySet();
   }
