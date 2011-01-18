@@ -29,7 +29,7 @@ public class InterpolatedTriGramModel extends NGram implements TunableModel {
   @Override
   public void tune(Collection<List<String>> trainingSentences) {
     modelTuned = true;
-    double bestAlpha = -1, bestBeta = -1, bestGamma = -1, bestPerplexity = Double.POSITIVE_INFINITY;
+    double bestAlpha = 0, bestBeta = 0, bestGamma = 1, bestPerplexity = Double.POSITIVE_INFINITY;
     for (int i = 0; i <= kGridPoints; i++) {
       for (int j = 0; j <= kGridPoints - i; j++) {
         alpha = ((double)i)/kGridPoints;
@@ -40,7 +40,6 @@ public class InterpolatedTriGramModel extends NGram implements TunableModel {
         assert -1E-6 <= beta && beta <= 1 + 1E-6;
         assert -1E-6 <= gamma && gamma <= 1 + 1E-6;
         double perplexity = LanguageModelTester.computePerplexity(this, trainingSentences);
-//        assert !Double.isInfinite(perplexity); 
         System.out.println(alpha + ", " + beta + ", "+ gamma +":" + perplexity);
         if (perplexity < bestPerplexity) {
            bestPerplexity = perplexity;
