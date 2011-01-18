@@ -66,7 +66,7 @@ public class LanguageModelTester {
     EditDistance editDistance = new EditDistance();
 
     if( showGuesses ) System.out.println("***Rebuilt Enron Emails***");
-    // Loop over each jumbled sentence.d
+    // Loop over each jumbled sentence.
     for (JumbleProblem jProblem : jumbleProblems) {
       List<String> correctSentence = jProblem.getCorrectSentence();
       List<String> bestGuess = null;
