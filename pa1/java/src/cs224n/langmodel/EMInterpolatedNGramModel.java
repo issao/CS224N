@@ -140,7 +140,7 @@ public class EMInterpolatedNGramModel extends NGram implements TunableModel {
   }
 
   @Override
-  protected double getWordProbability(List<String> prefix, String word) {
+  public double getWordProbability(List<String> prefix, String word) {
     assert modelTuned == true;
     if (!weights.containsKey(prefix)) {
       return backupModel.getWordProbability(prefix, word);

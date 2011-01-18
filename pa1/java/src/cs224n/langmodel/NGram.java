@@ -7,9 +7,9 @@ import java.util.Set;
 
 public abstract class NGram implements LanguageModel {
   
-  protected static final String START = "<S>";
-  protected static final String STOP = "</S>";
-  protected static final String UNKNOWN = "<UNK/>";
+  public static final String START = "<S>";
+  public static final String STOP = "</S>";
+  public static final String UNKNOWN = "<UNK/>";
   
   protected int n;
   
@@ -44,7 +44,7 @@ public abstract class NGram implements LanguageModel {
         sentence.get(index));
   }
   
-  protected abstract double getWordProbability(List<String> prefix, String word);
+  public abstract double getWordProbability(List<String> prefix, String word);
 
   protected List<String> getPrefix(List<String> sentence, int index) {
     List<String> prefix = new ArrayList<String>(sentence.subList(index - n + 1, index));

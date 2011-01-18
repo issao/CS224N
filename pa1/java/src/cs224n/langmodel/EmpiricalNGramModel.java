@@ -51,7 +51,7 @@ public class EmpiricalNGramModel extends NGram {
   }
 
   @Override
-  protected double getWordProbability(List<String> prefix, String word) {
+  public double getWordProbability(List<String> prefix, String word) {
     assert prefix.size() == n - 1;
     if (!rawCount.containsKey(prefix)) {
       // Missing prefix, give uniform probability.

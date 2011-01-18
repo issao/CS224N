@@ -54,7 +54,7 @@ public class BackoffModel extends NGram {
   }
 
   @Override
-  protected double getWordProbability(List<String> prefix, String word) {
+  public double getWordProbability(List<String> prefix, String word) {
     if (!knownPrefixes().contains(prefix)) {
       // Must back off with implicit alpha = 1;
       return backoffModel.getWordProbability(getBackoffModelPrefix(prefix), word);

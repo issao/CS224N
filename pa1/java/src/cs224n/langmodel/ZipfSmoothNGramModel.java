@@ -137,7 +137,7 @@ public class ZipfSmoothNGramModel extends NGram {
   }
 
   @Override
-  protected double getWordProbability(List<String> prefix, String word) {
+  public double getWordProbability(List<String> prefix, String word) {
     assert prefix.size() == n - 1;
     if (!knownPrefixes().contains(prefix)) {
       // Missing prefix, give uniform probability.
