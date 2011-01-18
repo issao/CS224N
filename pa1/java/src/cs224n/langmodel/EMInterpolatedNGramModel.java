@@ -71,22 +71,6 @@ public class EMInterpolatedNGramModel extends NGram implements TunableModel {
       for (int i = 0; i < models.size(); i++) {
         fractionalCount.add(new Counter<String>());
       }
-
-      System.out.println("========= EM for prefix: " + prefix);
-      for (String word : wordSet) {
-        System.out.println("Count = " + ngram.getCount(prefix, word));
-        for (int i = 0; i < models.size(); i++) {
-          System.out.println("P("
-              + word
-              + ", "
-              + i
-              + ") = "
-              + models.get(i).getWordProbability(
-                  models.get(i).chopPrefix(prefix), word));
-        }
-      }
-
-      System.out.println();
       
       for (int iteration = 0; iteration < NUMBER_ITERATIONS; iteration++) {
         // E-Step 1- Compute P(word, Y) = P(word|Y) * P(Y)
@@ -125,10 +109,6 @@ public class EMInterpolatedNGramModel extends NGram implements TunableModel {
           }
         }
 
-        System.out.println("== Iteration " + iteration);
-        System.out.println("Weights: " + weight);
-        System.out.println("Entropy: " + entropy);
-
         // M-step- Sum the above per model, divide by total word count.
         // that is the new P(Y).
         for (int i = 0; i < models.size(); i++) {
@@ -137,9 +117,6 @@ public class EMInterpolatedNGramModel extends NGram implements TunableModel {
         }
 
         checkWeights(weight);
-
-        System.out.println("New weights: " + weight);
-        System.out.println("New entropy: " + entropy);
       }
     }
   }
