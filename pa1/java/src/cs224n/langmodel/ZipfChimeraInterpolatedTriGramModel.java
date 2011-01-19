@@ -1,10 +1,20 @@
 package cs224n.langmodel;
 
-public class ZipfChimeraInterpolatedTriGramModel extends InterpolatedTriGramModel {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ZipfChimeraInterpolatedTriGramModel extends ConstantEMInterpolatedNGramModel {
 
   public ZipfChimeraInterpolatedTriGramModel() {
-    super(new SmoothNGramModel(1), new BackoffZipfBiGramModel(),
-        new BackoffZipfTriGramModel());
+    super(createModelList(), 3);
+  }
+
+  private static List<NGram> createModelList() {
+    List<NGram> models = new ArrayList<NGram>();
+    models.add(new SmoothNGramModel(1));
+    models.add(new BackoffZipfBiGramModel());
+    models.add(new BackoffZipfTriGramModel());
+    return models;
   }
 
 }
