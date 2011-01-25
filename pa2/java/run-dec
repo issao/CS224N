@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# You may find this shell script helpful.
+
+export PATH=/usr/pubsw/bin:$PATH
+
+java -server -mx2000m -cp classes \
+  cs224n.assignments.DecoderTester \
+  -lmmodel     cs224n.langmodel.EmpiricalUnigramLanguageModel \
+  -wamodel     cs224n.wordaligner.BaselineWordAligner \
+  -lmsentences 1000 \
+  -wasentences 1000 \
+  $@
+  

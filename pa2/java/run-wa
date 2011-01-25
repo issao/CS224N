@@ -1,0 +1,11 @@
+#!/bin/sh
+
+export PATH=/usr/pubsw/bin:$PATH
+
+java -server -mx1000m -cp classes \
+  cs224n.assignments.WordAlignmentTester \
+  -path /afs/ir/class/cs224n/pa2/data/ \
+  -model baseline \
+  -data test \
+  $@
+  
