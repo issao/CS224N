@@ -2,9 +2,9 @@
 
 # You may find this shell script helpful.
 
-java -mx200m -cp classes \
+java -mx2000m -cp classes \
   cs224n.assignments.LanguageModelTester \
-  -model cs224n.langmodel.EmpiricalUnigramLanguageModel \
+  -model cs224n.langmodel.ZipfChimeraInterpolatedTriGramModel \
   -data      /afs/ir/class/cs224n/pa1/data \
   -train     europarl-train.sent.txt \
   -test      europarl-test.sent.txt \
