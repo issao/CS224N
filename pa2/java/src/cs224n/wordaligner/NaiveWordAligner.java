@@ -65,9 +65,9 @@ public class NaiveWordAligner extends WordAligner {
         }
       }
     }
-    normalize(frenchCounter);
-    normalize(englishCounter);
-    normalize(joint);
+    frenchCounter.normalize();
+    englishCounter.normalize();
+    joint.normalize();
 
     translationModel = new CounterMap<String, String>();
     for (String englishWord : joint.keySet()) {
@@ -81,30 +81,6 @@ public class NaiveWordAligner extends WordAligner {
       }
     }
 
-    normalizeConditionalProbabilities(translationModel);
-  }
-
-  private void normalizeConditionalProbabilities(
-      CounterMap<String, String> translationModel) {
-    for (String frenchWord : translationModel.keySet()) {
-      normalize(translationModel.getCounter(frenchWord));
-    }
-  }
-
-  private void normalize(CounterMap<String, String> counterMap) {
-    double totalCount = counterMap.totalCount();
-    for (String key : counterMap.keySet()) {
-      for (String value : counterMap.getCounter(key).keySet()) {
-        counterMap.setCount(key, value, counterMap.getCount(key, value)
-            / totalCount);
-      }
-    }
-  }
-
-  private void normalize(Counter<String> counter) {
-    double totalCount = counter.totalCount();
-    for (String key : counter.keySet()) {
-      counter.setCount(key, counter.getCount(key) / totalCount);
-    }
+    translationModel.normalizeConditionalProbabilities();
   }
 }

@@ -165,6 +165,15 @@ public class Counter <E> implements Serializable {
     return pq;
   }
 
+
+  
+  public void normalize() {
+    double totalCount = this.totalCount();
+    for (E key : this.keySet()) {
+      this.setCount(key, this.getCount(key) / totalCount);
+    }
+  }
+  
   public Counter() {
     this(new MapFactory.HashMapFactory<E, Double>());
   }

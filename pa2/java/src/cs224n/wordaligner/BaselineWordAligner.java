@@ -31,6 +31,7 @@ import java.util.List;
     public CounterMap<String,String> getProbSourceGivenTarget(){ return dummy; }
 
     public void train(List<SentencePair> trainingPairs) {
+
       dummy = new CounterMap<String,String>();
       for(SentencePair pair : trainingPairs){
         List<String> targetWords = pair.getEnglishWords();

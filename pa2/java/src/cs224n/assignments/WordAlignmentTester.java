@@ -71,7 +71,7 @@ public class WordAlignmentTester {
       dataset = argMap.get("-data");
       System.out.println("Running with data: "+dataset);
     } else {
-      System.out.println("No data set specified.  Use -data [miniTest, validate, test].");
+      System.out.println("No data set specified.  Use -data [miniTest, tiny, validate, test].");
     }
     if (argMap.containsKey("-model")) {
       model = argMap.get("-model");
@@ -79,28 +79,32 @@ public class WordAlignmentTester {
     } else {
       System.out.println("No model specified.  Use -model modelname.");
     }
-    if (argMap.containsKey("-language") && !dataset.equalsIgnoreCase("miniTest")) {
+    if (argMap.containsKey("-language") && !dataset.equalsIgnoreCase("miniTest") && !dataset.equalsIgnoreCase("tiny")) {
         language = argMap.get("-language");
         System.out.println("Running with language: "+language);
-      } else if(!dataset.equalsIgnoreCase("miniTest")){
+      } else if(!dataset.equalsIgnoreCase("miniTest") && !dataset.equalsIgnoreCase("tiny")){
         System.out.println("No language specified.  Use -language languageName. Using default -> french");
       }
     if (argMap.containsKey("-verbose")) {
       verbose = true;
     }
     
-    if(!dataset.equalsIgnoreCase("miniTest")){
-        StringBuffer modBasePath = new StringBuffer(basePath+"/"+language);
+    if(dataset.equalsIgnoreCase("miniTest")){ 
+      StringBuffer modBasePath = new StringBuffer(basePath+"/mini");
+      basePath = modBasePath.toString();
+    } else if(dataset.equalsIgnoreCase("tiny")) {
+      StringBuffer modBasePath = new StringBuffer(basePath+"/tiny");
+      basePath = modBasePath.toString();
+    } else {
+      StringBuffer modBasePath = new StringBuffer(basePath+"/"+language);
         basePath = modBasePath.toString();
-    }else{
-        StringBuffer modBasePath = new StringBuffer(basePath+"/mini");
-        basePath = modBasePath.toString();
+       
     }
     SetSourceLanguageExtension(language);
     
     // Read appropriate training and testing sets.
     List<SentencePair> trainingSentencePairs = new ArrayList<SentencePair>();
-    if (! dataset.equalsIgnoreCase("miniTest") && maxTrainingSentences > 0)
+    if (! dataset.equalsIgnoreCase("miniTest") && !dataset.equalsIgnoreCase("tiny")&& maxTrainingSentences > 0)
       trainingSentencePairs = readSentencePairs(basePath+"/training", maxTrainingSentences);
     List<SentencePair> testSentencePairs = new ArrayList<SentencePair>();
     Map<Integer,Alignment> testAlignments = new HashMap<Integer, Alignment>();
@@ -115,6 +119,9 @@ public class WordAlignmentTester {
     } else if (dataset.equalsIgnoreCase("miniTest")) {
       testSentencePairs = readSentencePairs(basePath, Integer.MAX_VALUE);
       testAlignments = readAlignments(basePath+"/mini.wa");
+    } else if (dataset.equalsIgnoreCase("tiny")) {
+      testSentencePairs = readSentencePairs(basePath, Integer.MAX_VALUE);
+      testAlignments = readAlignments(basePath+"/tiny.wa");
     } else {
       throw new RuntimeException("Bad data set mode: "+ dataset+", use test, validate, or miniTest.");
     }
@@ -208,6 +215,7 @@ public class WordAlignmentTester {
     List<SentencePair> sentencePairs = new ArrayList<SentencePair>();
     List<String> baseFileNames = getBaseFileNames(path);
     for (String baseFileName : baseFileNames) {
+      System.out.println("Reading " + baseFileName);
       if (sentencePairs.size() >= maxSentencePairs)
         break;
       sentencePairs.addAll(readSentencePairs(baseFileName));
@@ -216,6 +224,7 @@ public class WordAlignmentTester {
   }
 
   private static List<SentencePair> readSentencePairs(String baseFileName) {
+    System.out.println("REading " + baseFileName);
     List<SentencePair> sentencePairs = new ArrayList<SentencePair>();
     String englishFileName = baseFileName + "." + ENGLISH_EXTENSION;
     String frenchFileName = baseFileName + "." + FRENCH_EXTENSION;

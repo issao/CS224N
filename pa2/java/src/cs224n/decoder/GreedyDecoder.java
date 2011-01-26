@@ -45,6 +45,7 @@ public class GreedyDecoder extends Decoder {
    */
   private void populateZFert(String filename){
     try{
+      System.out.println(filename);
       zferts = new HashSet<String>();
       BufferedReader br = new BufferedReader(new FileReader(filename));
       String line = "";
