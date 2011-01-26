@@ -10,13 +10,9 @@ import cs224n.util.SentencePair;
  * Simple alignment baseline which maps french positions to english positions.
  * If the french sentence is longer, all final word map to null.
  */
-public class ModelOneWordAligner extends WordAligner {
+public class ModelTwoWordAligner extends WordAligner {
 
   private TranslationModel translationModel;
-  public TranslationModel getTranslationModel() {
-    return translationModel;
-  }
-
   private DistortionModel distortionModel;
 
   public Alignment alignSentencePair(SentencePair sentencePair) {
@@ -59,9 +55,12 @@ public class ModelOneWordAligner extends WordAligner {
   }
 
   public void train(List<SentencePair> trainingPairs) {
-    translationModel = new TranslationModel();
-    translationModel.init(trainingPairs);
-    distortionModel = new ConstantDistortionModel();
+    // Run model one.
+    ModelOneWordAligner modelOne = new ModelOneWordAligner();
+    modelOne.train(trainingPairs);
+    // Steal model one's translationModel
+    translationModel = modelOne.getTranslationModel();
+    distortionModel = new DisplacementDistortionModel();
     distortionModel.init(trainingPairs);
 
     int i = 0;
