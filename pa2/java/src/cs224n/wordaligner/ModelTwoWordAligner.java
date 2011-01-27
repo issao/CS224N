@@ -113,16 +113,6 @@ public class ModelTwoWordAligner extends WordAligner {
                 frenchPosition, fractionalCount);
 
           }
-          double nullFractionalCount = translationModel.getProbability(
-              NULL_WORD, frenchWord)
-              * distortionModel.getProbability(sentencePair.getEnglishWords()
-                  .size(), -1, sentencePair.getFrenchWords().size(),
-                  frenchPosition) / sum_quantity;
-          translationModel.addFractionalCount(NULL_WORD, frenchWord,
-              nullFractionalCount);
-          distortionModel.addFractionalCount(sentencePair.getEnglishWords()
-              .size(), -1, sentencePair.getFrenchWords().size(),
-              frenchPosition, nullFractionalCount);
         }
       }
 
