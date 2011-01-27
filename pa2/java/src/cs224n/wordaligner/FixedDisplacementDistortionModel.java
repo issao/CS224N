@@ -5,29 +5,32 @@ import java.util.List;
 import cs224n.util.Counter;
 import cs224n.util.SentencePair;
 
-public class DisplacementDistortionModel implements DistortionModel {
+public class FixedDisplacementDistortionModel implements DistortionModel {
 
   private Counter<Integer> distortionModelParams;
   private Counter<Integer> trainingDistortionModelParams;
 
   @Override
   public void init(List<SentencePair> trainingPairs) {
-    distortionModelParams = new Counter<Integer>();
-    for (int i = -1; i <= 5; i++) {
-      distortionModelParams.setCount(i, 1 / 7.0);
-    }
   }
 
   @Override
   public void startIteration() {
-    trainingDistortionModelParams = new Counter<Integer>();
   }
 
+  public double getFixedProbability(int englishLength, int englishPosition,
+      int frenchLength, int frenchPosition) {
+    if (englishPosition == -1) {
+      return 0.2;
+    } else {
+      return (6 - bucket(englishLength, englishPosition, frenchLength, frenchPosition)) * 0.8 / 21;
+    }
+  }
+  
   @Override
   public double getProbability(int englishLength, int englishPosition,
       int frenchLength, int frenchPosition) {
-    return distortionModelParams.getCount(
-        bucket(englishLength, englishPosition, frenchLength, frenchPosition));
+    return getFixedProbability(englishLength, englishPosition, frenchLength, frenchPosition);
   }
 
   private int bucket(int englishLength, int englishPosition, int frenchLength,
@@ -44,17 +47,11 @@ public class DisplacementDistortionModel implements DistortionModel {
 
   @Override
   public void addFractionalCount(int englishLength, int englishPosition,
-      int frenchLength, int frenchPosition, double count) {
-    trainingDistortionModelParams.incrementCount(
-        bucket(englishLength, englishPosition, frenchLength, frenchPosition),
-        count);
+      int frenchLength, int frenchPosition, double count) { 
   }
 
   @Override
   public void finishIteration() {
-    trainingDistortionModelParams.normalize();
-    distortionModelParams = trainingDistortionModelParams;
-    trainingDistortionModelParams = null;
   }
 
 }
