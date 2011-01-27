@@ -76,28 +76,31 @@ public class ModelOneWordAligner extends WordAligner {
           double sum_quantity = 0; // TODO rename me
 
           // Calculate sum_quantity.
-          for (int englishPosition = 0; englishPosition < sentencePair
+          for (int englishPosition = -1; englishPosition < sentencePair
               .getEnglishWords().size(); englishPosition++) {
-            String englishWord = sentencePair.getEnglishWords().get(
-                englishPosition);
-
+            String englishWord;
+            if (englishPosition >= 0) {
+              englishWord = sentencePair.getEnglishWords().get(englishPosition);
+            } else {
+              englishWord = NULL_WORD;
+            }
+                
             double distortion = distortionModel.getProbability(sentencePair
                 .getEnglishWords().size(), englishPosition, sentencePair
                 .getFrenchWords().size(), frenchPosition);
             sum_quantity += translationModel.getProbability(englishWord,
                 frenchWord) * distortion;
           }
-          sum_quantity += translationModel
-              .getProbability(NULL_WORD, frenchWord)
-              * distortionModel.getProbability(sentencePair.getEnglishWords()
-                  .size(), -1, sentencePair.getFrenchWords().size(),
-                  frenchPosition);
 
           // Calculate posterior
-          for (int englishPosition = 0; englishPosition < sentencePair
+          for (int englishPosition = -1; englishPosition < sentencePair
               .getEnglishWords().size(); englishPosition++) {
-            String englishWord = sentencePair.getEnglishWords().get(
-                englishPosition);
+            String englishWord;
+            if (englishPosition >= 0) {
+              englishWord = sentencePair.getEnglishWords().get(englishPosition);
+            } else {
+              englishWord = NULL_WORD;
+            }
             double distortion = distortionModel.getProbability(sentencePair
                 .getEnglishWords().size(), englishPosition, sentencePair
                 .getFrenchWords().size(), frenchPosition);
@@ -110,16 +113,6 @@ public class ModelOneWordAligner extends WordAligner {
                 frenchPosition, fractionalCount);
 
           }
-          double nullFractionalCount = translationModel.getProbability(
-              NULL_WORD, frenchWord)
-              * distortionModel.getProbability(sentencePair.getEnglishWords()
-                  .size(), -1, sentencePair.getFrenchWords().size(),
-                  frenchPosition) / sum_quantity;
-          translationModel.addFractionalCount(NULL_WORD, frenchWord,
-              nullFractionalCount);
-          distortionModel.addFractionalCount(sentencePair.getEnglishWords()
-              .size(), -1, sentencePair.getFrenchWords().size(),
-              frenchPosition, nullFractionalCount);
         }
       }
 
