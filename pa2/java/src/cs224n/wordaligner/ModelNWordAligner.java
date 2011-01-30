@@ -81,6 +81,7 @@ public class ModelNWordAligner extends WordAligner {
     int i = 0;
     // System.out.println(translationModel.getTranslationModelParams());
     do {
+      System.out.println("Iteration " + i);
       translationModel.startIteration();
       distortionModel.startIteration();
       for (SentencePair sentencePair : trainingPairs) {

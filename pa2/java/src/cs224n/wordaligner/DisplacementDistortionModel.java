@@ -7,6 +7,7 @@ import cs224n.util.SentencePair;
 
 public class DisplacementDistortionModel implements DistortionModel {
 
+  private static final int MAX_BUCKET = 20;
   private static final double NULL_PROBABILITY = 0.2;
   private Counter<Integer> distortionModelParams;
   private Counter<Integer> trainingDistortionModelParams;
@@ -14,11 +15,11 @@ public class DisplacementDistortionModel implements DistortionModel {
   @Override
   public void init(List<SentencePair> trainingPairs) {
     distortionModelParams = new Counter<Integer>();
-    for (int i = -1; i <= 5; i++) {
+    for (int i = -1; i <= MAX_BUCKET; i++) {
       if (i == -1) {
         distortionModelParams.setCount(i, NULL_PROBABILITY);
       } else {
-        distortionModelParams.setCount(i, (6 - i) * (1 - NULL_PROBABILITY) / 21);
+        distortionModelParams.setCount(i, (MAX_BUCKET + 1.0 - i) * (1 - NULL_PROBABILITY) / ((MAX_BUCKET + 1) * (MAX_BUCKET + 2) / 2.0));
       }
     }
   }
@@ -45,7 +46,7 @@ public class DisplacementDistortionModel implements DistortionModel {
     assert englishPosition >= 0;
     int bucket = (int) Math.floor(Math.abs(englishPosition - frenchPosition
         * 1.0 * englishLength / frenchLength));
-    return Math.min(bucket, 5);
+    return Math.min(bucket, MAX_BUCKET);
   }
 
   @Override
