@@ -215,7 +215,7 @@ public class WordAlignmentTester {
     List<SentencePair> sentencePairs = new ArrayList<SentencePair>();
     List<String> baseFileNames = getBaseFileNames(path);
     for (String baseFileName : baseFileNames) {
-      System.out.println("Reading " + baseFileName);
+//      System.out.println("Reading " + baseFileName);
       if (sentencePairs.size() >= maxSentencePairs)
         break;
       sentencePairs.addAll(readSentencePairs(baseFileName));
