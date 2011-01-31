@@ -1,0 +1,11 @@
+for j in NaiveWordAligner ModelOneWordAligner ModelTwoWordAligner ModelTwoFixedWordAligner;
+do
+  for k in miniTest validate test;
+  do
+    for i in 0 25000 50000 75000 1000000;
+    do
+      echo "Running $j on $k with sentences $i" | tee -a results/$j.$k
+      time ./run-wa -path /Users/yfriedman/CS224N/pa2/data -model cs224n.wordaligner.$j -data $k -sentences $i >> results/$j.$k
+    done
+  done
+done
