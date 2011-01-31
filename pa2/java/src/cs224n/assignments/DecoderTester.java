@@ -26,8 +26,6 @@ public class DecoderTester {
   public static final String GERMAN_EXT = "g";
   public static final String SPANISH_EXT = "s";
 
-  public static final String DATA_PATH = "/afs/ir/class/cs224n/pa2/data/";
-
   // file containing candidate zero-fertility words
   public static final String ZFERTS = "zferts";
 
@@ -44,7 +42,7 @@ public class DecoderTester {
   
   /* Will create and train the specified language model.
     */
-  public static LanguageModel CreateLanguageModel(Map<String,String> options, Collection<List<String>> lmTrainingSentences) throws IOException{
+  public static LanguageModel CreateLanguageModel(Map<String,String> options, Collection<List<String>> lmTrainingSentences, Collection<List<String>> lmTuningSentences) throws IOException{
     
     // construct model, using reflection ...................................
     LanguageModel model;
@@ -63,6 +61,13 @@ public class DecoderTester {
     System.out.println("Training language model with "+lmTrainingSentences.size()+" sentences");
     model.train(lmTrainingSentences);
 
+    if (model instanceof TunableModel) {
+      // tune model .........................................................
+      System.out.println("Tuning language model with "+lmTuningSentences.size()+" sentences");
+      ((TunableModel) model).tune(lmTuningSentences);
+      System.out.println("done\n");
+    }
+    
     return model;
   }
 
@@ -106,6 +111,7 @@ public class DecoderTester {
     Map<String, String> options = new HashMap<String, String>();
     options.put("-lmmodel",     "cs224n.langmodel.EmpiricalUnigramLanguageModel");
     options.put("-lmsentences", "1000");
+    options.put("-lmtuningsentences", "1000");
     options.put("-wamodel",     "cs224n.wordaligner.BaselineWordAligner");
     options.put("-wasentences", "1000");
     options.put("-source",      "french");
@@ -126,14 +132,15 @@ public class DecoderTester {
 
     // initiallize train / test sets
     Collection<List<String>> lmTrainingSentences = new ArrayList<List<String>>();
+    Collection<List<String>> lmTuningSentences = new ArrayList<List<String>>();
     List<SentencePair> waTrainingSentencePairs = new ArrayList<SentencePair>();
     List<SentencePair> testSentencePairs = new ArrayList<SentencePair>();
 
     // populate train / test sets
-    Pair<String, String> languages = ReadTrainAndTestData(options, lmTrainingSentences, waTrainingSentencePairs, testSentencePairs);
-
+    Pair<String, String> languages = ReadTrainAndTestData(options, lmTrainingSentences, lmTuningSentences, waTrainingSentencePairs, testSentencePairs);
+    
     System.out.println("**********\nCreating / Training Language Model ... ");
-    LanguageModel langmodel = CreateLanguageModel(options, lmTrainingSentences);
+    LanguageModel langmodel = CreateLanguageModel(options, lmTrainingSentences, lmTuningSentences);
     System.out.println("..done\n**********\n");
 
     System.out.println("**********\nCreating / Training Word Aligner ... ");
@@ -153,9 +160,11 @@ public class DecoderTester {
     System.out.println("\ttransweight = "+transweight);
     System.out.println("\tlengthweight = "+lengthweight);
     System.out.println("...done\n**********\n");
+    String dataPath  = options.get("-path");
+    String zfertsFileName = dataPath + "/../java/" + ZFERTS + "." + GetLanguageExtension(languages.getSecond());
 
     System.out.println("**********\nCreating / Testing Decoder ...");
-    Decoder decoder = new GreedyDecoder(langmodel, wordaligner, reverse_wordaligner, lmweight, transweight, lengthweight, ZFERTS+"."+GetLanguageExtension(languages.getSecond()));
+    Decoder decoder = new GreedyDecoder(langmodel, wordaligner, reverse_wordaligner, lmweight, transweight, lengthweight, zfertsFileName);
     test(decoder, testSentencePairs, languages);
     System.out.println("...done\n**********\n");
   }
@@ -234,7 +243,7 @@ public class DecoderTester {
     *  testSentencePairs, and testAlignments according to arguments
     *  in options.
     */
-  public static Pair<String, String> ReadTrainAndTestData(Map<String,String> options, Collection<List<String>> lmTrainingSentences, List<SentencePair> waTrainingSentencePairs, List<SentencePair> testSentencePairs){
+  public static Pair<String, String> ReadTrainAndTestData(Map<String,String> options, Collection<List<String>> lmTrainingSentences, Collection<List<String>> lmTuningSentences, List<SentencePair> waTrainingSentencePairs, List<SentencePair> testSentencePairs){
     
     String source = options.get("-source").toLowerCase();
     String target = options.get("-target").toLowerCase();
@@ -264,14 +273,17 @@ public class DecoderTester {
       folder = source;
     }
 
+    String dataPath  = options.get("-path");
+    
     int numWATrainingSentences = Integer.parseInt(options.get("-wasentences"));
     int numLMTrainingSentences = Integer.parseInt(options.get("-lmsentences"));
-    int maxTrainingSentences = Math.max(numLMTrainingSentences,numWATrainingSentences);
+    int numLMTuningSentences = Integer.parseInt(options.get("-lmtuningsentences"));
+    int maxTrainingSentences = Math.max(numLMTrainingSentences + numLMTuningSentences,numWATrainingSentences);
 
     //load up test sentence pairs
     List<SentencePair> allTestPairs = new ArrayList<SentencePair>();
 
-    allTestPairs.addAll(readSentencePairs(DATA_PATH+folder+"/test", source_ext, target_ext, Integer.MAX_VALUE));
+    allTestPairs.addAll(readSentencePairs(dataPath+"/"+folder+"/test", source_ext, target_ext, Integer.MAX_VALUE));
 
     //only keep test sentences b/w 5 and 20 words
     for(SentencePair sentpair : allTestPairs){
@@ -284,7 +296,7 @@ public class DecoderTester {
     //load up train sentence pairs
     List<SentencePair> trainingSentencePairs = new ArrayList<SentencePair>();
     if (maxTrainingSentences > 0){
-      trainingSentencePairs.addAll(readSentencePairs(DATA_PATH+folder+"/training", source_ext, target_ext, maxTrainingSentences));
+      trainingSentencePairs.addAll(readSentencePairs(dataPath+"/"+folder+"/training", source_ext, target_ext, maxTrainingSentences));
     }
 
     for(int i = 0; i < trainingSentencePairs.size(); i++){
@@ -295,6 +307,8 @@ public class DecoderTester {
       //add first numLMTrainingSentences to lmTrainingSentences
       if(i < numLMTrainingSentences){
         lmTrainingSentences.add(trainingSentencePairs.get(i).getEnglishWords());
+      } else if (i < (numLMTrainingSentences + numLMTuningSentences)) {
+        lmTuningSentences.add(trainingSentencePairs.get(i).getEnglishWords());
       }
     }
 
