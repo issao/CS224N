@@ -34,7 +34,15 @@ public class ModelNWordAligner extends WordAligner {
       String frenchWord = sentencePair.getFrenchWords().get(frenchPosition);
       // start with null
       double bestProbability = translationModel.getProbability(NULL_WORD,
-          frenchWord);
+          frenchWord)
+          * distortionModel.getProbability(sentencePair.getEnglishWords()
+              .size(), -1, numFrenchWords, frenchPosition); // technically
+                                                            // frenchPosition
+                                                            // doesn't matter
+                                                            // since we're
+                                                            // passing null (-1)
+                                                            // for
+                                                            // englishPosition
       int bestIndex = -1;
       // see if another alignment is better
       for (int englishPosition = 0; englishPosition < sentencePair
@@ -62,22 +70,22 @@ public class ModelNWordAligner extends WordAligner {
     double probability = 0;
     for (int sourcePosition = 0; sourcePosition < sourceSentence.size(); sourcePosition++) {
       int targetPosition = alignment.getAlignedTarget(sourcePosition);
-      // Distortion can be caluclated generally because if it's from the null word, the bucket function handles that as a special case.
-      double distortion = distortionModel.getProbability(
-          targetSentence.size(), targetPosition, sourceSentence.size(),
-          sourcePosition);
+      // Distortion can be caluclated generally because if it's from the null
+      // word, the bucket function handles that as a special case.
+      double distortion = distortionModel.getProbability(targetSentence.size(),
+          targetPosition, sourceSentence.size(), sourcePosition);
       if (targetPosition == -1) {
         probability += Math.log(translationModel.getProbability(NULL_WORD,
             sourceSentence.get(sourcePosition)) * distortion);
       } else {
-        
+
         probability += Math.log(translationModel.getProbability(
             targetSentence.get(targetPosition),
             sourceSentence.get(sourcePosition))
             * distortion);
       }
     }
-//    System.err.println(probability);
+    // System.err.println(probability);
     return Math.exp(probability);
   }
 
