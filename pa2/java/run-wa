@@ -2,7 +2,7 @@
 
 export PATH=/usr/pubsw/bin:$PATH
 
-java -server -mx2000m -cp classes \
+java -server -mx3000m -ea -cp classes \
   cs224n.assignments.WordAlignmentTester \
   -path /afs/ir/class/cs224n/pa2/data/ \
   -model baseline \
