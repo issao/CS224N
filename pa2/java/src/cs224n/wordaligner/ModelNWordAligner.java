@@ -59,11 +59,38 @@ public class ModelNWordAligner extends WordAligner {
 
   public double getAlignmentProb(List<String> targetSentence,
       List<String> sourceSentence, Alignment alignment) {
-    return 0;
+    double probability = 0;
+    for (int sourcePosition = 0; sourcePosition < sourceSentence.size(); sourcePosition++) {
+      int targetPosition = alignment.getAlignedTarget(sourcePosition);
+      // Distortion can be caluclated generally because if it's from the null word, the bucket function handles that as a special case.
+      double distortion = distortionModel.getProbability(
+          targetSentence.size(), targetPosition, sourceSentence.size(),
+          sourcePosition);
+      if (targetPosition == -1) {
+        probability += Math.log(translationModel.getProbability(NULL_WORD,
+            sourceSentence.get(sourcePosition)) * distortion);
+      } else {
+        
+        probability += Math.log(translationModel.getProbability(
+            targetSentence.get(targetPosition),
+            sourceSentence.get(sourcePosition))
+            * distortion);
+      }
+    }
+//    System.err.println(probability);
+    return Math.exp(probability);
   }
 
   public CounterMap<String, String> getProbSourceGivenTarget() {
-    return translationModel.getTranslationModelParams();
+    CounterMap<String, String> reversed = new CounterMap<String, String>();
+    CounterMap<String, String> forward = translationModel
+        .getTranslationModelParams();
+    for (String key : forward.keySet()) {
+      for (String value : forward.getCounter(key).keySet()) {
+        reversed.setCount(value, key, forward.getCount(key, value));
+      }
+    }
+    return reversed;
   }
 
   public void train(List<SentencePair> trainingPairs) {

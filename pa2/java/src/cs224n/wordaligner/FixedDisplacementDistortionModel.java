@@ -2,9 +2,13 @@ package cs224n.wordaligner;
 
 import java.util.List;
 
+import cs224n.util.Counter;
 import cs224n.util.SentencePair;
 
 public class FixedDisplacementDistortionModel implements DistortionModel {
+
+  private Counter<Integer> distortionModelParams;
+  private Counter<Integer> trainingDistortionModelParams;
 
   @Override
   public void init(List<SentencePair> trainingPairs) {
