@@ -62,26 +62,25 @@ public class ModelNWordAligner extends WordAligner {
     double probability = 0;
     for (int sourcePosition = 0; sourcePosition < sourceSentence.size(); sourcePosition++) {
       int targetPosition = alignment.getAlignedTarget(sourcePosition);
-      // Distortion can be calculated generally because if it's from the null word, the bucket function handles that as a special case.
-      double distortion = distortionModel.getProbability(
-          targetSentence.size(), targetPosition, sourceSentence.size(),
-          sourcePosition);
-      double translationProbability;
+      // Distortion can be caluclated generally because if it's from the null
+      // word, the bucket function handles that as a special case.
+      double distortion = distortionModel.getProbability(targetSentence.size(),
+          targetPosition, sourceSentence.size(), sourcePosition);
       if (targetPosition == -1) {
-        translationProbability = translationModel.getProbability(NULL_WORD,
-            sourceSentence.get(sourcePosition));
+        probability += Math.log(translationModel.getProbability(NULL_WORD,
+            sourceSentence.get(sourcePosition)) * distortion);
       } else {
-        
-        translationProbability = translationModel.getProbability(
+
+        probability += Math.log(translationModel.getProbability(
             targetSentence.get(targetPosition),
-            sourceSentence.get(sourcePosition));
+            sourceSentence.get(sourcePosition))
+            * distortion);
       }
-      // Here, we are computing P(f, a | e). TODO: Should we use P(a | f, e)? Is tha the same as the distortion parameter?
-      probability += Math.log(translationProbability * distortion);
     }
-//    System.err.println(probability);
+    // System.err.println(probability);
     return Math.exp(probability);
   }
+
 
   public CounterMap<String, String> getProbSourceGivenTarget() {
     CounterMap<String, String> reversed = new CounterMap<String, String>();
