@@ -5,7 +5,6 @@ import cs224n.util.Counter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Collections;
 
 /**
  * A dummy language model -- uses empirical unigram counts, plus a single
@@ -67,14 +66,7 @@ public class EmpiricalUnigramLanguageModel implements LanguageModel {
 
   // -----------------------------------------------------------------------
 
-  /**
-   * Returns the probability, according to the model, of the word specified
-   * by the argument sentence and index.  Smoothing is used, so that all
-   * words get positive probability, even if they have not been seen
-   * before.
-   */
-  public double getWordProbability(List<String> sentence, int index) {
-    String word = sentence.get(index);
+  private double getWordProbability(String word) {
     double count = wordCounter.getCount(word);
     if (count == 0) {                   // unknown word
       // System.out.println("UNKNOWN WORD: " + sentence.get(index));
@@ -83,11 +75,16 @@ public class EmpiricalUnigramLanguageModel implements LanguageModel {
     return count / (total + 1.0);
   }
 
-  /*
-  public double getUnigramProbability(String word){
-    return getWordProbability(Collections.singletonList(word),0);
+  /**
+   * Returns the probability, according to the model, of the word specified
+   * by the argument sentence and index.  Smoothing is used, so that all
+   * words get positive probability, even if they have not been seen
+   * before.
+   */
+  public double getWordProbability(List<String> sentence, int index) {
+    String word = sentence.get(index);
+    return getWordProbability(word);
   }
-  */
 
   /**
    * Returns the probability, according to the model, of the specified
@@ -105,6 +102,27 @@ public class EmpiricalUnigramLanguageModel implements LanguageModel {
   }
 
   /**
+   * checks if the probability distribution properly sums up to 1
+   */
+  public double checkModel() {
+    double sum = 0.0;
+    // since this is a unigram model, 
+    // the event space is everything in the vocabulary (including STOP)
+    // and a UNK token
+
+    // this loop goes through the vocabulary (which includes STOP)
+    for (String word : wordCounter.keySet()) {
+      sum += getWordProbability(word);
+    }
+    
+    // remember to add the UNK. In this EmpiricalUnigramLanguageModel
+    // we assume there is only one UNK, so we add...
+    sum += 1.0 / (total + 1.0);
+    
+    return sum;
+  }
+  
+  /**
    * Returns a random word sampled according to the model.  A simple
    * "roulette-wheel" approach is used: first we generate a sample uniform
    * on [0, 1]; then we step through the vocabulary eating up probability
@@ -114,12 +132,12 @@ public class EmpiricalUnigramLanguageModel implements LanguageModel {
     double sample = Math.random();
     double sum = 0.0;
     for (String word : wordCounter.keySet()) {
-      sum += wordCounter.getCount(word) / total;
+      sum += wordCounter.getCount(word) / (total + 1);
       if (sum > sample) {
         return word;
       }
     }
-    return "*UNKNOWN*";                 // this should never happen, right?
+    return "*UNKNOWN*";   // a little probability mass was reserved for unknowns
   }
 
   /**

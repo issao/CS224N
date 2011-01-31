@@ -135,7 +135,8 @@ class Hypothesis {
   public double getProb(){
     //return 2.0*langlog + 1.0*translog;
     if (recalcNeeded) calcProbs();
-    return lmweight*langlog + transweight*translog + lengthweight*elen;
+    double prob = lmweight*langlog + transweight*translog + lengthweight*elen;
+    return prob;
     //return 2.0*langlog + 1.0*translog;
     //return 1.0*langlog + 1.0*translog;
   }
@@ -162,7 +163,8 @@ class Hypothesis {
    */
 
   private void calcProbs() {
-    langlog = Math.log(lm.getSentenceProbability(targetSentence));
+    // NOTE: We use log/log2 for sentence probability, so get back to natural log.
+    langlog = lm.getSentenceProbability(targetSentence) * Math.log(2.0);
     //langlog = Math.log(lm.getSentenceProbability(targetSentence))/targetSentence.size()*sourceSentence.size();
     translog = Math.log(wa.getAlignmentProb(targetSentence, sourceSentence, alignment));
     //translog = wa.getAlignmentLogProb(targetSentence, sourceSentence, alignment);
@@ -181,6 +183,8 @@ class Hypothesis {
     }
     sb.append("\n");
     sb.append(alignment.toString());
+    sb.append("\n");
+    sb.append(targetSentence);
     return sb.toString();
   }
 }
