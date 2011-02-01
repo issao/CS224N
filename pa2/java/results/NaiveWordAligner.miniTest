@@ -1,0 +1,99 @@
+Running NaiveWordAligner on miniTest with sentences 0
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 0 training sentences.
+Running with data: miniTest
+Running with model: cs224n.wordaligner.NaiveWordAligner
+REading /Users/yfriedman/CS224N/pa2/data/mini/mini
+Precision: 0.5454545454545454
+Recall: 0.6666666666666666
+AER: 0.4
+Running NaiveWordAligner on miniTest with sentences 25000
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 25000 training sentences.
+Running with data: miniTest
+Running with model: cs224n.wordaligner.NaiveWordAligner
+REading /Users/yfriedman/CS224N/pa2/data/mini/mini
+Precision: 0.5454545454545454
+Recall: 0.6666666666666666
+AER: 0.4
+Running NaiveWordAligner on miniTest with sentences 50000
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 50000 training sentences.
+Running with data: miniTest
+Running with model: cs224n.wordaligner.NaiveWordAligner
+REading /Users/yfriedman/CS224N/pa2/data/mini/mini
+Precision: 0.5454545454545454
+Recall: 0.6666666666666666
+AER: 0.4
+Running NaiveWordAligner on miniTest with sentences 75000
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 75000 training sentences.
+Running with data: miniTest
+Running with model: cs224n.wordaligner.NaiveWordAligner
+REading /Users/yfriedman/CS224N/pa2/data/mini/mini
+Precision: 0.5454545454545454
+Recall: 0.6666666666666666
+AER: 0.4
+Running NaiveWordAligner on miniTest with sentences 1000000
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 1000000 training sentences.
+Running with data: miniTest
+Running with model: cs224n.wordaligner.NaiveWordAligner
+REading /Users/yfriedman/CS224N/pa2/data/mini/mini
+Precision: 0.5454545454545454
+Recall: 0.6666666666666666
+AER: 0.4
+Running NaiveWordAligner on miniTest with sentences 0
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 0 training sentences.
+Running with data: miniTest
+Running with model: cs224n.wordaligner.NaiveWordAligner
+REading /Users/yfriedman/CS224N/pa2/data/mini/mini
+Precision: 0.5454545454545454
+Recall: 0.6666666666666666
+AER: 0.4
+Running NaiveWordAligner on miniTest with sentences 25000
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 25000 training sentences.
+Running with data: miniTest
+Running with model: cs224n.wordaligner.NaiveWordAligner
+REading /Users/yfriedman/CS224N/pa2/data/mini/mini
+Precision: 0.5454545454545454
+Recall: 0.6666666666666666
+AER: 0.4
+Running NaiveWordAligner on miniTest with sentences 50000
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 50000 training sentences.
+Running with data: miniTest
+Running with model: cs224n.wordaligner.NaiveWordAligner
+REading /Users/yfriedman/CS224N/pa2/data/mini/mini
+Precision: 0.5454545454545454
+Recall: 0.6666666666666666
+AER: 0.4
+Running NaiveWordAligner on miniTest with sentences 75000
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 75000 training sentences.
+Running with data: miniTest
+Running with model: cs224n.wordaligner.NaiveWordAligner
+REading /Users/yfriedman/CS224N/pa2/data/mini/mini
+Precision: 0.5454545454545454
+Recall: 0.6666666666666666
+AER: 0.4
+Running NaiveWordAligner on miniTest with sentences 1000000
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 1000000 training sentences.
+Running with data: miniTest
+Running with model: cs224n.wordaligner.NaiveWordAligner
+REading /Users/yfriedman/CS224N/pa2/data/mini/mini
+Precision: 0.5454545454545454
+Recall: 0.6666666666666666
+AER: 0.4
+Running NaiveWordAligner on miniTest with sentences 100000
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 100000 training sentences.
+Running with data: miniTest
+Running with model: cs224n.wordaligner.NaiveWordAligner
+REading /Users/yfriedman/CS224N/pa2/data/mini/mini
+Precision: 0.5454545454545454
+Recall: 0.6666666666666666
+AER: 0.4

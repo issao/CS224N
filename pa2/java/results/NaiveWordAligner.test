@@ -1,0 +1,289 @@
+Running NaiveWordAligner on test with sentences 0
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 0 training sentences.
+Running with data: test
+Running with model: cs224n.wordaligner.NaiveWordAligner
+No language specified.  Use -language languageName. Using default -> french
+REading /Users/yfriedman/CS224N/pa2/data/french/test/test
+Precision: 0.21440536013400335
+Recall: 0.17409608717186725
+AER: 0.7993897787948131
+Running NaiveWordAligner on test with sentences 25000
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 25000 training sentences.
+Running with data: test
+Running with model: cs224n.wordaligner.NaiveWordAligner
+No language specified.  Use -language languageName. Using default -> french
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.001
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.002
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.003
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.004
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.005
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.006
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.007
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.008
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.009
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.010
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.011
+REading /Users/yfriedman/CS224N/pa2/data/french/test/test
+Precision: 0.4078082721298802
+Recall: 0.4640911342248638
+AER: 0.5729299093143487
+Running NaiveWordAligner on test with sentences 50000
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 50000 training sentences.
+Running with data: test
+Running with model: cs224n.wordaligner.NaiveWordAligner
+No language specified.  Use -language languageName. Using default -> french
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.001
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.002
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.003
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.004
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.005
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.006
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.007
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.008
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.009
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.010
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.011
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.012
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.013
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.014
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.015
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.016
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.017
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.018
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.019
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.020
+REading /Users/yfriedman/CS224N/pa2/data/french/test/test
+Precision: 0.440536013400335
+Recall: 0.504952947003467
+AER: 0.5374184252902788
+Running NaiveWordAligner on test with sentences 75000
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 75000 training sentences.
+Running with data: test
+Running with model: cs224n.wordaligner.NaiveWordAligner
+No language specified.  Use -language languageName. Using default -> french
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.001
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.002
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.003
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.004
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.005
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.006
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.007
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.008
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.009
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.010
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.011
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.012
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.013
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.014
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.015
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.016
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.017
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.018
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.019
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.020
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.021
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.022
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.023
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.024
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.025
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.026
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.027
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.028
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.029
+REading /Users/yfriedman/CS224N/pa2/data/french/test/test
+Precision: 0.45947687153717304
+Recall: 0.5237741456166419
+AER: 0.5185185185185186
+Running NaiveWordAligner on test with sentences 1000000
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 1000000 training sentences.
+Running with data: test
+Running with model: cs224n.wordaligner.NaiveWordAligner
+No language specified.  Use -language languageName. Using default -> french
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.001
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.002
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.003
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.004
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.005
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.006
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.007
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.008
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.009
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.010
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.011
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.012
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.013
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.014
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.015
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.016
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.017
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.018
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.019
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.020
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.021
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.022
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.023
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.024
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.025
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.026
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.027
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.028
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.029
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.030
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.031
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.032
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.033
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.034
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.035
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.036
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.037
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.038
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.039
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.040
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.041
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.042
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.043
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.044
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.045
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.046
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.047
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.048
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.049
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.049a
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.050
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.051
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.052
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.053
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.054
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.055
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.056
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.057
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.058
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.059
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.060
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.061
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.062
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.063
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.064
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.065
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.066
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.067
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.068
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.069
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.070
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.071
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.072
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.073
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.074
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.075
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.076
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.077
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.078
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.079
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.080
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.081
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.082
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.083
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.084
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.085
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.086
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.087
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.088
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.089
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.090
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.091
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.092
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.093
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.094
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.095
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.096
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.097
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.098
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.099
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.100
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.101
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.102
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.103
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.104
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.105
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.106
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.107
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.108
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.109
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.110
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.111
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.112
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.113
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.114
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.115
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.116
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.senate.debates.1997-09-22.001
+Running NaiveWordAligner on test with sentences 0
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 0 training sentences.
+Running with data: test
+Running with model: cs224n.wordaligner.NaiveWordAligner
+No language specified.  Use -language languageName. Using default -> french
+REading /Users/yfriedman/CS224N/pa2/data/french/test/test
+Running NaiveWordAligner on test with sentences 25000
+Running NaiveWordAligner on test with sentences 50000
+Running NaiveWordAligner on test with sentences 75000
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 75000 training sentences.
+Running with data: test
+Running with model: cs224n.wordaligner.NaiveWordAligner
+No language specified.  Use -language languageName. Using default -> french
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.001
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.002
+Running NaiveWordAligner on test with sentences 1000000
+Running NaiveWordAligner on test with sentences 100000
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 100000 training sentences.
+Running with data: test
+Running with model: cs224n.wordaligner.NaiveWordAligner
+No language specified.  Use -language languageName. Using default -> french
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.001
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.002
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.003
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.004
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.005
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.006
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.007
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.008
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.009
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.010
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.011
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.012
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.013
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.014
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.015
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.016
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.017
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.018
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.019
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.020
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.021
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.022
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.023
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.024
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.025
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.026
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.027
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.028
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.029
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.030
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.031
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.032
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.033
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.034
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.035
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.036
+REading /Users/yfriedman/CS224N/pa2/data/french/training/hansard.36.1.house.debates.037
+REading /Users/yfriedman/CS224N/pa2/data/french/test/test
+Precision: 0.46617703904136065
+Recall: 0.5289747399702823
+AER: 0.5123315535214849

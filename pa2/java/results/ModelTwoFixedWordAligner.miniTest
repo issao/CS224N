@@ -1,0 +1,186 @@
+Running ModelTwoFixedWordAligner on miniTest with sentences 0
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 0 training sentences.
+Running with data: miniTest
+Running with model: cs224n.wordaligner.ModelTwoFixedWordAligner
+REading /Users/yfriedman/CS224N/pa2/data/mini/mini
+Iteration 0
+Iteration 1
+Iteration 2
+Iteration 3
+Iteration 4
+Iteration 5
+Iteration 6
+Iteration 7
+Iteration 8
+Iteration 9
+Iteration 10
+Iteration 0
+Iteration 1
+Iteration 2
+Iteration 3
+Iteration 4
+Iteration 5
+Iteration 6
+Iteration 7
+Iteration 8
+Iteration 9
+Iteration 10
+Precision: 1.0
+Recall: 1.0
+AER: 0.0
+Running ModelTwoFixedWordAligner on miniTest with sentences 25000
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 25000 training sentences.
+Running with data: miniTest
+Running with model: cs224n.wordaligner.ModelTwoFixedWordAligner
+REading /Users/yfriedman/CS224N/pa2/data/mini/mini
+Iteration 0
+Iteration 1
+Iteration 2
+Iteration 3
+Iteration 4
+Iteration 5
+Iteration 6
+Iteration 7
+Iteration 8
+Iteration 9
+Iteration 10
+Iteration 0
+Iteration 1
+Iteration 2
+Iteration 3
+Iteration 4
+Iteration 5
+Iteration 6
+Iteration 7
+Iteration 8
+Iteration 9
+Iteration 10
+Precision: 1.0
+Recall: 1.0
+AER: 0.0
+Running ModelTwoFixedWordAligner on miniTest with sentences 50000
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 50000 training sentences.
+Running with data: miniTest
+Running with model: cs224n.wordaligner.ModelTwoFixedWordAligner
+REading /Users/yfriedman/CS224N/pa2/data/mini/mini
+Iteration 0
+Iteration 1
+Iteration 2
+Iteration 3
+Iteration 4
+Iteration 5
+Iteration 6
+Iteration 7
+Iteration 8
+Iteration 9
+Iteration 10
+Iteration 0
+Iteration 1
+Iteration 2
+Iteration 3
+Iteration 4
+Iteration 5
+Iteration 6
+Iteration 7
+Iteration 8
+Iteration 9
+Iteration 10
+Precision: 1.0
+Recall: 1.0
+AER: 0.0
+Running ModelTwoFixedWordAligner on miniTest with sentences 75000
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 75000 training sentences.
+Running with data: miniTest
+Running with model: cs224n.wordaligner.ModelTwoFixedWordAligner
+REading /Users/yfriedman/CS224N/pa2/data/mini/mini
+Iteration 0
+Iteration 1
+Iteration 2
+Iteration 3
+Iteration 4
+Iteration 5
+Iteration 6
+Iteration 7
+Iteration 8
+Iteration 9
+Iteration 10
+Iteration 0
+Iteration 1
+Iteration 2
+Iteration 3
+Iteration 4
+Iteration 5
+Iteration 6
+Iteration 7
+Iteration 8
+Iteration 9
+Iteration 10
+Precision: 1.0
+Recall: 1.0
+AER: 0.0
+Running ModelTwoFixedWordAligner on miniTest with sentences 1000000
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 1000000 training sentences.
+Running with data: miniTest
+Running with model: cs224n.wordaligner.ModelTwoFixedWordAligner
+REading /Users/yfriedman/CS224N/pa2/data/mini/mini
+Iteration 0
+Iteration 1
+Iteration 2
+Iteration 3
+Iteration 4
+Iteration 5
+Iteration 6
+Iteration 7
+Iteration 8
+Iteration 9
+Iteration 10
+Iteration 0
+Iteration 1
+Iteration 2
+Iteration 3
+Iteration 4
+Iteration 5
+Iteration 6
+Iteration 7
+Iteration 8
+Iteration 9
+Iteration 10
+Precision: 1.0
+Recall: 1.0
+AER: 0.0
+Running ModelTwoFixedWordAligner on miniTest with sentences 100000
+Using base path: /Users/yfriedman/CS224N/pa2/data
+Using an additional 100000 training sentences.
+Running with data: miniTest
+Running with model: cs224n.wordaligner.ModelTwoFixedWordAligner
+REading /Users/yfriedman/CS224N/pa2/data/mini/mini
+Iteration 0
+Iteration 1
+Iteration 2
+Iteration 3
+Iteration 4
+Iteration 5
+Iteration 6
+Iteration 7
+Iteration 8
+Iteration 9
+Iteration 10
+Iteration 0
+Iteration 1
+Iteration 2
+Iteration 3
+Iteration 4
+Iteration 5
+Iteration 6
+Iteration 7
+Iteration 8
+Iteration 9
+Iteration 10
+Precision: 1.0
+Recall: 1.0
+AER: 0.0
