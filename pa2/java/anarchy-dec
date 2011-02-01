@@ -1,0 +1,11 @@
+for j in ModelTwoWordAligner ModelTwoFixedWordAligner; #NaiveWordAligner ModelOneWordAligner; 
+do
+  for k in 0.3 0.4 0.5 0.6 0.7;
+  do
+    for i in 0.7 0.6 0.5 0.4 0.3;
+    do
+      echo "Running $j with lmweight $i and transweight $k" | tee -a results/$j.$k
+      time ./run-dec  -path /Users/yfriedman/CS224N/pa2/data -lmmodel cs224n.langmodel.ZipfChimeraInterpolatedTriGramModel  -wamodel  cs224n.wordaligner.$j -lmsentences 50000 -lmtunesentences 5000 -wasentences 10000 -lmweight $i -transweight $k >> results/dec.$j.$k.$i
+    done
+  done
+done
