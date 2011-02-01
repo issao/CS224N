@@ -1,0 +1,118 @@
+DecoderTester options:
+  -transweight: 0.7
+  -source     : french
+  -lmtunesentences: 5000
+  -lengthweight: 1.0
+  -wamodel    : cs224n.wordaligner.ModelTwoFixedWordAligner
+  -lmmodel    : cs224n.langmodel.ZipfChimeraInterpolatedTriGramModel
+  -lmtuningsentences: 1000
+  -wasentences: 10000
+  -lmweight   : 0.3
+  -lmsentences: 50000
+  -target     : english
+  -testsentences: 25
+  -path       : /Users/yfriedman/CS224N/pa2/data
+
+**********
+Creating / Training Language Model ... 
+Created language model: cs224n.langmodel.ZipfChimeraInterpolatedTriGramModel@4277158a
+Training language model with 50000 sentences
+Tuning language model with 1000 sentences
+[0.2098082921901709, 0.3799036206560131, 0.4102880871538161] entropy: -80389.0076736911
+[0.1673588635179522, 0.3991931742963181, 0.43344796218572973] entropy: -79422.37098843968
+[0.15123767841414085, 0.4101134717764079, 0.43864884980945124] entropy: -79272.69156734433
+[0.14454792247403428, 0.4171408019342818, 0.438311275591684] entropy: -79246.24027573304
+[0.14155272262370222, 0.4218606207954025, 0.43658665658089524] entropy: -79240.28438812212
+[0.14010516843005333, 0.4250840930022579, 0.4348107385676888] entropy: -79238.45338051273
+[0.13934773798022163, 0.4273037942698891, 0.4333484677498892] entropy: -79237.73168949907
+[0.13891990955879574, 0.4288394039455694, 0.43224068649563496] entropy: -79237.40824353597
+[0.13866188028425655, 0.42990467900923, 0.4314334407065135] entropy: -79237.25567136091
+[0.13849825693913753, 0.4306448923869699, 0.4308568506738926] entropy: -79237.18237618104
+done
+
+..done
+**********
+
+**********
+Creating / Training Word Aligner ... 
+Created word aligner: cs224n.wordaligner.ModelTwoFixedWordAligner@6c121f1d
+Training word aligner with 10008 sentencesIteration 0
+Iteration 1
+Iteration 2
+Iteration 3
+Iteration 4
+Iteration 5
+Iteration 6
+Iteration 7
+Iteration 8
+Iteration 9
+Iteration 10
+Iteration 0
+Iteration 1
+Iteration 2
+Iteration 3
+Iteration 4
+Iteration 5
+Iteration 6
+Iteration 7
+Iteration 8
+Iteration 9
+Iteration 10
+...done
+**********
+
+**********
+Creating / Training Reverse Word Aligner ... 
+Created word aligner: cs224n.wordaligner.ModelTwoFixedWordAligner@21f3aa07
+Training word aligner with 10008 sentencesIteration 0
+Iteration 1
+Iteration 2
+Iteration 3
+Iteration 4
+Iteration 5
+Iteration 6
+Iteration 7
+Iteration 8
+Iteration 9
+Iteration 10
+Iteration 0
+Iteration 1
+Iteration 2
+Iteration 3
+Iteration 4
+Iteration 5
+Iteration 6
+Iteration 7
+Iteration 8
+Iteration 9
+Iteration 10
+...done
+**********
+
+**********
+ Setting weights for the decoder ... 
+	lmweight = 0.3
+	transweight = 0.7
+	lengthweight = 1.0
+...done
+**********
+
+**********
+Creating / Testing Decoder ...
+/Users/yfriedman/CS224N/pa2/data/../java/zferts.e
+french string:	monsieur le Orateur , ma question se adresse à le ministre chargé de les transports . 
+actual english string:	Mr. Speaker , my question is directed to the Minister of Transport . 
+iter=1
+iter=2
+iter=3
+iter=4
+iter=5
+iter=6
+iter=7
+iter=8
+iter=9
+iter=10
+iter=11
+iter=12
+iter=13
+iter=14
