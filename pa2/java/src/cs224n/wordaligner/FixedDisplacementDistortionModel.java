@@ -6,7 +6,7 @@ import cs224n.util.SentencePair;
 
 public class FixedDisplacementDistortionModel implements DistortionModel {
 
-  private static final int MAX_BUCKET = 10;
+  private static final int MAX_BUCKET = 5;
   private static final double NULL_PROBABILITY = 0.2;
 
   @Override
