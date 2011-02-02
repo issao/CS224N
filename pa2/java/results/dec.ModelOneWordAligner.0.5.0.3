@@ -1,0 +1,241 @@
+DecoderTester options:
+  -transweight: 0.5
+  -source     : french
+  -lmtunesentences: 5000
+  -lengthweight: 1.0
+  -wamodel    : cs224n.wordaligner.ModelOneWordAligner
+  -lmmodel    : cs224n.langmodel.ZipfChimeraInterpolatedTriGramModel
+  -lmtuningsentences: 1000
+  -wasentences: 10000
+  -lmweight   : 0.3
+  -lmsentences: 50000
+  -target     : english
+  -testsentences: 25
+  -path       : /Users/yfriedman/CS224N/pa2/data
+
+**********
+Creating / Training Language Model ... 
+Created language model: cs224n.langmodel.ZipfChimeraInterpolatedTriGramModel@1999f91c
+Training language model with 50000 sentences
+Tuning language model with 1000 sentences
+[0.2098082921901709, 0.3799036206560131, 0.4102880871538161] entropy: -80389.0076736911
+[0.1673588635179522, 0.3991931742963181, 0.43344796218572973] entropy: -79422.37098843968
+[0.15123767841414085, 0.4101134717764079, 0.43864884980945124] entropy: -79272.69156734433
+[0.14454792247403428, 0.4171408019342818, 0.438311275591684] entropy: -79246.24027573304
+[0.14155272262370222, 0.4218606207954025, 0.43658665658089524] entropy: -79240.28438812212
+[0.14010516843005333, 0.4250840930022579, 0.4348107385676888] entropy: -79238.45338051273
+[0.13934773798022163, 0.4273037942698891, 0.4333484677498892] entropy: -79237.73168949907
+[0.13891990955879574, 0.4288394039455694, 0.43224068649563496] entropy: -79237.40824353597
+[0.13866188028425655, 0.42990467900923, 0.4314334407065135] entropy: -79237.25567136091
+[0.13849825693913753, 0.4306448923869699, 0.4308568506738926] entropy: -79237.18237618104
+done
+
+..done
+**********
+
+**********
+Creating / Training Word Aligner ... 
+Created word aligner: cs224n.wordaligner.ModelOneWordAligner@95c083
+Training word aligner with 10008 sentencesIteration 0
+Iteration 1
+Iteration 2
+Iteration 3
+Iteration 4
+Iteration 5
+Iteration 6
+Iteration 7
+Iteration 8
+Iteration 9
+Iteration 10
+...done
+**********
+
+**********
+Creating / Training Reverse Word Aligner ... 
+Created word aligner: cs224n.wordaligner.ModelOneWordAligner@1f5b0afd
+Training word aligner with 10008 sentencesIteration 0
+Iteration 1
+Iteration 2
+Iteration 3
+Iteration 4
+Iteration 5
+Iteration 6
+Iteration 7
+Iteration 8
+Iteration 9
+Iteration 10
+...done
+**********
+
+**********
+ Setting weights for the decoder ... 
+	lmweight = 0.3
+	transweight = 0.5
+	lengthweight = 1.0
+...done
+**********
+
+**********
+Creating / Testing Decoder ...
+/Users/yfriedman/CS224N/pa2/data/../java/zferts.e
+french string:	monsieur le Orateur , ma question se adresse à le ministre chargé de les transports . 
+actual english string:	Mr. Speaker , my question is directed to the Minister of Transport . 
+iter=1
+iter=2
+iter=3
+iter=4
+iter=5
+iter=6
+iter=7
+iter=8
+iter=9
+iter=10
+iter=11
+iter=12
+iter=13
+iter=14
+iter=15
+iter=16
+iter=17
+iter=18
+lang prob: -26.92326294348794, trans prob:-62.10265997595384, elen log:13.0, 58.552 seconds, 18 iterations
+guessed english string:	Mr. Speaker , my question is directed to the minister of fisheries . 
+Edit Distance:	2.0
+Sentence Size:	13
+
+french string:	tous deux possèdent de nombreuses années de expérience dans la fabrication et la distribution de les produits forestiers . 
+actual english string:	both have many years experience in the manufacture and distribution of forest products . 
+iter=1
+iter=2
+iter=3
+iter=4
+iter=5
+iter=6
+iter=7
+iter=8
+iter=9
+iter=10
+iter=11
+iter=12
+iter=13
+iter=14
+lang prob: -62.15446958211606, trans prob:-76.89727919252816, elen log:19.0, 72.833 seconds, 14 iterations
+guessed english string:	many of these two years of experience in the other forest products , and distribution of the House . 
+Edit Distance:	11.0
+Sentence Size:	14
+
+french string:	je voudrais aussi parler de le droit de le fournisseur de choisir ses clients à son gré . 
+actual english string:	another point I should like to discuss is the right of the supplier to choose his customers as he sees fit . 
+iter=1
+iter=2
+iter=3
+iter=4
+iter=5
+iter=6
+iter=7
+iter=8
+iter=9
+iter=10
+iter=11
+iter=12
+iter=13
+iter=14
+iter=15
+iter=16
+lang prob: -46.32179280920958, trans prob:-74.55819468051865, elen log:14.0, 57.622 seconds, 16 iterations
+guessed english string:	i also want to do the right of the supplier at his question . 
+Edit Distance:	14.0
+Sentence Size:	22
+
+french string:	je voudrais commenter un autre point particulier , monsieur le Orateur , avant de me taire . 
+actual english string:	there is just one specific item more that I would like to comment upon and then I will sit down , Mr. Speaker . 
+iter=1
+iter=2
+iter=3
+iter=4
+iter=5
+iter=6
+iter=7
+iter=8
+iter=9
+iter=10
+iter=11
+iter=12
+iter=13
+iter=14
+lang prob: -42.31954205052011, trans prob:-64.63403213647808, elen log:11.0, 45.402 seconds, 14 iterations
+guessed english string:	Mr. me , I would like the one item another . 
+Edit Distance:	20.0
+Sentence Size:	24
+
+french string:	ce est tout à fait compréhensible . 
+actual english string:	it is quite understandable . 
+iter=1
+iter=2
+iter=3
+iter=4
+iter=5
+iter=6
+lang prob: -21.27230033746672, trans prob:-20.874449328908916, elen log:5.0, 3.342 seconds, 6 iterations
+guessed english string:	this is understandable that . 
+Edit Distance:	3.0
+Sentence Size:	5
+
+french string:	en outre , elle pourrait constituer une sérieuse menace pour la Confédération et le unité nationale . 
+actual english string:	in addition , it could become a serious threat to Confederation and national unity . 
+iter=1
+iter=2
+iter=3
+iter=4
+iter=5
+iter=6
+iter=7
+iter=8
+iter=9
+iter=10
+iter=11
+lang prob: -72.93756684485689, trans prob:-74.65780578027616, elen log:21.0, 57.71 seconds, 11 iterations
+guessed english string:	in addition , whether she could be a threat to , and for the Canadian Confederation , the national unity . 
+Edit Distance:	11.0
+Sentence Size:	15
+
+french string:	je ne partage pas le avis de le ministre . 
+actual english string:	i disagree with the argument advanced by the minister . 
+iter=1
+iter=2
+iter=3
+iter=4
+iter=5
+iter=6
+lang prob: -32.9306718818439, trans prob:-32.47554940376094, elen log:11.0, 9.259 seconds, 6 iterations
+guessed english string:	i do not share in the opinion of the minister . 
+Edit Distance:	7.0
+Sentence Size:	10
+
+french string:	il y a beaucoup à dire sur les deux aspects de cette question . 
+actual english string:	there is a lot to be said on both sides of that question . 
+iter=1
+iter=2
+iter=3
+iter=4
+iter=5
+iter=6
+iter=7
+iter=8
+iter=9
+iter=10
+iter=11
+lang prob: -51.90132768944415, trans prob:-54.95396911683049, elen log:18.0, 49.836 seconds, 11 iterations
+guessed english string:	there has not been for many other aspects of the two things to say on this issue . 
+Edit Distance:	16.0
+Sentence Size:	14
+
+
+WER: 0.717948717948718
+
+BLEU: 0.2054667272894018
+--> log Ngram Scores: -0.5753641449035618/-1.3862943611198906/-1.791759469228055/-2.3978952727983707
+--> BP: 0.9563389704816692 (refLen=117.0,hypLen=112.0)
+...done
+**********
+
