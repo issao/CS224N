@@ -351,17 +351,37 @@ public class MaximumEntropyClassifierTester {
      * activations) are *almost* log probabilities, but need to be normalized.
      */
     private static <F,L> double[] getLogProbabilities(EncodedDatum datum, double[] weights, Encoding<F, L> encoding, IndexLinearizer indexLinearizer) {
-      // TODO: apply the classifier to this feature vector
-      // TODO
-      // TODO
-      // TODO
-
-      // dummy code
-      double[] logProbabilities = DoubleArrays.constantArray(Double.NEGATIVE_INFINITY, encoding.getNumLabels());
-      logProbabilities[1] = 0.0;
-      return logProbabilities;
-      // end dummy code
-      // TODO
+     // Initialize per-feature logs 
+     
+     double[] weightPerLabel = new double[encoding.getNumLabels()];
+     
+     // Calculate perWeightLabel
+     for (int labelIndex = 0; labelIndex < encoding.getNumLabels(); labelIndex++) {
+       System.out.println("Label: " + encoding.getLabel(labelIndex));
+       double labelWeight = 0;
+       for (int i = 0; i < datum.getNumActiveFeatures(); i++) {
+         int featureIndex = datum.getFeatureIndex(i);        
+         int linearIndex = indexLinearizer.getLinearIndex(featureIndex, labelIndex);
+       
+         System.out.println(encoding.getFeature(datum.getFeatureIndex(i)) + " : " + datum.getFeatureCount(i));
+         System.out.println("Weight: " + weights[linearIndex]  * datum.getFeatureCount(i));
+         labelWeight += weights[linearIndex]  * datum.getFeatureCount(i);
+       }
+       weightPerLabel[labelIndex] = labelWeight;
+       
+       System.out.println("total label vote: " + labelWeight);
+     }
+     
+     // Get normalization factor
+     double normalizationFactor = SloppyMath.logAdd(weightPerLabel);
+     
+     // Compute logProbabilities
+     for (int labelIndex = 0; labelIndex < encoding.getNumLabels(); labelIndex++) {
+       weightPerLabel[labelIndex] = weightPerLabel[labelIndex] - normalizationFactor;
+     }
+     System.out.println("Got probabilities: " + Arrays.toString(weightPerLabel));
+      
+     return weightPerLabel;
     }
 
     public Counter<L> getProbabilities(Datum<F> datum) {
@@ -447,6 +467,7 @@ public class MaximumEntropyClassifierTester {
   }
 
   static List<Pair<List<String>,List<String>>> loadData(String fileName) throws IOException {
+    System.err.println(fileName);
     BufferedReader reader = new BufferedReader(new FileReader(fileName));
     List<Pair<List<String>,List<String>>> sentences = new ArrayList<Pair<List<String>,List<String>>>();
     List<String> sentence = new ArrayList<String>();
