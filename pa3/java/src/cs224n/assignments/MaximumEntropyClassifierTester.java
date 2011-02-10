@@ -174,23 +174,20 @@ public class MaximumEntropyClassifierTester {
 
         double[] derivatives = new double[dimension()];
 
-        for (int i = 0; i < dimension(); i++) {
-          double firstTerm = 0;
-          double secondTerm = 0;
-          int featureIndex = indexLinearizer.getFeatureIndex(i);
-          int labelIndex = indexLinearizer.getLabelIndex(i);
+        for (int j = 0; j < data.length; j++) {
+          double[] logP = getLogProbabilities(data[j], x, encoding,
+              indexLinearizer);
 
-          for (int j = 0; j < data.length; j++) {
-            double featureCount = getFeatureCountFromData(data[j], featureIndex);
+          for (int i = 0; i < dimension(); i++) {
+            double featureCount = getFeatureCountFromData(data[j],
+                indexLinearizer.getFeatureIndex(i));
             if (data[j].getLabelIndex() == indexLinearizer.getLabelIndex(i)) {
-              firstTerm += featureCount;
+              derivatives[i] -= featureCount;
             }
-         
-            double[] logP = getLogProbabilities(data[j], x, encoding, indexLinearizer);
-            secondTerm += featureCount * SloppyMath.exp(logP[labelIndex]);
-          }
 
-          derivatives[i] = -1 * firstTerm + secondTerm;
+            derivatives[i] += featureCount
+                * SloppyMath.exp(logP[indexLinearizer.getLabelIndex(i)]);
+          }
 
         }
 
