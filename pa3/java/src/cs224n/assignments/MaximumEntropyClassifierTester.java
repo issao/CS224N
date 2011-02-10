@@ -191,9 +191,11 @@ public class MaximumEntropyClassifierTester {
         }
 
         // penalties
-
-        // TODO
-        // TODO
+        for (int i = 0; i < dimension(); i++) {
+          objective += x[i] * x[i] / (2 * sigma * sigma); 
+          derivatives[i] += x[i] / (sigma * sigma);
+        }
+        
         return new Pair<Double, double[]>(objective, derivatives);
       }
 
