@@ -160,32 +160,25 @@ public class MaximumEntropyClassifierTester {
         for (EncodedDatum datum : data) {
           double[] logP = getLogProbabilities(datum, x, encoding,
               indexLinearizer);
-          double[] p = new double[logP.length];
-          for (int labelIndex = 0; labelIndex < p.length; labelIndex++) {
-            p[labelIndex] = SloppyMath.exp(logP[labelIndex]);
-          }
           // Calculate objective
           objective -= logP[datum.getLabelIndex()];
 
           // Calculate derivatives
-          for (int i = 0; i < dimension(); i++) {
-            int featureIndex = indexLinearizer.getFeatureIndex(i);
-            double featureCount = 0.0;
-            // TODO: Move a bit of this out of the tighter loop.
+          for (int labelIndex = 0; labelIndex < indexLinearizer.numLabels; labelIndex++) {
+            double probLabel = SloppyMath.exp(logP[labelIndex]);
             for (int k = 0; k < datum.getNumActiveFeatures(); k++) {
-              if (datum.getFeatureIndex(k) == featureIndex) {
-                featureCount = datum.getFeatureCount(k);
-                break;
+              int featureIndex = datum.getFeatureIndex(k);
+              double featureCount = datum.getFeatureCount(k);
+              // First term (actual count)
+              if (datum.getLabelIndex() == labelIndex) {
+                derivatives[indexLinearizer.getLinearIndex(featureIndex,
+                    labelIndex)] -= featureCount;
               }
-            }
-            // First term (actual count)
-            if (datum.getLabelIndex() == indexLinearizer.getLabelIndex(i)) {
-              derivatives[i] -= featureCount;
-            }
 
-            // Second term (expected count)
-            derivatives[i] += featureCount
-                * p[indexLinearizer.getLabelIndex(i)];
+              // Second term (expected count)
+              derivatives[indexLinearizer.getLinearIndex(featureIndex,
+                  labelIndex)] += featureCount * probLabel;
+            }
           }
 
         }
