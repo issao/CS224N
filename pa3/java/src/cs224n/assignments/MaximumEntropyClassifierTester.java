@@ -177,7 +177,7 @@ public class MaximumEntropyClassifierTester {
           for (int i = 0; i < dimension(); i++) {
             double featureCount = getFeatureCountFromData(datum,
                 indexLinearizer.getFeatureIndex(i));
-            
+
             // First term (actual count)
             if (datum.getLabelIndex() == indexLinearizer.getLabelIndex(i)) {
               derivatives[i] -= featureCount;
@@ -192,10 +192,10 @@ public class MaximumEntropyClassifierTester {
 
         // penalties
         for (int i = 0; i < dimension(); i++) {
-          objective += x[i] * x[i] / (2 * sigma * sigma); 
+          objective += x[i] * x[i] / (2 * sigma * sigma);
           derivatives[i] += x[i] / (sigma * sigma);
         }
-        
+
         return new Pair<Double, double[]>(objective, derivatives);
       }
 
@@ -393,11 +393,11 @@ public class MaximumEntropyClassifierTester {
       double[] weightPerLabel = new double[encoding.getNumLabels()];
 
       // Calculate perWeightLabel
-      for (int labelIndex = 0; labelIndex < encoding.getNumLabels(); labelIndex++) {
-        // System.out.println("Label: " + encoding.getLabel(labelIndex));
-        double labelWeight = 0;
-        for (int i = 0; i < datum.getNumActiveFeatures(); i++) {
-          int featureIndex = datum.getFeatureIndex(i);
+      for (int i = 0; i < datum.getNumActiveFeatures(); i++) {
+        int featureIndex = datum.getFeatureIndex(i);
+
+        for (int labelIndex = 0; labelIndex < encoding.getNumLabels(); labelIndex++) {
+          // System.out.println("Label: " + encoding.getLabel(labelIndex));
           int linearIndex = indexLinearizer.getLinearIndex(featureIndex,
               labelIndex);
 
@@ -405,9 +405,9 @@ public class MaximumEntropyClassifierTester {
           // " : " + datum.getFeatureCount(i));
           // System.out.println("Weight: " + weights[linearIndex] *
           // datum.getFeatureCount(i));
-          labelWeight += weights[linearIndex] * datum.getFeatureCount(i);
+          weightPerLabel[labelIndex] += weights[linearIndex]
+              * datum.getFeatureCount(i);
         }
-        weightPerLabel[labelIndex] = labelWeight;
 
         // System.out.println("total label vote: " + labelWeight);
       }
