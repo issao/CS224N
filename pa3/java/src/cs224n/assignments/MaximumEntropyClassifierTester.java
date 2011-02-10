@@ -165,26 +165,25 @@ public class MaximumEntropyClassifierTester {
 
       private Pair<Double, double[]> calculate(double[] x) {
         double objective = 0.0;
-
-        for (int i = 0; i < data.length; i++) {
-          double[] logP = getLogProbabilities(data[i], x, encoding,
-              indexLinearizer);
-          objective -= logP[data[i].getLabelIndex()];
-        }
-
         double[] derivatives = new double[dimension()];
 
-        for (int j = 0; j < data.length; j++) {
-          double[] logP = getLogProbabilities(data[j], x, encoding,
+        for (EncodedDatum datum : data) {
+          double[] logP = getLogProbabilities(datum, x, encoding,
               indexLinearizer);
+          // Calculate objective
+          objective -= logP[datum.getLabelIndex()];
 
+          // Calculate derivatives
           for (int i = 0; i < dimension(); i++) {
-            double featureCount = getFeatureCountFromData(data[j],
+            double featureCount = getFeatureCountFromData(datum,
                 indexLinearizer.getFeatureIndex(i));
-            if (data[j].getLabelIndex() == indexLinearizer.getLabelIndex(i)) {
+            
+            // First term (actual count)
+            if (datum.getLabelIndex() == indexLinearizer.getLabelIndex(i)) {
               derivatives[i] -= featureCount;
             }
 
+            // Second term (expected count)
             derivatives[i] += featureCount
                 * SloppyMath.exp(logP[indexLinearizer.getLabelIndex(i)]);
           }
