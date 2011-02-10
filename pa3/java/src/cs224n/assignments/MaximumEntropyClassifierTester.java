@@ -181,13 +181,13 @@ public class MaximumEntropyClassifierTester {
           int labelIndex = indexLinearizer.getLabelIndex(i);
 
           for (int j = 0; j < data.length; j++) {
+            double featureCount = getFeatureCountFromData(data[j], featureIndex);
             if (data[j].getLabelIndex() == indexLinearizer.getLabelIndex(i)) {
-              firstTerm += getFeatureCountFromData(data[j], featureIndex);
+              firstTerm += featureCount;
             }
          
             double[] logP = getLogProbabilities(data[j], x, encoding, indexLinearizer);
-            secondTerm += getFeatureCountFromData(data[j], featureIndex)
-                * SloppyMath.exp(logP[labelIndex]);
+            secondTerm += featureCount * SloppyMath.exp(logP[labelIndex]);
           }
 
           derivatives[i] = -1 * firstTerm + secondTerm;
