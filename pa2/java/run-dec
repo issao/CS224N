@@ -6,9 +6,13 @@ export PATH=/usr/pubsw/bin:$PATH
 
 java -server -mx2000m -cp classes \
   cs224n.assignments.DecoderTester \
-  -lmmodel     cs224n.langmodel.EmpiricalUnigramLanguageModel \
-  -wamodel     cs224n.wordaligner.BaselineWordAligner \
-  -lmsentences 1000 \
-  -wasentences 1000 \
+  -path /afs/ir/class/cs224n/pa2/data/ \
+  -lmmodel     cs224n.langmodel.ZipfChimeraInterpolatedTriGramModel \
+  -wamodel     cs224n.wordaligner.ModelTwoWordAligner \
+  -lmsentences 10000 \
+  -lmtuningsentences 5000 \
+  -wasentences 10000 \
+  -transweight 0.4 \
+  -lmweight 0.7 \
   $@
   

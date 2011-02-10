@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# You may find this shell script helpful.
+
+java -mx200m \
+  cs224n.assignments.LanguageModelTester \
+  -data      /afs/ir/class/cs224n/pa1/data \
+  -train     treebank-train.sent.txt \
+  -test      treebank-test.sent.txt \
+  -hub       true \
+  -baselines true \
+  -generate  true \
+  $@

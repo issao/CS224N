@@ -11,7 +11,6 @@ import java.util.ArrayList;
  * @author Dan Klein
  */
 public class IOUtils {
-
   public static List<File> getFilesUnder(String path, FileFilter fileFilter) {
     File root = new File(path);
     List<File> files = new ArrayList<File>();

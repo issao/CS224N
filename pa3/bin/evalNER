@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/afs/ir/class/cs224n/pa3/bin/mergetags.pl $1 | /afs/ir/class/cs224n/pa3/bin/conlleval

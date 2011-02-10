@@ -5,7 +5,7 @@ export PATH=/usr/pubsw/bin:$PATH
 java -server -mx2000m -cp classes \
   cs224n.assignments.WordAlignmentTester \
   -path /afs/ir/class/cs224n/pa2/data/ \
-  -model baseline \
+  -model cs224n.wordaligner.ModelTwoWordAligner \
   -data test \
   $@
   
