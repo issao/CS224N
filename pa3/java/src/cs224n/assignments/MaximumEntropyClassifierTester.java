@@ -153,16 +153,6 @@ public class MaximumEntropyClassifierTester {
        * conditional likelihood of the data is, as well as the derivatives of
        * that likelihood wrt each weight parameter.
        */
-
-      private double getFeatureCountFromData(EncodedDatum data, int featureIndex) {
-        for (int k = 0; k < data.getNumActiveFeatures(); k++) {
-          if (data.getFeatureIndex(k) == featureIndex) {
-            return data.getFeatureCount(k);
-          }
-        }
-        return 0;
-      }
-
       private Pair<Double, double[]> calculate(double[] x) {
         double objective = 0.0;
         double[] derivatives = new double[dimension()];
@@ -170,14 +160,24 @@ public class MaximumEntropyClassifierTester {
         for (EncodedDatum datum : data) {
           double[] logP = getLogProbabilities(datum, x, encoding,
               indexLinearizer);
+          double[] p = new double[logP.length];
+          for (int labelIndex = 0; labelIndex < p.length; labelIndex++) {
+            p[labelIndex] = SloppyMath.exp(logP[labelIndex]);
+          }
           // Calculate objective
           objective -= logP[datum.getLabelIndex()];
 
           // Calculate derivatives
           for (int i = 0; i < dimension(); i++) {
-            double featureCount = getFeatureCountFromData(datum,
-                indexLinearizer.getFeatureIndex(i));
-
+            int featureIndex = indexLinearizer.getFeatureIndex(i);
+            double featureCount = 0.0;
+            // TODO: Move a bit of this out of the tighter loop.
+            for (int k = 0; k < datum.getNumActiveFeatures(); k++) {
+              if (datum.getFeatureIndex(k) == featureIndex) {
+                featureCount = datum.getFeatureCount(k);
+                break;
+              }
+            }
             // First term (actual count)
             if (datum.getLabelIndex() == indexLinearizer.getLabelIndex(i)) {
               derivatives[i] -= featureCount;
@@ -185,7 +185,7 @@ public class MaximumEntropyClassifierTester {
 
             // Second term (expected count)
             derivatives[i] += featureCount
-                * SloppyMath.exp(logP[indexLinearizer.getLabelIndex(i)]);
+                * p[indexLinearizer.getLabelIndex(i)];
           }
 
         }
