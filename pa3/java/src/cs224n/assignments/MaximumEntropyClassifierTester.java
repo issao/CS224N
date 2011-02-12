@@ -12,8 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sun.xml.internal.ws.util.StringUtils;
-
 import cs224n.classify.BasicLabeledDatum;
 import cs224n.classify.ClassifierFactory;
 import cs224n.classify.Datum;
@@ -787,5 +785,6 @@ public class MaximumEntropyClassifierTester {
                 .getLinearIndex(featureIndex, labelIndex)]));
       }
     }
+    System.err.println("Number of features: " + classifier.indexLinearizer.numFeatures);
   }
 }
