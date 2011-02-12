@@ -1,0 +1,7 @@
+processed 69051 tokens with 7119 phrases; found: 4284 phrases; correct: 2318.
+accuracy:  83.68%; precision:  54.11%; recall:  32.56%; FB1:  40.66
+              DNA: precision:  36.42%; recall:  11.79%; FB1:  17.82  453
+              RNA: precision:   9.23%; recall:   4.58%; FB1:   6.12  65
+        cell_line: precision:  75.00%; recall:  16.48%; FB1:  27.02  116
+        cell_type: precision:  43.73%; recall:  47.55%; FB1:  45.56  997
+          protein: precision:  61.21%; recall:  39.19%; FB1:  47.79  2653

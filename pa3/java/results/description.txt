@@ -1,0 +1,4 @@
+naive -
+  havent added any features
+case -
+  a couple of features related to the case of the words.
