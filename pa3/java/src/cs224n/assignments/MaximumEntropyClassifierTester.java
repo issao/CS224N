@@ -496,6 +496,7 @@ public class MaximumEntropyClassifierTester {
     // add feature for previous label:
     features.add("PREV_LABEL-" + prevLabel);
 
+    // same-word features.
     addRegEx(features, word, "[\\d]");
     addRegEx(features, word, "^[ACTGactg]+$");
     addRegEx(features, word, "ase$");
@@ -514,6 +515,7 @@ public class MaximumEntropyClassifierTester {
     addRegEx(features, word, "[^A-Za-z]");
     addRegEx(features, word, "[^A-Za-z0-9]");
     addRegEx(features, word, "^[^a-z]+$");
+    addRegEx(features, word, "cytes$");
     
     
     addLengthFeature(features, word, 1);
