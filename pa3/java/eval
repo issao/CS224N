@@ -1,0 +1,2 @@
+#!/usr/bin/bash
+../java/run_eval 2> results/$1.weights | evalNER > results/$1.stats
