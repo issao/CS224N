@@ -707,17 +707,18 @@ public class MaximumEntropyClassifierTester {
     }
     MaximumEntropyClassifier<String, String> classifier = (MaximumEntropyClassifier<String, String>) maximumEntropyClassifier;
     for (int labelIndex = 0; labelIndex < classifier.indexLinearizer.numLabels; labelIndex++) {
-      PriorityQueue<String> queue = new PriorityQueue<String>();
+      PriorityQueue<Integer> queue = new PriorityQueue<Integer>();
       for (int featureIndex = 0; featureIndex < classifier.indexLinearizer.numFeatures; featureIndex++) {
-        queue.add(classifier.encoding.getFeature(featureIndex),
-            classifier.weights[classifier.indexLinearizer.getLinearIndex(
-                featureIndex, labelIndex)]);
+        queue.add(featureIndex,
+            Math.abs(classifier.weights[classifier.indexLinearizer.getLinearIndex(
+                featureIndex, labelIndex)]));
       }
       System.err.println("Label '" + classifier.encoding.getLabel(labelIndex)
           + "':");
       for (int i = 0; i < 10 && queue.hasNext(); i++) {
-        double priority = queue.getPriority();
-        System.err.println("     " + queue.next() + ": " + priority);
+        int featureIndex = queue.next();
+        System.err.println("     " + classifier.encoding.getFeature(featureIndex) + ": " + classifier.weights[classifier.indexLinearizer.getLinearIndex(
+            featureIndex, labelIndex)]);
       }
     }
   }
