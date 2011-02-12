@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.sun.xml.internal.ws.util.StringUtils;
+
 import cs224n.classify.BasicLabeledDatum;
 import cs224n.classify.ClassifierFactory;
 import cs224n.classify.Datum;
@@ -494,20 +496,49 @@ public class MaximumEntropyClassifierTester {
     // add feature for previous label:
     features.add("PREV_LABEL-" + prevLabel);
 
-    // is the word all caps:
-    if (!word.toLowerCase().equals(word)) {
-      features.add("NOT_ALL_LOWER_CASE");
-    }
-    if (word.toUpperCase().equals(word)) {
-      features.add("ALL_UPPER_CASE");
-    }
-    if (word.charAt(0) < 'a') { // Upper case letter or numbers
-      features.add("[A-Z0-9].*");
-    }
+    addRegEx(features, word, "[\\d]");
+    addRegEx(features, word, "^[ACTGactg]+$");
+    addRegEx(features, word, "ase$");
+    addRegEx(features, word, "in$");
+    addRegEx(features, word, "ine$");
+    addRegEx(features, word, "phage$");
+    addRegEx(features, word, "^[\\d]");
+    addRegEx(features, word, "-");
+    addRegEx(features, word, "[A-Z]");
+    addRegEx(features, word, "[0-9]");
+    addRegEx(features, word, "[A-Z0-9]");
+    addRegEx(features, word, "^[A-Z]");
+    addRegEx(features, word, "^[a-z][A-Z]");
+    addRegEx(features, word, "alpha", "beta", "gamma", "delta", "eta", "zeta", "kappa", "epsilon", "rho", "sigma", "omega");
+    addRegEx(features, word, "[()]");
+    addRegEx(features, word, "[^A-Za-z]");
+    addRegEx(features, word, "[^A-Za-z0-9]");
+    addRegEx(features, word, "^[^a-z]+$");
+    
+    
+    addLengthFeature(features, word, 1);
+    addLengthFeature(features, word, 2);
+    addLengthFeature(features, word, 3);
 
     // TODO : extract better features!
 
     return features;
+  }
+
+  private static void addLengthFeature(List<String> features, String word, int n) {
+    if (word.length() == n) {
+      features.add("LENGHT-" + n);
+    }
+  }
+
+  private static void addRegEx(List<String> features, String word,
+      String... regexs) {
+    for (String regex : regexs) {
+      if (word.matches(regex)) {
+        features.add("REGEX-" + regexs.toString());
+        return;
+      }
+    }
   }
 
   private static List<LabeledDatum<String, String>> transformData(
