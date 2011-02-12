@@ -496,7 +496,6 @@ public class MaximumEntropyClassifierTester {
     features.add("PREV_LABEL-" + prevLabel);
 
     addWordFeatures(features, word, "");
-    
     if (position < (sentence.size() - 1)) {
       addWordFeatures(features, sentence.get(position + 1), "NEXT-");
     }
@@ -504,6 +503,13 @@ public class MaximumEntropyClassifierTester {
       addWordFeatures(features, sentence.get(position - 1), "PREV-");
     }
 
+    addWordFeatures(features, word, prevLabel + "-");
+    if (position < (sentence.size() - 1)) {
+      addWordFeatures(features, sentence.get(position + 1), prevLabel + "-NEXT-");
+    }
+    if (position > 0) {
+      addWordFeatures(features, sentence.get(position - 1), prevLabel + "-PREV-");
+    }
     
     // TODO : extract better features!
 
