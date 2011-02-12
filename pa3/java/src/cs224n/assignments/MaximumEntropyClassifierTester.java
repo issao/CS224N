@@ -1,19 +1,32 @@
 package cs224n.assignments;
 
-import cs224n.assignments.MaximumEntropyClassifierTester.MaximumEntropyClassifier.IndexLinearizer;
-import cs224n.classify.*;
-import cs224n.math.*;
-import cs224n.util.*;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
+
+import cs224n.classify.BasicLabeledDatum;
+import cs224n.classify.ClassifierFactory;
+import cs224n.classify.Datum;
+import cs224n.classify.LabeledDatum;
+import cs224n.classify.ProbabilisticClassifier;
+import cs224n.math.DifferentiableFunction;
+import cs224n.math.DoubleArrays;
+import cs224n.math.GradientMinimizer;
+import cs224n.math.LBFGSMinimizer;
+import cs224n.math.SloppyMath;
+import cs224n.util.CommandLineUtils;
+import cs224n.util.Counter;
+import cs224n.util.Index;
+import cs224n.util.Pair;
+import cs224n.util.PriorityQueue;
 
 /**
  * Harness for building and testing a maximum-entropy classifier.
@@ -488,15 +501,12 @@ public class MaximumEntropyClassifierTester {
     if (word.toUpperCase().equals(word)) {
       features.add("ALL_UPPER_CASE");
     }
-    if (word.charAt(0) < 'a') {  // Upper case letter or numbers
+    if (word.charAt(0) < 'a') { // Upper case letter or numbers
       features.add("[A-Z0-9].*");
     }
-    
-    
+
     // TODO : extract better features!
-    
-    
-    
+
     return features;
   }
 
@@ -705,20 +715,24 @@ public class MaximumEntropyClassifierTester {
         System.out.println(guessedLabels.get(i));
       }
     }
+    NumberFormat nf = new DecimalFormat("0.0000");
     MaximumEntropyClassifier<String, String> classifier = (MaximumEntropyClassifier<String, String>) maximumEntropyClassifier;
     for (int labelIndex = 0; labelIndex < classifier.indexLinearizer.numLabels; labelIndex++) {
       PriorityQueue<Integer> queue = new PriorityQueue<Integer>();
       for (int featureIndex = 0; featureIndex < classifier.indexLinearizer.numFeatures; featureIndex++) {
-        queue.add(featureIndex,
-            Math.abs(classifier.weights[classifier.indexLinearizer.getLinearIndex(
+        queue.add(featureIndex, Math
+            .abs(classifier.weights[classifier.indexLinearizer.getLinearIndex(
                 featureIndex, labelIndex)]));
       }
       System.err.println("Label '" + classifier.encoding.getLabel(labelIndex)
           + "':");
       for (int i = 0; i < 10 && queue.hasNext(); i++) {
         int featureIndex = queue.next();
-        System.err.println("     " + classifier.encoding.getFeature(featureIndex) + ": " + classifier.weights[classifier.indexLinearizer.getLinearIndex(
-            featureIndex, labelIndex)]);
+        System.err.println("     "
+            + classifier.encoding.getFeature(featureIndex)
+            + ":\t\t"
+            + nf.format(classifier.weights[classifier.indexLinearizer
+                .getLinearIndex(featureIndex, labelIndex)]));
       }
     }
   }
