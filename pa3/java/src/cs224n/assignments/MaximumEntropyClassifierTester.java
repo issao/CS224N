@@ -522,6 +522,14 @@ public class MaximumEntropyClassifierTester {
     addLengthFeature(features, word, 2);
     addLengthFeature(features, word, 3);
 
+    if (position < (sentence.size() - 1)) {
+      features.add("NEXT_WORD-" + sentence.get(position + 1));
+    }
+    if (position > 0) {
+      features.add("PRE_WORD-" + sentence.get(position - 1));
+    }
+
+    
     // TODO : extract better features!
 
     return features;
@@ -745,7 +753,11 @@ public class MaximumEntropyClassifierTester {
       for (int i = 0; i < sentence.size(); i++) {
         System.out.print(sentence.get(i) + "\t");
         System.out.print(goldLabels.get(i) + "\t");
-        System.out.println(guessedLabels.get(i));
+        System.out.print(guessedLabels.get(i));
+        if (!goldLabels.get(i).equals(guessedLabels.get(i))) {
+          System.out.print("\tINCORRECT");
+        }
+        System.out.println();
       }
     }
     NumberFormat nf = new DecimalFormat("0.0000");
