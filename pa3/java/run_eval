@@ -1,0 +1,1 @@
+java -server -mx2000m -cp classes cs224n.assignments.MaximumEntropyClassifierTester /Users/$USER/CS224N/pa3/data/ner/genia
