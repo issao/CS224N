@@ -1,9 +1,13 @@
 package cs224n.assignments;
 
-import cs224n.classify.*;
-import cs224n.util.Counter;
-
 import java.util.List;
+import java.util.Map;
+
+import cs224n.classify.ClassifierFactory;
+import cs224n.classify.Datum;
+import cs224n.classify.LabeledDatum;
+import cs224n.classify.ProbabilisticClassifier;
+import cs224n.util.Counter;
 
 /**
  * @author Dan Klein
@@ -31,7 +35,6 @@ public class MostFrequentLabelClassifier<F,L> implements ProbabilisticClassifier
   public Counter<L> getLogProbabilities(Datum<F> datum) {
     throw new UnsupportedOperationException();
   }
-
   
   public L getLabel(Datum<F> datum) {
     return mostFrequentLabel;

@@ -1,5 +1,6 @@
 package cs224n.assignments;
 
+import cs224n.assignments.MaximumEntropyClassifierTester.MaximumEntropyClassifier.IndexLinearizer;
 import cs224n.classify.*;
 import cs224n.math.*;
 import cs224n.util.*;
@@ -480,11 +481,22 @@ public class MaximumEntropyClassifierTester {
     // add feature for previous label:
     features.add("PREV_LABEL-" + prevLabel);
 
+    // is the word all caps:
+    if (!word.toLowerCase().equals(word)) {
+      features.add("NOT_ALL_LOWER_CASE");
+    }
+    if (word.toUpperCase().equals(word)) {
+      features.add("ALL_UPPER_CASE");
+    }
+    if (word.charAt(0) < 'a') {  // Upper case letter or numbers
+      features.add("[A-Z0-9].*");
+    }
+    
+    
     // TODO : extract better features!
-    // TODO
-    // TODO
-    // TODO
-
+    
+    
+    
     return features;
   }
 
@@ -691,6 +703,21 @@ public class MaximumEntropyClassifierTester {
         System.out.print(sentence.get(i) + "\t");
         System.out.print(goldLabels.get(i) + "\t");
         System.out.println(guessedLabels.get(i));
+      }
+    }
+    MaximumEntropyClassifier<String, String> classifier = (MaximumEntropyClassifier<String, String>) maximumEntropyClassifier;
+    for (int labelIndex = 0; labelIndex < classifier.indexLinearizer.numLabels; labelIndex++) {
+      PriorityQueue<String> queue = new PriorityQueue<String>();
+      for (int featureIndex = 0; featureIndex < classifier.indexLinearizer.numFeatures; featureIndex++) {
+        queue.add(classifier.encoding.getFeature(featureIndex),
+            classifier.weights[classifier.indexLinearizer.getLinearIndex(
+                featureIndex, labelIndex)]);
+      }
+      System.err.println("Label '" + classifier.encoding.getLabel(labelIndex)
+          + "':");
+      for (int i = 0; i < 10 && queue.hasNext(); i++) {
+        double priority = queue.getPriority();
+        System.err.println("     " + queue.next() + ": " + priority);
       }
     }
   }
