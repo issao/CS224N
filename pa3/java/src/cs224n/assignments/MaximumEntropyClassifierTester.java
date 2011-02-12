@@ -491,42 +491,17 @@ public class MaximumEntropyClassifierTester {
 
     // add feature for the label:
     String word = sentence.get(position);
-    features.add("WORD-" + word);
 
     // add feature for previous label:
     features.add("PREV_LABEL-" + prevLabel);
 
-    // same-word features.
-    addRegEx(features, word, "[\\d]");
-    addRegEx(features, word, "^[ACTGactg]+$");
-    addRegEx(features, word, "ase$");
-    addRegEx(features, word, "in$");
-    addRegEx(features, word, "ine$");
-    addRegEx(features, word, "phage$");
-    addRegEx(features, word, "^[\\d]");
-    addRegEx(features, word, "-");
-    addRegEx(features, word, "[A-Z]");
-    addRegEx(features, word, "[0-9]");
-    addRegEx(features, word, "[A-Z0-9]");
-    addRegEx(features, word, "^[A-Z]");
-    addRegEx(features, word, "^[a-z][A-Z]");
-    addRegEx(features, word, "alpha", "beta", "gamma", "delta", "eta", "zeta", "kappa", "epsilon", "rho", "sigma", "omega");
-    addRegEx(features, word, "[()]");
-    addRegEx(features, word, "[^A-Za-z]");
-    addRegEx(features, word, "[^A-Za-z0-9]");
-    addRegEx(features, word, "^[^a-z]+$");
-    addRegEx(features, word, "cytes$");
+    addWordFeatures(features, word, "");
     
-    
-    addLengthFeature(features, word, 1);
-    addLengthFeature(features, word, 2);
-    addLengthFeature(features, word, 3);
-
     if (position < (sentence.size() - 1)) {
-      features.add("NEXT_WORD-" + sentence.get(position + 1));
+      addWordFeatures(features, sentence.get(position + 1), "NEXT-");
     }
     if (position > 0) {
-      features.add("PRE_WORD-" + sentence.get(position - 1));
+      addWordFeatures(features, sentence.get(position - 1), "PREV-");
     }
 
     
@@ -534,18 +509,44 @@ public class MaximumEntropyClassifierTester {
 
     return features;
   }
+  
+  private static void addWordFeatures(List<String> features, String word, String prefix) {
+    features.add(prefix + "WORD-" + word);
+    addRegEx(features, word, prefix, "[\\d]");
+    addRegEx(features, word, prefix, "^[ACTGactg]+$");
+    addRegEx(features, word, prefix, "ase$");
+    addRegEx(features, word, prefix, "in$");
+    addRegEx(features, word, prefix, "ine$");
+    addRegEx(features, word, prefix, "phage$");
+    addRegEx(features, word, prefix, "^[\\d]");
+    addRegEx(features, word, prefix, "-");
+    addRegEx(features, word, prefix, "[A-Z]");
+    addRegEx(features, word, prefix, "[0-9]");
+    addRegEx(features, word, prefix, "[A-Z0-9]");
+    addRegEx(features, word, prefix, "^[A-Z]");
+    addRegEx(features, word, prefix, "^[a-z][A-Z]");
+    addRegEx(features, word, prefix, "alpha", "beta", "gamma", "delta", "eta", "zeta", "kappa", "epsilon", "rho", "sigma", "omega");
+    addRegEx(features, word, prefix, "[()]");
+    addRegEx(features, word, prefix, "[^A-Za-z]");
+    addRegEx(features, word, prefix, "[^A-Za-z0-9]");
+    addRegEx(features, word, prefix, "^[^a-z]+$");
+    addRegEx(features, word, prefix, "cytes$");
+    addLengthFeature(features, word, prefix, 1);
+    addLengthFeature(features, word, prefix, 2);
+    addLengthFeature(features, word, prefix, 3);
+  }
 
-  private static void addLengthFeature(List<String> features, String word, int n) {
+  private static void addLengthFeature(List<String> features, String word, String prefix, int n) {
     if (word.length() == n) {
-      features.add("LENGHT-" + n);
+      features.add(prefix + "LENGTH-" + n);
     }
   }
 
-  private static void addRegEx(List<String> features, String word,
+  private static void addRegEx(List<String> features, String prefix, String word,
       String... regexs) {
     for (String regex : regexs) {
       if (word.matches(regex)) {
-        features.add("REGEX-" + regexs.toString());
+        features.add(prefix + "REGEX-" + regexs.toString());
         return;
       }
     }
