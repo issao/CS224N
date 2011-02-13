@@ -60,7 +60,7 @@ public class PCFGParserTester {
     public void train(List<Tree<String>> trainTrees) {
       List<Tree<String>> binarizedTrees = new ArrayList<Tree<String>>();
       for (Tree<String> tree : trainTrees) {
-        binarizedTrees.add(TreeAnnotations.binarizeTree(tree));
+        binarizedTrees.add(TreeAnnotations.annotateTree(tree));
       }
       lexicon = new Lexicon(binarizedTrees);
       grammar = new Grammar(binarizedTrees);
@@ -332,11 +332,26 @@ public class PCFGParserTester {
       // TODO: change the annotation from a lossless binarization to a
       // finite-order markov process (try at least 1st and 2nd order)
 
-      // TODO : mark nodes with the label of their parent nodes, giving a second
-      // order vertical markov process
+      return binarizeTree(verticallyMarkovize(unAnnotatedTree));
 
-      return binarizeTree(unAnnotatedTree);
+    }
 
+    private static Tree<String> verticallyMarkovize(Tree<String> tree,
+        String suffix) {
+      if (tree.isLeaf()) {
+        return tree;
+      } else {
+        List<Tree<String>> newChildren = new ArrayList<Tree<String>>();
+        for (Tree<String> child : tree.getChildren()) {
+          newChildren.add(verticallyMarkovize(child, "-^" + tree.getLabel()));
+        }
+
+        return new Tree<String>(tree.getLabel() + suffix, newChildren);
+      }
+    }
+
+    private static Tree<String> verticallyMarkovize(Tree<String> tree) {
+      return verticallyMarkovize(tree, "");
     }
 
     private static Tree<String> binarizeTree(Tree<String> tree) {
