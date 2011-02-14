@@ -494,46 +494,44 @@ public class MaximumEntropyClassifierTester {
     features.add("PREV_LABEL-" + prevLabel);
 
     addWordFeatures(features, word, "");
-//    if (position < (sentence.size() - 1)) {
-//      addWordFeatures(features, sentence.get(position + 1), "NEXT-");
-//    }
-//    if (position > 0) {
-//      addWordFeatures(features, sentence.get(position - 1), "PREV-");
-//    }
-//
-//    addWordFeatures(features, word, prevLabel + "-");
-//    if (position < (sentence.size() - 1)) {
-//      addWordFeatures(features, sentence.get(position + 1), prevLabel + "-NEXT-");
-//    }
-//    if (position > 0) {
-//      addWordFeatures(features, sentence.get(position - 1), prevLabel + "-PREV-");
-//    }
-//    
-    // TODO : extract better features!
+    if (position < (sentence.size() - 1)) {
+      addWordFeatures(features, sentence.get(position + 1), "NEXT-");
+    }
+    if (position > 0) {
+      addWordFeatures(features, sentence.get(position - 1), "PREV-");
+    }
 
+    addWordFeatures(features, word, prevLabel + "-");
+    if (position < (sentence.size() - 1)) {
+      addWordFeatures(features, sentence.get(position + 1), prevLabel + "-NEXT-");
+    }
+    if (position > 0) {
+      addWordFeatures(features, sentence.get(position - 1), prevLabel + "-PREV-");
+    }
+    
     return features;
   }
   
   private static void addWordFeatures(List<String> features, String word, String prefix) {
     features.add(prefix + "WORD-" + word);
-//    addRegEx(features, word, prefix, "^[ACTGactg]+$");
-//    addRegEx(features, word, prefix, "ase$");
-//    addRegEx(features, word, prefix, "cytes$");
-//    addRegEx(features, word, prefix, "in$");
-//    addRegEx(features, word, prefix, "ine$");
-//    addRegEx(features, word, prefix, "phage$");
-//    addRegEx(features, word, prefix, "^[\\d]");
-//    addRegEx(features, word, prefix, "-");
-//    addRegEx(features, word, prefix, "[A-Z]");
-//    addRegEx(features, word, prefix, "[\\d]");
-//    addRegEx(features, word, prefix, "[A-Z0-9]");
-//    addRegEx(features, word, prefix, "^[A-Z]");
-//    addRegEx(features, word, prefix, "^[a-z][A-Z]");
-//    addRegEx(features, word, prefix, "alpha", "beta", "gamma", "delta", "eta", "zeta", "kappa", "epsilon", "rho", "sigma", "omega");
-//    addRegEx(features, word, prefix, "[()]");
-//    addRegEx(features, word, prefix, "[^A-Za-z]");
-//    addRegEx(features, word, prefix, "[^A-Za-z0-9]");
-//    addRegEx(features, word, prefix, "^[^a-z]+$");
+    addRegEx(features, word, prefix, "^[ACTGactg]+$");
+    addRegEx(features, word, prefix, "ase$");
+    addRegEx(features, word, prefix, "in$");
+    addRegEx(features, word, prefix, "ine$");
+    addRegEx(features, word, prefix, "phage$");
+    addRegEx(features, word, prefix, "^[\\d]");
+    addRegEx(features, word, prefix, "-");
+    addRegEx(features, word, prefix, "[A-Z]");
+    addRegEx(features, word, prefix, "[\\d]");
+    addRegEx(features, word, prefix, "[A-Z0-9]");
+    addRegEx(features, word, prefix, "^[A-Z]");
+    addRegEx(features, word, prefix, "^[a-z][A-Z]");
+    addRegEx(features, word, prefix, "(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega)");
+    addRegEx(features, word, prefix, "[()]");
+    addRegEx(features, word, prefix, "[^A-Za-z]");
+    addRegEx(features, word, prefix, "[^A-Za-z0-9]");
+    addRegEx(features, word, prefix, "^[^a-z]+$");
+    addRegEx(features, word, prefix, "cytes$");
     addLengthFeature(features, word, prefix, 1);
     addLengthFeature(features, word, prefix, 2);
     addLengthFeature(features, word, prefix, 3);
@@ -545,13 +543,9 @@ public class MaximumEntropyClassifierTester {
     }
   }
 
-  private static void addRegEx(List<String> features, String prefix, String word,
-      String... regexs) {
-    for (String regex : regexs) {
-      if (word.matches(regex)) {
-        features.add(prefix + "REGEX-" + regexs.toString());
-        return;
-      }
+  private static void addRegEx(List<String> features, String word, String prefix, String regex) {
+    if (word.matches(regex)) {
+      features.add(prefix + "REGEX-" + regex);
     }
   }
 
