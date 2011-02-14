@@ -509,8 +509,6 @@ public class MaximumEntropyClassifierTester {
       addWordFeatures(features, sentence.get(position - 1), prevLabel + "-PREV-");
     }
     
-    // TODO : extract better features!
-
     return features;
   }
   
@@ -528,7 +526,7 @@ public class MaximumEntropyClassifierTester {
     addRegEx(features, word, prefix, "[A-Z0-9]");
     addRegEx(features, word, prefix, "^[A-Z]");
     addRegEx(features, word, prefix, "^[a-z][A-Z]");
-    addRegEx(features, word, prefix, "alpha", "beta", "gamma", "delta", "eta", "zeta", "kappa", "epsilon", "rho", "sigma", "omega");
+    addRegEx(features, word, prefix, "(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega)");
     addRegEx(features, word, prefix, "[()]");
     addRegEx(features, word, prefix, "[^A-Za-z]");
     addRegEx(features, word, prefix, "[^A-Za-z0-9]");
@@ -545,13 +543,9 @@ public class MaximumEntropyClassifierTester {
     }
   }
 
-  private static void addRegEx(List<String> features, String prefix, String word,
-      String... regexs) {
-    for (String regex : regexs) {
-      if (word.matches(regex)) {
-        features.add(prefix + "REGEX-" + regexs.toString());
-        return;
-      }
+  private static void addRegEx(List<String> features, String word, String prefix, String regex) {
+    if (word.matches(regex)) {
+      features.add(prefix + "REGEX-" + regex);
     }
   }
 
