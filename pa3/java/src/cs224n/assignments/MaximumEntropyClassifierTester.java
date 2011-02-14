@@ -516,7 +516,6 @@ public class MaximumEntropyClassifierTester {
   
   private static void addWordFeatures(List<String> features, String word, String prefix) {
     features.add(prefix + "WORD-" + word);
-    addRegEx(features, word, prefix, "[\\d]");
     addRegEx(features, word, prefix, "^[ACTGactg]+$");
     addRegEx(features, word, prefix, "ase$");
     addRegEx(features, word, prefix, "in$");
@@ -525,7 +524,7 @@ public class MaximumEntropyClassifierTester {
     addRegEx(features, word, prefix, "^[\\d]");
     addRegEx(features, word, prefix, "-");
     addRegEx(features, word, prefix, "[A-Z]");
-    addRegEx(features, word, prefix, "[0-9]");
+    addRegEx(features, word, prefix, "[\\d]");
     addRegEx(features, word, prefix, "[A-Z0-9]");
     addRegEx(features, word, prefix, "^[A-Z]");
     addRegEx(features, word, prefix, "^[a-z][A-Z]");
