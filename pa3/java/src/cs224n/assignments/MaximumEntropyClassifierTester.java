@@ -493,9 +493,9 @@ public class MaximumEntropyClassifierTester {
     // add feature for previous label:
     features.add("PREV_LABEL-" + prevLabel);
 
-    addContextSensitiveFeatures(features, sentence, position, "", true);
-    addContextSensitiveFeatures(features, sentence, position, prevLabel + "-", true);
-    addContextSensitiveFeatures(features, sentence, position, word + "-", false);
+//    addContextSensitiveFeatures(features, sentence, position, "", true);
+//    addContextSensitiveFeatures(features, sentence, position, prevLabel + "-", true);
+//    addContextSensitiveFeatures(features, sentence, position, word + "-", false);
 
     
     return features;
@@ -794,6 +794,23 @@ public class MaximumEntropyClassifierTester {
                 .getLinearIndex(featureIndex, labelIndex)]));
       }
     }
+    // Worst features
+    PriorityQueue<Integer> queue = new PriorityQueue<Integer>();
+    for (int linearIndex = 0; linearIndex < classifier.indexLinearizer.getNumLinearIndexes(); linearIndex++) {
+      queue.add(linearIndex, -1 * Math.abs(classifier.weights[linearIndex]));
+    }
+    System.err.println("Worst features");
+    for (int i = 0; i < 100 && queue.hasNext(); i++) {
+      int linearIndex = queue.next();
+      System.err.println("     "
+          + classifier.encoding.getFeature(classifier.indexLinearizer.getFeatureIndex(linearIndex))
+          + "-\t\t"
+          + classifier.encoding.getLabel(classifier.indexLinearizer.getLabelIndex(linearIndex))
+          + ":\t\t"
+          + nf.format(classifier.weights[linearIndex]));
+    }
+    
+    
     System.err.println("Number of features: " + classifier.indexLinearizer.numFeatures);
   }
 }
