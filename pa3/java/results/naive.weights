@@ -1,108 +1,109 @@
-/Users/issao/CS224N/pa3/data/ner/genia.train
+/afs/ir/class/cs224n/pa3/data/ner/genia.train
 Iteration 0 ended with value 484759.93530312594
 Iteration 1 ended with value 237495.3877425743
 Iteration 2 ended with value 216823.23432462144
 Iteration 3 ended with value 182798.50896062204
 Iteration 4 ended with value 175670.05906581238
-Iteration 5 ended with value 166230.9718837225
+Iteration 5 ended with value 166230.9718837223
 Iteration 6 ended with value 157373.81926621075
-Iteration 7 ended with value 149554.18054820746
-Iteration 8 ended with value 141464.9910598956
-Iteration 9 ended with value 134647.15490463463
-Iteration 10 ended with value 130848.312997486
-Iteration 11 ended with value 127031.46447207626
-Iteration 12 ended with value 123326.35913344797
-Iteration 13 ended with value 119470.1073934684
-Iteration 14 ended with value 115902.94492193882
-Iteration 15 ended with value 113835.54287732615
-Iteration 16 ended with value 112190.63649153826
-Iteration 17 ended with value 110819.48738791142
-Iteration 18 ended with value 109137.26441455293
-Iteration 19 ended with value 106737.10537567134
-Iteration 20 ended with value 102309.44623984917
-Iteration 21 ended with value 100163.19178864916
-Iteration 22 ended with value 98721.71892808497
-Iteration 23 ended with value 97986.9412767092
-Iteration 24 ended with value 95967.46542761556
-Iteration 25 ended with value 93977.86403114862
-Iteration 26 ended with value 93612.52974458116
-Iteration 27 ended with value 92753.86677902033
-Iteration 28 ended with value 92100.86152795347
-Iteration 29 ended with value 89812.38287334034
-Iteration 30 ended with value 88077.38764198333
-Iteration 31 ended with value 87361.46661232653
-Iteration 32 ended with value 87213.3411996542
-Iteration 33 ended with value 86735.55272363161
-Iteration 34 ended with value 85294.2749081427
-Iteration 35 ended with value 84912.58038728598
-Iteration 36 ended with value 83655.91425585195
-Iteration 37 ended with value 83501.16495149814
-Iteration 38 ended with value 82897.7673153019
-Iteration 39 ended with value 81684.29419468199
-/Users/issao/CS224N/pa3/data/ner/genia.test
+Iteration 7 ended with value 149554.18054820728
+Iteration 8 ended with value 141464.9910598954
+Iteration 9 ended with value 134647.1549046346
+Iteration 10 ended with value 130848.31299748589
+Iteration 11 ended with value 127031.46447207633
+Iteration 12 ended with value 123326.35913344834
+Iteration 13 ended with value 119470.10739346835
+Iteration 14 ended with value 115902.94492193898
+Iteration 15 ended with value 113835.54287732614
+Iteration 16 ended with value 112190.63649154299
+Iteration 17 ended with value 110819.48738791146
+Iteration 18 ended with value 109137.26441455174
+Iteration 19 ended with value 106737.10537567039
+Iteration 20 ended with value 102309.44623984705
+Iteration 21 ended with value 100163.19178865686
+Iteration 22 ended with value 98721.71892808376
+Iteration 23 ended with value 97986.94127670817
+Iteration 24 ended with value 95967.46542761591
+Iteration 25 ended with value 93977.86403114974
+Iteration 26 ended with value 93612.5297445791
+Iteration 27 ended with value 92753.86677902451
+Iteration 28 ended with value 92100.86152796114
+Iteration 29 ended with value 89812.38287335786
+Iteration 30 ended with value 88077.38764197822
+Iteration 31 ended with value 87361.46661232927
+Iteration 32 ended with value 87213.34119965312
+Iteration 33 ended with value 86735.55272363416
+Iteration 34 ended with value 85294.27490809635
+Iteration 35 ended with value 84912.58038731993
+Iteration 36 ended with value 83655.91425585086
+Iteration 37 ended with value 83501.16495147717
+Iteration 38 ended with value 82897.76731532555
+Iteration 39 ended with value 81684.29419582163
+/afs/ir/class/cs224n/pa3/data/ner/genia.test
 Label 'DNA':
-     PREV_LABEL-DNA: 9.519792002555345
-     WORD-LTR: 4.405097317631976
-     PREV_LABEL-protein: -4.347731449812874
-     PREV_LABEL-cell_type: -3.813141329095452
-     WORD-NF-kappa: 3.5847245136649177
-     PREV_LABEL-cell_line: -3.5602171293877793
-     PREV_LABEL-RNA: -3.1001878231827145
-     WORD-reporter: 3.0854519371746556
-     WORD-c-fos: 3.037764707467203
-     WORD-kappa: 3.0330794832895416
+     PREV_LABEL-DNA:		9.5198
+     WORD-LTR:		4.4051
+     PREV_LABEL-protein:		-4.3477
+     PREV_LABEL-cell_type:		-3.8131
+     WORD-NF-kappa:		3.5847
+     PREV_LABEL-cell_line:		-3.5602
+     PREV_LABEL-RNA:		-3.1002
+     WORD-reporter:		3.0855
+     WORD-c-fos:		3.0378
+     WORD-kappa:		3.0331
 Label 'O':
-     PREV_LABEL-protein: 11.660929732636447
-     WORD-.: 11.216027593255466
-     WORD-,: 10.683229292258936
-     WORD-in: 9.68214695289518
-     WORD-is: 9.640476984782246
-     WORD-was: 9.080386788165265
-     WORD-that: 8.628522721592482
-     WORD-by: 8.507637291093875
-     WORD-with: 8.348145324085563
-     WORD-the: 8.34686587136324
+     PREV_LABEL-protein:		11.6609
+     WORD-.:		11.2160
+     WORD-,:		10.6832
+     WORD-in:		9.6821
+     WORD-is:		9.6405
+     WORD-was:		9.0804
+     WORD-that:		8.6285
+     WORD-by:		8.5076
+     WORD-with:		8.3481
+     WORD-the:		8.3469
 Label 'protein':
-     PREV_LABEL-protein: 12.543748849638618
-     WORD-NF-kappaB: 5.75685134360069
-     WORD-NF-kappa: 5.335205856679426
-     WORD-cytokines: 5.142199732694551
-     WORD-CD40: 4.970136326413766
-     WORD-IL-10: 4.950794253625994
-     WORD-TNF-alpha: 4.802506108982179
-     WORD-IL-12: 4.374336437412591
-     WORD-is: -4.35068195485808
-     WORD-expression: -4.299013279328308
+     PREV_LABEL-protein:		12.5437
+     WORD-NF-kappaB:		5.7569
+     WORD-NF-kappa:		5.3352
+     WORD-cytokines:		5.1422
+     WORD-CD40:		4.9701
+     WORD-IL-10:		4.9508
+     WORD-TNF-alpha:		4.8025
+     WORD-IL-12:		4.3743
+     WORD-is:		-4.3507
+     WORD-expression:		-4.2990
 Label 'cell_type':
-     WORD-monocytes: 8.441415411328661
-     PREV_LABEL-cell_type: 7.204888648009645
-     PREV_LABEL-protein: -6.452722738211899
-     WORD-macrophages: 5.801598621795886
-     WORD-peripheral: 5.0656193920039785
-     WORD-PBMC: 5.051456058781102
-     WORD-lymphocytes: 4.5980280485540925
-     PREV_LABEL-DNA: -4.55075368793052
-     WORD-neutrophils: 4.524296230111767
-     PREV_LABEL-cell_line: -4.200382754171451
+     WORD-monocytes:		8.4414
+     PREV_LABEL-cell_type:		7.2049
+     PREV_LABEL-protein:		-6.4527
+     WORD-macrophages:		5.8016
+     WORD-peripheral:		5.0656
+     WORD-PBMC:		5.0515
+     WORD-lymphocytes:		4.5980
+     PREV_LABEL-DNA:		-4.5508
+     WORD-neutrophils:		4.5243
+     PREV_LABEL-cell_line:		-4.2004
 Label 'cell_line':
-     WORD-Jurkat: 8.06553853711978
-     PREV_LABEL-cell_line: 7.6942213050295605
-     PREV_LABEL-protein: -6.861394692856923
-     WORD-U937: 5.8614443033664045
-     WORD-THP-1: 5.237393854391234
-     PREV_LABEL-DNA: -4.542928707346637
-     PREV_LABEL-cell_type: -3.776018441660131
-     WORD-K562: 3.385214209116345
-     WORD-HeLa: 3.22553761223377
-     PREV_LABEL-RNA: -3.115267736707065
+     WORD-Jurkat:		8.0655
+     PREV_LABEL-cell_line:		7.6942
+     PREV_LABEL-protein:		-6.8614
+     WORD-U937:		5.8614
+     WORD-THP-1:		5.2374
+     PREV_LABEL-DNA:		-4.5429
+     PREV_LABEL-cell_type:		-3.7760
+     WORD-K562:		3.3852
+     WORD-HeLa:		3.2255
+     PREV_LABEL-RNA:		-3.1153
 Label 'RNA':
-     PREV_LABEL-RNA: 6.950372273119836
-     PREV_LABEL-protein: -6.542812918579062
-     WORD-mRNA: 5.985907487022568
-     PREV_LABEL-DNA: -4.545625233567426
-     PREV_LABEL-cell_type: -3.8317125028344536
-     PREV_LABEL-cell_line: -3.4809613422408954
-     PREV_LABEL-O: -2.0922207023644166
-     WORD-transcripts: 1.480664743288078
-     WORD-RNA: 1.4662885049503476
-     WORD-mRNAs: 1.3872237119342987
+     PREV_LABEL-RNA:		6.9504
+     PREV_LABEL-protein:		-6.5428
+     WORD-mRNA:		5.9859
+     PREV_LABEL-DNA:		-4.5456
+     PREV_LABEL-cell_type:		-3.8317
+     PREV_LABEL-cell_line:		-3.4810
+     PREV_LABEL-O:		-2.0922
+     WORD-transcripts:		1.4807
+     WORD-RNA:		1.4663
+     WORD-mRNAs:		1.3872
+Number of features: 19245
