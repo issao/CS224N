@@ -493,10 +493,9 @@ public class MaximumEntropyClassifierTester {
     // add feature for previous label:
     features.add("PREV_LABEL-" + prevLabel);
 
-//    addContextSensitiveFeatures(features, sentence, position, "", true);
-//    addContextSensitiveFeatures(features, sentence, position, prevLabel + "-", true);
-//    addContextSensitiveFeatures(features, sentence, position, word + "-", false);
-
+    addContextSensitiveFeatures(features, sentence, position, "", true);
+    addContextSensitiveFeatures(features, sentence, position, prevLabel + "-", true);
+    addContextSensitiveFeatures(features, sentence, position, word + "-", false);
     
     return features;
   }
