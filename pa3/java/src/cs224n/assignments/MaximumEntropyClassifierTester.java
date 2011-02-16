@@ -493,27 +493,43 @@ public class MaximumEntropyClassifierTester {
     // add feature for previous label:
     features.add("PREV_LABEL-" + prevLabel);
 
-    addWordFeatures(features, word, "");
-    if (position < (sentence.size() - 1)) {
-      addWordFeatures(features, sentence.get(position + 1), "NEXT-");
-    }
-    if (position > 0) {
-      addWordFeatures(features, sentence.get(position - 1), "PREV-");
-    }
+    addContextSensitiveFeatures(features, sentence, position, "", true);
+    addContextSensitiveFeatures(features, sentence, position, prevLabel + "-", true);
+    addContextSensitiveFeatures(features, sentence, position, word + "-", false);
 
-    addWordFeatures(features, word, prevLabel + "-");
-    if (position < (sentence.size() - 1)) {
-      addWordFeatures(features, sentence.get(position + 1), prevLabel + "-NEXT-");
-    }
-    if (position > 0) {
-      addWordFeatures(features, sentence.get(position - 1), prevLabel + "-PREV-");
-    }
     
     return features;
   }
   
-  private static void addWordFeatures(List<String> features, String word, String prefix) {
-    features.add(prefix + "WORD-" + word);
+  private static void addContextSensitiveFeatures(List<String> features,
+      List<String> sentence, int position, String prefix,
+      boolean includeWordFeature) {
+    if (includeWordFeature) {
+      addWordFeatures(features, sentence.get(position), prefix, includeWordFeature);
+    }
+    // 1-word distance
+    if (position < (sentence.size() - 1)) {
+      addWordFeatures(features, sentence.get(position + 1), prefix + "NEXT-", includeWordFeature);
+    }
+    if (position > 0) {
+      addWordFeatures(features, sentence.get(position - 1), prefix + "PREV-", includeWordFeature);
+    }
+    // 2-word distance
+    if (position < (sentence.size() - 2)) {
+      addWordFeatures(features, sentence.get(position + 2), prefix + "2NEXT-", includeWordFeature);
+    }
+    if (position > 1) {
+      addWordFeatures(features, sentence.get(position - 2), prefix + "2PREV-", includeWordFeature);
+    }
+  }
+
+  
+  private static void addWordFeatures(List<String> features, String word, String prefix, boolean includeWordFeature) {
+    if (includeWordFeature) features.add(prefix + "WORD-" + word);
+    addCheapWordFeatures(features, word, prefix);
+  }
+  
+  private static void addCheapWordFeatures(List<String> features, String word, String prefix) {
     addRegEx(features, word, prefix, "^[ACTGactg]+$");
     addRegEx(features, word, prefix, "ase$");
     addRegEx(features, word, prefix, "in$");
