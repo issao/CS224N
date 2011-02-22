@@ -1,2 +1,2 @@
 #!/bin/bash
-../java/run_eval 2> results/$1.weights | evalNER > results/$1.stats
+../java/run_eval 2> results/$1.weights | tee results/$1.labels | evalNER > results/$1.stats

@@ -493,48 +493,62 @@ public class MaximumEntropyClassifierTester {
     // add feature for previous label:
     features.add("PREV_LABEL-" + prevLabel);
 
-    addWordFeatures(features, word, "");
-    if (position < (sentence.size() - 1)) {
-      addWordFeatures(features, sentence.get(position + 1), "NEXT-");
-    }
-    if (position > 0) {
-      addWordFeatures(features, sentence.get(position - 1), "PREV-");
-    }
-
-    addWordFeatures(features, word, prevLabel + "-");
-    if (position < (sentence.size() - 1)) {
-      addWordFeatures(features, sentence.get(position + 1), prevLabel + "-NEXT-");
-    }
-    if (position > 0) {
-      addWordFeatures(features, sentence.get(position - 1), prevLabel + "-PREV-");
-    }
-    
-    // TODO : extract better features!
-
+    addContextSensitiveFeatures(features, sentence, position, "", true);
+    addContextSensitiveFeatures(features, sentence, position, prevLabel + "-", true);
+    addContextSensitiveFeatures(features, sentence, position, word + "-", false);
     return features;
   }
   
-  private static void addWordFeatures(List<String> features, String word, String prefix) {
-    features.add(prefix + "WORD-" + word);
-    addRegEx(features, word, prefix, "[\\d]");
+  private static void addContextSensitiveFeatures(List<String> features,
+      List<String> sentence, int position, String prefix,
+      boolean includeWordFeature) {
+    if (includeWordFeature) {
+      addWordFeatures(features, sentence.get(position), prefix, includeWordFeature);
+    }
+    // 1-word distance
+    if (position < (sentence.size() - 1)) {
+      addWordFeatures(features, sentence.get(position + 1), prefix + "NEXT-", includeWordFeature);
+    } else {
+      features.add(prefix + "ENDSENTENCE");
+    }
+    if (position > 0) {
+      addWordFeatures(features, sentence.get(position - 1), prefix + "PREV-", includeWordFeature);
+    } else {
+      features.add(prefix + "BEGINSENTENCE");
+    }
+    // 2-word distance
+    if (position < (sentence.size() - 2)) {
+      addWordFeatures(features, sentence.get(position + 2), prefix + "2NEXT-", includeWordFeature);
+    }
+    if (position > 1) {
+      addWordFeatures(features, sentence.get(position - 2), prefix + "2PREV-", includeWordFeature);
+    }
+  }
+
+  
+  private static void addWordFeatures(List<String> features, String word, String prefix, boolean includeWordFeature) {
+    if (includeWordFeature) features.add(prefix + "WORD-" + word);
+    addCheapWordFeatures(features, word, prefix);
+  }
+  
+  private static void addCheapWordFeatures(List<String> features, String word, String prefix) {
     addRegEx(features, word, prefix, "^[ACTGactg]+$");
     addRegEx(features, word, prefix, "ase$");
+    addRegEx(features, word, prefix, "cytes$");
     addRegEx(features, word, prefix, "in$");
     addRegEx(features, word, prefix, "ine$");
     addRegEx(features, word, prefix, "phage$");
     addRegEx(features, word, prefix, "^[\\d]");
-    addRegEx(features, word, prefix, "-");
+    addRegEx(features, word, prefix, "-\\d");
     addRegEx(features, word, prefix, "[A-Z]");
-    addRegEx(features, word, prefix, "[0-9]");
+    addRegEx(features, word, prefix, "/");
+    addRegEx(features, word, prefix, "[\\d]");
     addRegEx(features, word, prefix, "[A-Z0-9]");
     addRegEx(features, word, prefix, "^[A-Z]");
     addRegEx(features, word, prefix, "^[a-z][A-Z]");
-    addRegEx(features, word, prefix, "alpha", "beta", "gamma", "delta", "eta", "zeta", "kappa", "epsilon", "rho", "sigma", "omega");
+    addRegEx(features, word, prefix, "(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega)");
     addRegEx(features, word, prefix, "[()]");
-    addRegEx(features, word, prefix, "[^A-Za-z]");
     addRegEx(features, word, prefix, "[^A-Za-z0-9]");
-    addRegEx(features, word, prefix, "^[^a-z]+$");
-    addRegEx(features, word, prefix, "cytes$");
     addLengthFeature(features, word, prefix, 1);
     addLengthFeature(features, word, prefix, 2);
     addLengthFeature(features, word, prefix, 3);
@@ -546,13 +560,9 @@ public class MaximumEntropyClassifierTester {
     }
   }
 
-  private static void addRegEx(List<String> features, String prefix, String word,
-      String... regexs) {
-    for (String regex : regexs) {
-      if (word.matches(regex)) {
-        features.add(prefix + "REGEX-" + regexs.toString());
-        return;
-      }
+  private static void addRegEx(List<String> features, String word, String prefix, String regex) {
+    if (word.matches(regex)) {
+      features.add(prefix + "REGEX-" + regex);
     }
   }
 
@@ -785,6 +795,23 @@ public class MaximumEntropyClassifierTester {
                 .getLinearIndex(featureIndex, labelIndex)]));
       }
     }
+    // Worst features
+    PriorityQueue<Integer> queue = new PriorityQueue<Integer>();
+    for (int linearIndex = 0; linearIndex < classifier.indexLinearizer.getNumLinearIndexes(); linearIndex++) {
+      queue.add(linearIndex, -1 * Math.abs(classifier.weights[linearIndex]));
+    }
+    System.err.println("Worst features");
+    for (int i = 0; i < 100 && queue.hasNext(); i++) {
+      int linearIndex = queue.next();
+      System.err.println("     "
+          + classifier.encoding.getFeature(classifier.indexLinearizer.getFeatureIndex(linearIndex))
+          + "-\t\t"
+          + classifier.encoding.getLabel(classifier.indexLinearizer.getLabelIndex(linearIndex))
+          + ":\t\t"
+          + nf.format(classifier.weights[linearIndex]));
+    }
+    
+    
     System.err.println("Number of features: " + classifier.indexLinearizer.numFeatures);
   }
 }
