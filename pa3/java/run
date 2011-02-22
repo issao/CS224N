@@ -5,7 +5,7 @@
 DATA=miniTest
 DATA=genia
 
-java -server -mx500m -cp classes \
+java -ea -server -mx2000m -cp classes \
   cs224n.assignments.PCFGParserTester \
   -path /afs/ir/class/cs224n/pa3/data \
   -data $DATA \
