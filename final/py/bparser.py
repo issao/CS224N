@@ -10,7 +10,7 @@ def gettext(el):
   return ''.join([gettext(e) for e in el.contents])
 
 def decode(text):
-  return text.replace('&quot;', '"')
+  return text.encode('ascii', 'ignore').replace('&quot;', '"')
 
 def parse(doc, output):
   file = open(doc)
