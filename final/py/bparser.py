@@ -12,20 +12,21 @@ def gettext(el):
 def decode(text):
   return text.replace('&quot;', '"')
 
-def parse(doc):
+def parse(doc, output):
   file = open(doc)
+  outfile = open(output, 'w')
   root = BeautifulSoup(file.read())
   for foo in root.findAll('option'):
     foo.extract()
   for element in root.findAll('p'):
     if element.string:
-      print decode(element.string)
+      outfile.write(decode(element.string) + '\n')
     else:
      text = gettext(element)
      if text and string.count(re.sub('\s+', ' ', text), ' ') > 4:
-       print decode(text)
+       outfile.write(decode(text) + '\n')
 
-if len(sys.argv) < 2:
-  print "Please include a file to parse"
+if len(sys.argv) < 3:
+  print "Please include a file to parse and a destination file"
 else:
-  parse(sys.argv[1])
+  parse(sys.argv[1], sys.argv[2])
