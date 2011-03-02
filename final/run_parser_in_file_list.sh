@@ -1,8 +1,8 @@
 #!/bin/bash
 
-COMMAND="python ../../cs224n/final/py/bparser.py"
+COMMAND="python ${HOME}/cs224n/final/py/bparser.py"
 
-echo Printing extracted sentences to file $2
+echo Printing extracted sentences from files listed in $1 to file $2.
 
 touch $2
 for file in $(cat $1)
