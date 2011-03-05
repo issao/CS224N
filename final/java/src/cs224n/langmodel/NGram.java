@@ -1,12 +1,17 @@
 package cs224n.langmodel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-public abstract class NGram implements LanguageModel {
+public abstract class NGram implements LanguageModel, Serializable {
   
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -1932918303961843173L;
   public static final String START = "<S>";
   public static final String STOP = "</S>";
   public static final String UNKNOWN = "<UNK/>";

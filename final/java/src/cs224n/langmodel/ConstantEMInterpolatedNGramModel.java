@@ -1,5 +1,6 @@
 package cs224n.langmodel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -10,8 +11,12 @@ import java.util.Set;
 
 import cs224n.util.Counter;
 
-public class ConstantEMInterpolatedNGramModel extends NGram implements TunableModel {
+public class ConstantEMInterpolatedNGramModel extends NGram implements TunableModel, Serializable {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -405863396361059062L;
   private static final double MINIMUM_ENTROPY_STEP = 0.01;
   private static final int NUMBER_ITERATIONS = 10;
   private List<NGram> models;

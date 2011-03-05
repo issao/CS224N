@@ -1,9 +1,15 @@
 package cs224n.langmodel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ZipfChimeraInterpolatedTriGramModel extends ConstantEMInterpolatedNGramModel {
+public class ZipfChimeraInterpolatedTriGramModel extends ConstantEMInterpolatedNGramModel implements Serializable {
+
+  /**
+   * 
+   */
+  private static final long serialVersionUID = -1790054240678057591L;
 
   public ZipfChimeraInterpolatedTriGramModel() {
     super(createModelList(), 3);
