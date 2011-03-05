@@ -89,14 +89,14 @@ public class LanguageModelTester {
     System.out.println("Testing data will be read from  " + testFile + "\n");
     Collection<List<String>> testSentences = Sentences.Reader
         .readSentences(testFile);
-    String serialName = options.get("-model") + ":" + options.get("-train") + ":" + options.get("-valid");
+    String serialName = "models/" + options.get("-model") + ":" + options.get("-train") + ":" + options.get("-valid");
 
     // construct model, using reflection ...................................
     System.out.println();
     LanguageModel model;
     if ("true".equals(options.get("-loadserial"))) {
       System.out.print("Deserializing model [" + serialName +"] ...");
-      long now = System.currentTimeMillis();
+      long now = System.currentTimeMillis();  
       FileInputStream fis = new FileInputStream(serialName);
       ObjectInputStream in = new ObjectInputStream(fis);
       model = (LanguageModel) in.readObject();
@@ -166,7 +166,8 @@ public class LanguageModelTester {
     // trainSentences.size() is slow, because disk-backed!!!
     // " on " + trainSentences.size() + " sentences" +
         " from " + trainFile + " ... ");
-     model.train(trainSentences);
+    long startTrain = System.currentTimeMillis();
+    model.train(trainSentences);
     System.out.println("done\n");
 
     // tune model....
@@ -175,6 +176,8 @@ public class LanguageModelTester {
       ((TunableModel) model).tune(validSentences);
       System.out.println("done\n");
     }
+
+    System.out.println("Training done! " + (System.currentTimeMillis() - startTrain) + "ms ");
 
     if ("true".equals(options.get("-serialize"))) {
       System.out.print("Serializing model [" + serialName + "] ...");
