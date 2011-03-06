@@ -129,27 +129,35 @@ public class LanguageModelTester {
     System.out.println(nf.format(computePerplexity(model, validSentences)));
 
     // generate sentences from model .......................................
+    List<Double> perplexities = new ArrayList<Double>();
+    List<String> labels = new ArrayList<String>();
     if (options.get("-test") != null) {
       String testParam = options.get("-test");
       for (String oneTest : testParam.split(",")) {
         String testFile = dataPath + "/" + oneTest;
-        System.out
-            .println("Testing data will be read from  " + testFile + "\n");
+        System.out.println("Testing data will be read from  " + testFile + "\n");
         Collection<List<String>> testSentences = Sentences.Reader
             .readSentences(testFile);
         System.out.printf("%-30s", "Test set perplexity: ");
-        System.out.println(nf.format(computePerplexity(model, testSentences)));
-
-        if ("true".equals(options.get("-generate"))) {
-          System.out.println();
-          System.out.println("Generated sentences:");
-          for (int i = 0; i < 10; i++) {
-            List<String> sentence = model.generateSentence();
-            System.out.println("  " + sentence);
-            if (model instanceof NGram) {
-              // SentencePrinter.print(sentence, (NGram) model);
-            }
-          }
+        double perp = computePerplexity(model, testSentences);
+        perplexities.add(perp);
+        labels.add(oneTest);
+        System.out.println(nf.format(perp));   
+      }
+    }
+    FileWriter fw = new FileWriter(serialName + ".result");
+    for (int i = 0; i < perplexities.size(); i++) {
+      System.out.println(perplexities.get(i));
+      fw.write(perplexities.get(i) +",");
+    }
+    if ("true".equals(options.get("-generate"))) {
+      System.out.println();
+      System.out.println("Generated sentences:");
+      for (int i = 0; i < 10; i++) {
+        List<String> sentence = model.generateSentence();
+        System.out.println("  " + sentence);
+        if (model instanceof NGram) {
+          // SentencePrinter.print(sentence, (NGram) model);
         }
       }
     }
