@@ -18,11 +18,14 @@ def gettext(el):
 
 def predecode(text):
   return re.sub(
-      'https?://[^\s]*',
-      '[URL]',
-      re.sub(
       '[\t\r\f\v ]+', ' ',
-      text.encode('ascii', 'ignore').replace('"', '').replace('*', '')).strip().lower())
+      re.sub(
+          '(?P<match>[\.\?!,\']+)[ $]', ' \g<match> ',
+          re.sub(
+              '[^a-z,\?\!\'0-9\$\.\s\[\]]+', ' ',
+              re.sub(
+                  'https?://[^\s]*', '[URL]',
+                  text.encode('ascii', 'ignore').strip().lower()))))
 
 
 def outputParsedText(raw_text, outfile):
@@ -33,7 +36,7 @@ def outputParsedText(raw_text, outfile):
   if string.count(re.sub('\s+', ' ', text), ' ') < 10:
     return
   # Get rid of single sentences.
-  if string.count(re.sub('\.\.\.', '.', text), '. ') < 2:
+  if string.count(text, '. ') < 2:
     return
   # Split by line first.
   for line in text.split('\n'):
