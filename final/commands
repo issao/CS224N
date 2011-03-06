@@ -1,0 +1,4 @@
+wget -r -l inf -D foxnews.com www.foxnews.com -olog -X on-air -R png,jpg,jpeg
+wget -r -l inf -D www.barackobama.com,my.barackobama.com www.barackobama.com -R png,jpg,jpeg,js,gif -olog-obama
+find www.cnn.com/. -type f -print > cnnfiles
+
