@@ -76,7 +76,6 @@ public class LanguageModelTester {
     String dataPath = options.get("-data");
     String trainFile = dataPath + "/" + options.get("-train");
     String validFile = dataPath + "/" + options.get("-valid");
-    String testFile = dataPath + "/" + options.get("-test");
 
     // load sentence data ..................................................
     System.out.println("Training data will be read from " + trainFile);
@@ -131,21 +130,26 @@ public class LanguageModelTester {
 
     // generate sentences from model .......................................
     if (options.get("-test") != null) {
-      System.out.println("Testing data will be read from  " + testFile + "\n");
-      Collection<List<String>> testSentences = Sentences.Reader
-          .readSentences(testFile);
-      System.out.printf("%-30s", "Test set perplexity: ");
-      System.out.println(nf.format(computePerplexity(model, testSentences)));
-    }
+      String testParam = options.get("-test");
+      for (String oneTest : testParam.split(",")) {
+        String testFile = dataPath + "/" + oneTest;
+        System.out
+            .println("Testing data will be read from  " + testFile + "\n");
+        Collection<List<String>> testSentences = Sentences.Reader
+            .readSentences(testFile);
+        System.out.printf("%-30s", "Test set perplexity: ");
+        System.out.println(nf.format(computePerplexity(model, testSentences)));
 
-    if ("true".equals(options.get("-generate"))) {
-      System.out.println();
-      System.out.println("Generated sentences:");
-      for (int i = 0; i < 10; i++) {
-        List<String> sentence = model.generateSentence();
-        System.out.println("  " + sentence);
-        if (model instanceof NGram) {
-          // SentencePrinter.print(sentence, (NGram) model);
+        if ("true".equals(options.get("-generate"))) {
+          System.out.println();
+          System.out.println("Generated sentences:");
+          for (int i = 0; i < 10; i++) {
+            List<String> sentence = model.generateSentence();
+            System.out.println("  " + sentence);
+            if (model instanceof NGram) {
+              // SentencePrinter.print(sentence, (NGram) model);
+            }
+          }
         }
       }
     }
