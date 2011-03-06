@@ -1183,7 +1183,10 @@ class BeautifulStoneSoup(Tag, SGMLParser):
                 del(self.markupMassage)
         self.reset()
 
-        SGMLParser.feed(self, markup)
+        if markup:
+          SGMLParser.feed(self, markup)
+        else:
+          SGMLParser.feed(self, "")
         # Close out any unfinished strings and close all the open tags.
         self.endData()
         while self.currentTag.name != self.ROOT_TAG_NAME:

@@ -2,12 +2,13 @@
 
 COMMAND="python ${HOME}/cs224n/final/py/bparser.py"
 
-echo Printing extracted sentences from files listed in $1 to file $2.
+echo Printing extracted sentences from directory $1 to file $2.
 
 touch $2
-for file in $(cat $1)
+for file in $(find $1 -type f -print)
 do
-  rm -f tmpfile-$1
-  $COMMAND $file tmpfile-$1
-  cat tmpfile-$1 >> $2
+  TMPFILE=$(mktemp)
+  $COMMAND $file $TMPFILE
+  cat $TMPFILE >> $2
+  rm $TMPFILE
 done
