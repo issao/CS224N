@@ -64,4 +64,13 @@ if len(sys.argv) < 3:
 else:
   for root, _, files in os.walk(sys.argv[1]):
     for f in files:
-      parse(os.path.join(root, f), sys.argv[2])
+      skip = false
+      for end in ['pdf', 'swf', 'doc', 'gif', 'png', 'jpg', 'jpeg', 'js', 'css']:
+        if f.endswith('.' + end):
+          skip = true
+          break
+      if not skip:
+        parse(os.path.join(root, f), sys.argv[2] + '.all')
+        for topic in ['politics', 'us', 'world', 'health', 'entertainment', 'tech']:
+          if root.lower().count('topic'):
+            parse(os.path.join(root, f), sys.argv[2] + '.' + topic)
