@@ -24,7 +24,7 @@ def predecode(text):
           re.sub(
               '[^a-z,\?\!\'0-9\$\.\s\[\]]+', ' ',
               re.sub(
-                  'https?://[^\s]*', '[URL]',
+                  'https?://[^\s]*', '[url]',
                   text.encode('ascii', 'ignore').strip().lower()))))
 
 
@@ -69,8 +69,9 @@ def outputParsedTextFromLine(text, outfile):
 def parse(doc, output):
   file = open(doc)
   outfile = open(output, 'a+')
+  # outfile.write('<<<<<<From file %s>>>>>>\n' % doc)
   root = BeautifulSoup(file.read(), convertEntities=BeautifulSoup.HTML_ENTITIES)
-  for foo in root.findAll(['option', 'style', 'script']):
+  for foo in root.findAll(['option', 'style', 'script', 'meta', 'head']):
     foo.extract()
   for element in root.findAll('p'):
     outputParsedText(gettext(element), outfile)
