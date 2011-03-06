@@ -7,7 +7,7 @@ echo Printing extracted sentences from files listed in $1 to file $2.
 touch $2
 for file in $(cat $1)
 do
-  rm -f tmpfile
-  $COMMAND $file tmpfile
-  cat tmpfile >> $2
+  rm -f tmpfile-$1
+  $COMMAND $file tmpfile-$1
+  cat tmpfile-$1 >> $2
 done
