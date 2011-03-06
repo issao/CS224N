@@ -48,20 +48,19 @@ public class LanguageModelTester {
    * then computes the perplexity of the test data w.r.t. the model, the
    * perplexity of the correct answers to the Enron problems w.r.t. to the
    * model, and the word error rate of unscrambling the jumbled sentences.
-   * @throws ClassNotFoundException 
+   * 
+   * @throws ClassNotFoundException
    */
-  public static void main(String[] args) throws IOException, ClassNotFoundException {
+  public static void main(String[] args) throws IOException,
+      ClassNotFoundException {
 
     // set up default options ..............................................
     Map<String, String> options = new HashMap<String, String>();
     options.put("-data", "/afs/ir/class/cs224n/pa1/data");
     options.put("-train", "europarl-train.sent.txt");
     options.put("-valid", "europarl-validate.sent.txt");
-    options.put("-test", "europarl-test.sent.txt");
-    options.put("-model", "cs224n.langmodel.EmpiricalUnigramLanguageModel");
-    options.put("-showguesses", "false"); // show rebuilt Enron emails?
-    options.put("-jumble", "false"); // run Jumble (Enron) evaluation?
-    options.put("-baselines", "true"); // compute WER baselines?
+    options.put("-model",
+        "cs224n.langmodel.ZipfChimeraInterpolatedTriGramModel");
     options.put("-generate", "true"); // generate some sentences?
     options.put("-check", "true"); // check probabilities sum to 1
 
@@ -86,25 +85,25 @@ public class LanguageModelTester {
     System.out.println("Validation data will be read from " + validFile);
     Collection<List<String>> validSentences = Sentences.Reader
         .readSentences(validFile);
-    System.out.println("Testing data will be read from  " + testFile + "\n");
-    Collection<List<String>> testSentences = Sentences.Reader
-        .readSentences(testFile);
-    String serialName = "models/" + options.get("-model") + ":" + options.get("-train") + ":" + options.get("-valid");
+    String serialName = "models/" + options.get("-model") + ":"
+        + options.get("-train") + ":" + options.get("-valid");
 
     // construct model, using reflection ...................................
     System.out.println();
     LanguageModel model;
     if ("true".equals(options.get("-loadserial"))) {
-      System.out.print("Deserializing model [" + serialName +"] ...");
-      long now = System.currentTimeMillis();  
+      System.out.print("Deserializing model [" + serialName + "] ...");
+      long now = System.currentTimeMillis();
       FileInputStream fis = new FileInputStream(serialName);
       ObjectInputStream in = new ObjectInputStream(fis);
       model = (LanguageModel) in.readObject();
       in.close();
-      System.out.println(" Done! " + (System.currentTimeMillis() - now) + "ms ");
+      System.out
+          .println(" Done! " + (System.currentTimeMillis() - now) + "ms ");
 
     } else {
-      model = trainModel(options, trainFile, serialName, trainSentences, validSentences);
+      model = trainModel(options, trainFile, serialName, trainSentences,
+          validSentences);
     }
 
     // check if the probability distribution of the model sums up properly
@@ -130,10 +129,15 @@ public class LanguageModelTester {
     System.out.printf("%-30s", "Validation set perplexity: ");
     System.out.println(nf.format(computePerplexity(model, validSentences)));
 
-    System.out.printf("%-30s", "Test set perplexity: ");
-    System.out.println(nf.format(computePerplexity(model, testSentences)));
-
     // generate sentences from model .......................................
+    if (options.get("-test") != null) {
+      System.out.println("Testing data will be read from  " + testFile + "\n");
+      Collection<List<String>> testSentences = Sentences.Reader
+          .readSentences(testFile);
+      System.out.printf("%-30s", "Test set perplexity: ");
+      System.out.println(nf.format(computePerplexity(model, testSentences)));
+    }
+
     if ("true".equals(options.get("-generate"))) {
       System.out.println();
       System.out.println("Generated sentences:");
@@ -145,22 +149,23 @@ public class LanguageModelTester {
         }
       }
     }
-
   }
 
   private static LanguageModel trainModel(Map<String, String> options,
-      String trainFile, String serialName, Collection<List<String>> trainSentences,
-      Collection<List<String>> validSentences)
-      throws FileNotFoundException, IOException {
+      String trainFile, String serialName,
+      Collection<List<String>> trainSentences,
+      Collection<List<String>> validSentences) throws FileNotFoundException,
+      IOException {
     LanguageModel model;
     try {
-      @SuppressWarnings("unchecked")
+      @SuppressWarnings("rawtypes")
       Class modelClass = Class.forName(options.get("-model"));
       model = (LanguageModel) modelClass.newInstance();
     } catch (Exception e) {
       throw new RuntimeException(e);
-    }    System.out.println("Created model: " + model);
-    
+    }
+    System.out.println("Created model: " + model);
+
     // train model .........................................................
     System.out.print("Training model" +
     // trainSentences.size() is slow, because disk-backed!!!
@@ -177,7 +182,8 @@ public class LanguageModelTester {
       System.out.println("done\n");
     }
 
-    System.out.println("Training done! " + (System.currentTimeMillis() - startTrain) + "ms ");
+    System.out.println("Training done! "
+        + (System.currentTimeMillis() - startTrain) + "ms ");
 
     if ("true".equals(options.get("-serialize"))) {
       System.out.print("Serializing model [" + serialName + "] ...");
@@ -186,7 +192,8 @@ public class LanguageModelTester {
       ObjectOutputStream out = new ObjectOutputStream(fos);
       out.writeObject(model);
       out.close();
-      System.out.println(" Done! " + (System.currentTimeMillis() - now) + "ms ");
+      System.out
+          .println(" Done! " + (System.currentTimeMillis() - now) + "ms ");
     }
     return model;
   }
