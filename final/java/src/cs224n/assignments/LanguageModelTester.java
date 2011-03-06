@@ -150,6 +150,7 @@ public class LanguageModelTester {
       System.out.println(perplexities.get(i));
       fw.write(perplexities.get(i) +",");
     }
+    fw.close();
     if ("true".equals(options.get("-generate"))) {
       System.out.println();
       System.out.println("Generated sentences:");
