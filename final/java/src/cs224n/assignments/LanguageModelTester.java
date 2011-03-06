@@ -146,9 +146,12 @@ public class LanguageModelTester {
       }
     }
     FileWriter fw = new FileWriter(serialName + ".result");
-    for (int i = 0; i < perplexities.size(); i++) {
-      System.out.println(perplexities.get(i));
-      fw.write(perplexities.get(i) +",");
+    for (String label : labels) {
+      fw.write(label +",");
+    }
+    fw.write("\n");
+    for (double perp : perplexities) {
+      fw.write(nf.format(perp) +",");
     }
     fw.close();
     if ("true".equals(options.get("-generate"))) {
