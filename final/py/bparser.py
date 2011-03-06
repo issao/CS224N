@@ -46,6 +46,20 @@ def outputParsedTextFromLine(text, outfile):
     return
   if text.count('copyright'):
     return
+  if text.count('current browser'):
+    return
+  if text.count('all rights reserved'):
+    return
+  if text.count('privacy statement'):
+    return
+  if text.count('paid for by'):
+    return
+  if text.count('terms of service'):
+    return
+  if text.count('we are not liable'):
+    return
+  if text.count('we experienced an error'):
+    return
   outfile.write(text + '\n')
 
 
