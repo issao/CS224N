@@ -1,1 +1,52 @@
-Final project code.
+CS224n final project
+Yaron Friedman and Issao Fujiwara
+
+Our project consists of these main parts:
+
+- Data crawling.
+The relevant set of commands we used are in crawled/crawl.sh. Executing
+that command will fire off several recursive wgets. These step took about
+~4 hours to gather the data that we finally used
+
+
+- Mining relevant English text form articles.
+
+The script we used to extract relevant English text from the crawled
+corpora is at py/bparser.py, which depends on the Beautiful Soup HTML
+parser library, included in the same directory.
+
+Assuming you've ran all the crawling described in crawl.sh, and all the
+crawled directories are in the current directory, the following command
+extracts the English text we used from the raw crawled html:
+
+cat sources | ./run_parser.sh
+
+
+- Creating training and tuning data for the language models.
+
+This just involved splitting the input files in a train set with 90% of
+the lines and a tune set with the other 10% of the lines. We used the
+following scripts:
+./create_train_and_tune_data.sh  # Creates the 'splits' file
+cat splits | ./partition.sh  # Creates .tune and .train files.
+
+
+- Training language models using the corpora generated above and evaluating
+every other corpora with it.
+
+We reused the language models we built in PA1, with some modifications to
+make the language model trained with each corpora evaluate the perplexity
+of each other corpora. The java code is all under the java/ directory.
+
+First, build our Java code:
+cd java
+ant
+# TODO fill this in
+./run -train [corpora] -test [comma separated list of corpora]
+
+
+- Performing clustering analysis using MATLAB
+
+- Identifying unigrams with most varying frequencies across all corpora
+
+- Performing a similar clustering analysis using these unigrams.
