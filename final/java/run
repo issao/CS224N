@@ -5,7 +5,7 @@
 java -mx3000m -cp classes \
   cs224n.assignments.LanguageModelTester \
   -model cs224n.langmodel.ZipfChimeraInterpolatedTriGramModel \
-  -data      /usr/local/google/cs224n/crawled/crawled/parsed \
+  -data      ../data/parsed \
   -train     europarl-train.sent.txt \
   -generate  true \
   -serialize true \
