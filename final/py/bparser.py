@@ -1,4 +1,11 @@
 #!/usr/bin/python2.6
+#
+# Script that parses HTML markup from the sources that we crawled and
+# uses several heuristics to extract the most relevant set of English
+# words to generate our corpora for language model training.
+#
+# Uses the BeautifulSoup library for HTML parsing, included in this
+# directory.
 
 import os
 import re
@@ -69,7 +76,6 @@ def outputParsedTextFromLine(text, outfile):
 def parse(doc, output):
   file = open(doc)
   outfile = open(output, 'a+')
-  # outfile.write('<<<<<<From file %s>>>>>>\n' % doc)
   root = BeautifulSoup(file.read(), convertEntities=BeautifulSoup.HTML_ENTITIES)
   for foo in root.findAll(['option', 'style', 'script', 'meta', 'head']):
     foo.extract()
@@ -89,6 +95,3 @@ else:
           break
       if not skip:
         parse(os.path.join(root, f), sys.argv[2] + '.all')
-        for topic in ['politics', 'us', 'world', 'health', 'entertainment', 'tech']:
-          if root.lower().count(topic):
-            parse(os.path.join(root, f), sys.argv[2] + '.' + topic)
