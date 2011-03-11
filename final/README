@@ -41,12 +41,20 @@ of each other corpora. The java code is all under the java/ directory.
 First, build our Java code:
 cd java
 ant
-# TODO fill this in
-./run -train [corpora] -test [comma separated list of corpora]
+mkdir models
+./run_all_models.sh
+
+This puts all the computed perplexity values
 
 
 - Performing clustering analysis using MATLAB
 
+# TODO matlab commends. load, clustergram, plot(cg)
+
+
 - Identifying unigrams with most varying frequencies across all corpora
 
+
+
 - Performing a similar clustering analysis using these unigrams.
+
