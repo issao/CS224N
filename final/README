@@ -44,17 +44,50 @@ ant
 mkdir models
 ./run_all_models.sh
 
-This puts all the computed perplexity values
+This puts all the computed perplexity values in csv format in files in the
+directory java/models. We have copied all our computed results to the
+directory results/
+
+In order to get a single file that can be read by matlab, we did:
+./combine_model_results.sh
 
 
 - Performing clustering analysis using MATLAB
 
-# TODO matlab commends. load, clustergram, plot(cg)
+We used MATLAB to perform most of our clustering analysis.
+Here is a sample of commands:
+> perp_matrix = textread('results/combined_values_tab.csv')
+> labels = textread('results/rows', '%s')
+> clustergram(perp_matrix, 'RowLabels', labels, 'ColumnLabels', labels)
+
+We used the same method with differnt rows and columns subsets
+
+Altenatively, you can load the mat file at results/state.mat and graph any
+of the cg_* clustegrams by doing:
+plot(cg_news)
 
 
 - Identifying unigrams with most varying frequencies across all corpora
 
+We computed the unigram frequencies using compute_counts.sh and then
+used find_important_words.py to find among the top occuring words
+the ones that have the most difference in frequency across all corpora.
 
+Finally, we took this set of words:
+foundation
+congress
+liberty
+university
+immigration
+books
+illegal
+fought
+taxes
+college
+research
+mother
+voters
+medical
 
-- Performing a similar clustering analysis using these unigrams.
-
+And perform the same clustering analysis in matlab using the frequency
+of each of these words for each of the corpora.
